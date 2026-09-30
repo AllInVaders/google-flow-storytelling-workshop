@@ -750,7 +750,7 @@ def build_all_slides(existing_slide_ids=None):
         },
         {
             "accent": ACCENT_AMBER,
-            "title": "Copy-Paste Prompts A.3 + A.4 — Whip-Pan & Conversational Angle Edit (`gemini-omni-1.1-flash`)",
+            "title": "Copy-Paste Prompts A.3 + A.4 — Single-Take Whip-Pan & Conversational Edit",
             "link_label": "Open Atomic Sandbox ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
             "code": (
