@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
-"""Builds the 16-Slide Native Editable Google Slides Deck for the Google Flow & GenMedia Storytelling Workshop.
+"""Builds the 18-Slide Native Editable Google Slides Deck for the Google Flow, Gemini Omni & Lyria 3.5 Storytelling Workshop.
 
 Features:
-- Clean dark-mode executive cards (5-Card Pipeline, 3-Card Columns, 2x2 Grid, Split Prompt Preview)
+- Part I: Atomic Prompt Mastery Sandbox (Camera Angles, Kelvin Warmth, Aesthetic Styles, 5-Object Physics, Omni Conversational Editing, Lyria 3.5 Multimodal Music)
+- Part II: 7-Stage Incremental Commercial Production ("Solis — The 6:00 AM Spark") powered by Gemini Omni 1.1 Flash (`gemini-omni-1.1-flash`) and Lyria 3.5 (`lyria-3.5`)
 - Single-word classic Material Icons (`bolt`, `hub`, `code`, `check`, `warning`, `security`, `key`, `cloud`, `lock`, `psychology`, `star`)
-- Clickable link pills pointing to `https://github.com/AllInVaders/google-flow-storytelling-workshop` and `https://labs.google/fx/tools/flow`
-- Tripartite speaker notes (`[PURPOSE]`, `[VERBAL SCRIPT]`, `[TRANSITION]`) + copy-paste prompts on 100% of slides
+- Clickable link pills pointing to `https://github.com/AllInVaders/google-flow-storytelling-workshop`, `https://labs.google/fx/tools/flow`, and `https://aistudio.google.com?model=gemini-omni-1.1-flash`
+- Tripartite speaker notes (`[PURPOSE]`, `[VERBAL SCRIPT]`, `[TRANSITION]`) on 100% of slides
 """
 
 import json
-import re
+import os
 import subprocess
 
 GSLIDES = "/google/bin/releases/gemini-agents-gslides/gslides"
+DEFAULT_PRES_ID = "1RvTUXHZ1RYTo92FfgsawQ3dUK2bK1DDbZAPO0LVwhl0"
 GITHUB_REPO = "https://github.com/AllInVaders/google-flow-storytelling-workshop"
 GITHUB_BLOB = "https://github.com/AllInVaders/google-flow-storytelling-workshop/blob/main"
 FLOW_URL = "https://labs.google/fx/tools/flow"
-AISTUDIO_URL = "https://aistudio.google.com"
+OMNI_STUDIO_URL = "https://aistudio.google.com?model=gemini-omni-1.1-flash"
 
 BG_CANVAS = "#0B1120"
 BG_CARD = "#111827"
@@ -37,7 +39,7 @@ ACCENT_GREEN = "#10B981"
 ACCENT_RED = "#EF4444"
 
 
-def add_header(ops, sid, category, title, subtitle, slide_num, total_slides=16):
+def add_header(ops, sid, category, title, subtitle, slide_num, total_slides=18):
     """Adds slide header, slide counter, and clickable GitHub repository pill."""
     ops.append({"op": "set-background", "slide": sid, "color": BG_CANVAS})
     ops.append({
@@ -101,7 +103,7 @@ def add_header(ops, sid, category, title, subtitle, slide_num, total_slides=16):
         "width": 640,
         "height": 28,
         "font_family": "Roboto",
-        "font_size": 15.5,
+        "font_size": 15.2,
         "bold": True,
         "color": TEXT_WHITE,
     })
@@ -114,7 +116,7 @@ def add_header(ops, sid, category, title, subtitle, slide_num, total_slides=16):
         "width": 640,
         "height": 24,
         "font_family": "Roboto",
-        "font_size": 9.8,
+        "font_size": 9.6,
         "color": TEXT_SECONDARY,
     })
 
@@ -395,7 +397,7 @@ def add_grid_2x2(ops, sid, items):
             "width": 256,
             "height": 22,
             "font_family": "Roboto",
-            "font_size": 10.2,
+            "font_size": 10.1,
             "bold": True,
             "color": TEXT_WHITE,
         })
@@ -573,62 +575,67 @@ def add_split_case_study(ops, sid, left_card, right_card, bottom_preview):
     })
 
 
-def build_all_slides():
-    ops = [
-        {"op": "delete-element", "element": "i0"},
-        {"op": "delete-element", "element": "i1"},
-    ]
+def build_all_slides(existing_slide_ids=None):
+    ops = []
+    if existing_slide_ids:
+        # Add Slide 1 first so presentation never has 0 slides, then delete old slides
+        ops.append({"op": "add-slide", "layout": "BLANK", "id": "SLIDE_01"})
+        for old_id in existing_slide_ids:
+            ops.append({"op": "delete-element", "element": old_id})
+    else:
+        ops.append({"op": "add-slide", "layout": "BLANK", "id": "SLIDE_01"})
+        ops.append({"op": "delete-element", "element": "p"})
 
     # =========================================================================
-    # SLIDE 01: Hero Cover & Incremental Layer-Cake Roadmap (`p`)
+    # SLIDE 01: Hero Cover — Two-Part Workshop Roadmap (Atomic Sandbox + Production)
     # =========================================================================
-    sid = "p"
+    sid = "SLIDE_01"
     add_header(
         ops,
         sid,
-        "Google Flow & GenMedia · Hands-On Storytelling Workshop",
-        "Incremental AI Filmmaking: From a 2-Sentence Story to a 30s Commercial",
-        "Start with a tiny narrative seed and pile on Character Face Lock, Empty Sets, Storyboards, Motion, Dialogue & Scenebuilder.",
+        "Google Flow · Gemini Omni 1.1 Flash · Lyria 3.5 · Storytelling Workshop",
+        "Incremental AI Filmmaking: Atomic Prompt Sandbox to 30s Commercial",
+        "Part I tests isolated prompt characteristics (Angles, Warmth, Style, Physics); Part II builds a commercial with Gemini Omni.",
         1,
     )
     add_five_pipeline(ops, sid, [
         {
-            "icon": "psychology",
+            "icon": "bolt",
             "accent": ACCENT_AMBER,
-            "title": "00 · Story Seed",
-            "body": "• 2-Sentence Logline\n• 3-Act Micro-Arc\n• 2 Characters Max\n• 2 Locations + 1 Prop\n• Cold -> Warm Shift",
-            "link_label": "Stage 0 Lab ↗",
-            "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
+            "title": "Part I · Sandbox",
+            "body": "• Isolated Prompt Lab\n• Extreme Camera Angles\n• 7500K vs 2400K Warmth\n• 5-Object Physics Lock\n• Omni Multi-Turn Edit",
+            "link_label": "Atomic Sandbox ↗",
+            "link_url": f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
         },
         {
             "icon": "lock",
             "accent": ACCENT_BLUE,
-            "title": "01 · Face Lock",
-            "body": "• 35-Word Anchor Block\n• Neutral 5600K Portrait\n• 4-Angle Turnaround\n• Character Ingredients\n• Zero Identity Drift",
-            "link_label": "Stage 1 Lab ↗",
+            "title": "Stages 0–1 · Cast",
+            "body": "• 2-Sentence Story Seed\n• 3-Act Micro-Arc\n• 35-Word Identity Block\n• Neutral 5600K Portrait\n• 4-Angle Turnaround",
+            "link_label": "Stage 0–1 Lab ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
         {
             "icon": "hub",
             "accent": ACCENT_PURPLE,
-            "title": "02–03 · Set & Board",
-            "body": "• Empty Location Plates\n• Hero Product Macro\n• 6-Shot Storyboard\n• Start/End Frame Pairs\n• Continuity Bridges",
-            "link_label": "Stage 2-3 Lab ↗",
+            "title": "Stages 2–3 · Board",
+            "body": "• Empty Location Plates\n• Hero Product ('SOLIS')\n• 6-Shot Storyboard\n• First/Last Frame Pairs\n• Continuity Bridges",
+            "link_label": "Stage 2–3 Lab ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
         {
-            "icon": "bolt",
+            "icon": "cloud",
             "accent": ACCENT_CYAN,
-            "title": "04 · Camera & Motion",
-            "body": "• Ingredients to Video\n• Frames to Video\n• 7-Part Prompt Formula\n• Anamorphic & Macro\n• Veo 3.1 Physics",
+            "title": "Stage 4 · Omni Video",
+            "body": "• gemini-omni-1.1-flash\n• Up to 5 Image + 3 Vid Refs\n• First/Last Keyframing\n• 360p Draft -> 4K Upscale\n• Conversational Tuning",
             "link_label": "Stage 4 Lab ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
         {
             "icon": "star",
             "accent": ACCENT_GREEN,
-            "title": "05–06 · Talk & Edit",
-            "body": "• 180° Eyeline Rule\n• Shot-Reverse-Shot\n• Native Lip-Sync + TTS\n• Scenebuilder Extend\n• Jump To & J/L Cuts",
+            "title": "Stages 5–6 · Finale",
+            "body": "• 180° Eyeline Dialogue\n• gemini-3.8-flash-tts\n• Lyria 3.5 (Img+Text)\n• 10s Extend (up to 40s)\n• Kinetic Text & Edit",
             "link_label": "Prompt Library ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
         },
@@ -636,7 +643,7 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "Full Workshop Repo, Facilitator Script & Copy-Paste Prompts: https://github.com/AllInVaders/google-flow-storytelling-workshop",
+        "Full Workshop Repo, Atomic Sandbox & Prompts: https://github.com/AllInVaders/google-flow-storytelling-workshop",
         GITHUB_REPO,
     )
     ops.append({
@@ -644,25 +651,25 @@ def build_all_slides():
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Introduce the 7-Stage Incremental Story Layer-Cake (Snowball) methodology for Google Flow and cross-platform GenMedia.\n\n"
+            "Introduce the Two-Part Workshop Architecture: Part I (Atomic Prompt Mastery Sandbox) followed by Part II (7-Stage Incremental Commercial Production powered by Gemini Omni 1.1 Flash and Lyria 3.5).\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Welcome to the Google Flow and GenMedia Storytelling Workshop. Today we are going to build a 30-second commercial called 'Solis — The 6:00 AM Spark.' Instead of typing one giant prompt and hoping for the best, we will start with a two-sentence story seed and incrementally pile on characters, face consistency, location plates, storyboards, camera motion, two-person dialogue, and timeline assembly.\"\n\n"
+            "\"Welcome to the Google Flow, Gemini Omni, and Lyria 3.5 Storytelling Workshop. Today's workshop is divided into two hands-on parts. In Part I, we enter the Atomic Prompt Sandbox to push single, isolated characteristics to the limit—camera angles, Kelvin warmth, styles, and multi-object physics. Then in Part II, we start with a two-sentence story seed and incrementally pile on characters, sets, storyboards, Gemini Omni video generation, two-person dialogue, and Lyria 3.5 music.\"\n\n"
             "[TRANSITION]\n"
-            "Let's first understand why single-prompt video generation breaks down and how our incremental workflow solves it."
+            "Let's look at why we separate atomic prompt testing from incremental production."
         ),
     })
 
     # =========================================================================
-    # SLIDE 02: Why "One Giant Prompt" Fails vs. The Incremental Layer-Cake
+    # SLIDE 02: Why "One Giant Prompt" Fails vs. Atomic Sandbox + Layer-Cake
     # =========================================================================
     sid = "SLIDE_02"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Core Methodology · Why Incremental Layering Wins",
-        "Why Single-Prompt Video Fails vs. The Layer-Cake Production Pipeline",
-        "Separating story, character identity, empty sets, and camera physics eliminates character drift across every platform.",
+        "Core Methodology · Atomic Calibration + Incremental Layering",
+        "Why Single-Prompt Video Fails vs. Our Two-Part Production Method",
+        "Test isolated creative levers in Part I, then stack locked layers incrementally in Part II with Gemini Omni 1.1 Flash.",
         2,
     )
     add_split_case_study(
@@ -672,82 +679,268 @@ def build_all_slides():
             "icon": "warning",
             "accent": ACCENT_RED,
             "title": "The 'One Giant Prompt' Trap (Point A)",
-            "body": "• Typing 'Make a 30s coffee commercial' into a single prompt box.\n• Protagonist's face, glasses, and jacket mutate in every clip.\n• Background room geometry and product logos hallucinate.\n• Two speaking characters look away from each other.",
+            "body": "• Trying to test angles, lighting, style, and story in a single prompt.\n• Protagonist's face, glasses, and jacket mutate in every clip.\n• Regenerating a take from scratch destroys an 85% great performance.\n• Two speaking characters look away from each other.",
         },
         {
             "icon": "check",
             "accent": ACCENT_GREEN,
-            "title": "The Incremental Layer-Cake Method (Point B)",
-            "body": "• Lock 2-sentence story -> Lock faces -> Lock empty sets -> Storyboard.\n• Combine up to 3 pinned Ingredients per shot in Google Flow.\n• Use Start/End Frames for deterministic product transitions.\n• Direct 2-character conversations using the 180-Degree Rule.",
+            "title": "Atomic Sandbox + Layer-Cake Pipeline (Point B)",
+            "body": "• Part I: Isolate & master 1 variable per prompt (Angles, Warmth, Style).\n• Part II: Lock story -> Lock faces -> Lock empty sets -> Storyboard.\n• Animate & edit conversationally in gemini-omni-1.1-flash (up to 5 refs).\n• Score from Text + Image in Lyria 3.5 (44.1 kHz stereo).",
         },
         {
             "accent": ACCENT_BLUE,
-            "title": "Incremental Layering Equation (Google Flow + Any GenMedia Platform)",
+            "title": "Two-Part Workshop Progression (Google Flow + Gemini Omni 1.1 Flash + Lyria 3.5)",
             "link_label": "Facilitator Playbook ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/01-instructor-playbook.md",
             "code": (
-                "Layer 0 (Story Seed)        -> 2 sentences + 3-Act lighting contrast (Cold Cyan -> Warm Amber -> Sunrise)\n"
-                "Layer 1 (Identity Lock)     -> 35-word verbatim Identity Anchor Block + Neutral 5600K Portrait / 4-Angle Sheet\n"
-                "Layer 2 (Stage & Prop)      -> Empty Location Plates ([SCENE_STUDIO], [SCENE_CAFE]) + Hero Product ([PROP_CUP])\n"
-                "Layer 3 (Visual Storyboard) -> 6 Composited Keyframes (Start & End Frame pairs before rendering video)\n"
-                "Layer 4-6 (Motion + Audio)  -> Ingredients-to-Video + Frames-to-Video + 180° Shot-Reverse-Shot Dialogue + Scenebuilder"
+                "Part I  (Atomic Sandbox)     -> Push 1 isolated lever at a time: Camera Angles | Kelvin Warmth | Styles | 5-Object Physics\n"
+                "Stage 0–1 (Story & Cast)     -> 2-sentence seed (gemini-3.8-flash) + 35-word Identity Anchor + 4-Angle Sheet (gemini-3-pro-image)\n"
+                "Stage 2–3 (Stage & Board)    -> Empty Location Plates ([SCENE_STUDIO], [SCENE_CAFE]) + [PROP_CUP] + 6 Storyboard Keyframes\n"
+                "Stage 4–5 (Omni Video & Aud) -> gemini-omni-1.1-flash (Multi-Ref & First/Last Frame) + 180° Dialogue + gemini-3.8-flash-tts + lyria-3.5\n"
+                "Stage 6   (Omni Edit & Cut)  -> Multi-turn conversational video editing + 10s scene extension (up to 40s) + Kinetic Typography"
             ),
         },
     )
     add_takeaway_banner(
         ops,
         sid,
-        "Rule #1 of AI Filmmaking: Never invent your character, your room, and your camera move for the first time in the same video prompt.",
-        f"{GITHUB_BLOB}/workshop-guide/01-instructor-playbook.md",
+        "Rule #1: Calibrate isolated variables in the Atomic Sandbox first; then layer character, set, and motion in production.",
+        f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
     )
     ops.append({
         "op": "set-notes",
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Contrast the common beginner mistake (single monolithic prompt) against the modular film-set workflow used in Google Flow.\n\n"
+            "Explain why isolating variables in Part I (Atomic Sandbox) makes Part II (Incremental Commercial Production) dramatically more predictable.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"When most creators open a video model, they try to describe the story, the actor's face, the coffee shop, and the camera movement all at once. In the next shot, the actor's face drifts and the coffee shop looks completely different. By separating our production into incremental layers—just like a real film set—we lock the actors and sets first, then animate.\"\n\n"
+            "\"When creators jump straight into a 30-second commercial, they change five things at once and can't tell why a shot failed. That's why we start with Part I—our Atomic Prompt Sandbox—where we hold the subject constant and push one variable at a time: camera angle, Kelvin warmth, visual style, or multi-object physics. Once you feel how Gemini Image and Gemini Omni respond to each lever, Part II's incremental build becomes effortless.\"\n\n"
             "[TRANSITION]\n"
-            "Let's look at how these layers map directly to the Google Flow workspace and to other GenMedia platforms."
+            "Let's jump right into Part I and test our first two isolated characteristics: Camera Angles and Kelvin Warmth."
         ),
     })
 
     # =========================================================================
-    # SLIDE 03: Google Flow Workspace & Cross-Platform Architecture
+    # SLIDE 03: Part I (1/3) — Atomic Sandbox: Camera Angles & Kelvin Warmth
     # =========================================================================
     sid = "SLIDE_03"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Platform Architecture · Write Once, Execute Anywhere",
-        "Mapping the Workshop to Google Flow & Universal GenMedia Platforms",
-        "Every workshop exercise runs natively in Google Flow while mapping 1:1 to Vertex AI, AI Studio, Runway, Luma, and Midjourney.",
+        "Part I · Atomic Prompt Mastery Sandbox (Labs A & B)",
+        "Testing Isolated Variables: Extreme Camera Angles & Kelvin Warmth",
+        "Hold the subject constant and push camera perspective or Kelvin color temperature to the extreme in Image & Omni Video.",
         3,
+    )
+    add_split_case_study(
+        ops,
+        sid,
+        {
+            "icon": "bolt",
+            "accent": ACCENT_AMBER,
+            "title": "Lab A: Extreme Camera Angles & Whip-Pan",
+            "body": "• Worm's-Eye (14mm): Camera on wet cobblestones looking up 85°.\n• God's-Eye (90° Overhead): Flat-lay knolling on walnut desk.\n• Omni Single-Take: Low-angle tamp -> whip-pan right -> crane up.\n• Omni Conversational Edit: Re-angle to 180° orbit in 1 turn!",
+        },
+        {
+            "icon": "cloud",
+            "accent": ACCENT_CYAN,
+            "title": "Lab B: Warmth & Kelvin Color Temperature",
+            "body": "• Cold 7500K Blue-Hour: Cyan streetlamp, slate shadows, isolation.\n• Warm 2400K Sunrise: Honey-gold sunbeams, volumetric steam.\n• Omni Dynamic Shift: Clouds part to turn 7500K room into 3000K gold.\n• Omni Conversational Relight: Flip cold rain to 2200K candlelight!",
+        },
+        {
+            "accent": ACCENT_AMBER,
+            "title": "Copy-Paste Prompts A.3 + A.4 — Whip-Pan & Conversational Angle Edit (`gemini-omni-1.1-flash`)",
+            "link_label": "Open Atomic Sandbox ↗",
+            "link_url": f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
+            "code": (
+                "[TURN 1 - INITIAL GENERATION]: One continuous cinematic shot, no jump cuts. Start on an extreme low-angle macro view at counter height\n"
+                "of a barista's hand tamping espresso with a heavy brass tamper. The camera whip-pans smoothly right across the oak counter, following\n"
+                "a steaming terracotta cup as it slides toward an architect in tortoiseshell glasses, and cranes up into a high-angle overhead view.\n"
+                "[TURN 2 - CONVERSATIONAL EDIT]: Keep the exact character, cup movement, and audio, but change the camera to a slow 180° eye-level orbit."
+            ),
+        },
+    )
+    add_takeaway_banner(
+        ops,
+        sid,
+        "Notice Turn 2: With Gemini Omni 1.1 Flash, you can change the camera angle or relight a video conversationally without starting over!",
+        OMNI_STUDIO_URL,
+    )
+    ops.append({
+        "op": "set-notes",
+        "slide": sid,
+        "text": (
+            "[PURPOSE]\n"
+            "Run Hands-On Labs A and B from the Atomic Prompt Sandbox, testing extreme camera angles and Kelvin warmth shifts.\n\n"
+            "[VERBAL SCRIPT]\n"
+            "\"Open prompts/00-atomic-prompt-sandbox.md. First, look at Lab A: instead of letting the model pick a boring eye-level shot, we test a 14mm worm's-eye lookup on wet cobblestones, a 90-degree overhead flat-lay, and a continuous whip-pan-to-crane shot in Gemini Omni 1.1 Flash. Then in Turn 2, we ask Gemini Omni conversationally to keep the exact scene but orbit 180 degrees around the cup. Next, in Lab B, compare 7500K blue-hour coldness against 2400K golden sunrise warmth.\"\n\n"
+            "[TRANSITION]\n"
+            "Now let's test Visual Styles and Multi-Object Physics in Labs C and D."
+        ),
+    })
+
+    # =========================================================================
+    # SLIDE 04: Part I (2/3) — Atomic Sandbox: Visual Styles & Multi-Object Physics
+    # =========================================================================
+    sid = "SLIDE_04"
+    ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
+    add_header(
+        ops,
+        sid,
+        "Part I · Atomic Prompt Mastery Sandbox (Labs C & D)",
+        "Testing Radical Film Styles, 5-Object Spatial Lock & Chain Physics",
+        "Push tactile material styles and multi-object spatial/physical interactions in Nano Banana Pro & Gemini Omni 1.1 Flash.",
+        4,
+    )
+    add_grid_2x2(ops, sid, [
+        {
+            "icon": "star",
+            "accent": ACCENT_AMBER,
+            "title": "Lab C.1 · 35mm Kodak Vision3 500T Anamorphic",
+            "body": "• Panavision C-Series anamorphic lenses + organic 35mm grain.\n• Warm red-orange halation around glowing tungsten streetlamps, vertical oval bokeh, and horizontal blue streak flare.",
+            "link_label": "Style Prompts C.1–C.4 ↗",
+            "link_url": f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
+        },
+        {
+            "icon": "psychology",
+            "accent": ACCENT_PURPLE,
+            "title": "Lab C.2 · 12fps Stop-Motion Clay & Felt Diorama",
+            "body": "• Sculpted matte polymer clay figures with subtle thumbprints.\n• Needle-felted merino wool espresso steam + blown-glass raindrops on a balsa wood counter at 12fps shutter cadence.",
+            "link_label": "Stop-Motion Prompt ↗",
+            "link_url": f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
+        },
+        {
+            "icon": "lock",
+            "accent": ACCENT_BLUE,
+            "title": "Lab D.1 · 5-Object Spatial Lock (`gemini-3-pro-image`)",
+            "body": "• Center: Terracotta cup embossed with gold 'SOLIS'.\n• Left: Tortoiseshell glasses. Right: Brass watch at 6:00.\n• Foreground: 3 coffee beans on blueprint. Back: Fluted glass carafe.",
+            "link_label": "5-Object Prompt D.1 ↗",
+            "link_url": f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
+        },
+        {
+            "icon": "bolt",
+            "accent": ACCENT_GREEN,
+            "title": "Lab D.2 · Chain-Reaction Physics (`gemini-omni-1.1-flash`)",
+            "body": "• Brass marble rolls down oak ruler -> taps 3 brown-sugar dominoes -> nudges brass spoon into terracotta espresso cup -> ripples golden crema with synchronized foley.",
+            "link_label": "Physics Prompt D.2 ↗",
+            "link_url": f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
+        },
+    ])
+    add_takeaway_banner(
+        ops,
+        sid,
+        "Multi-Object Secret: Number each object (1)–(5) with explicit spatial prepositions (Center, Left, Right, Foreground, Background).",
+        f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
+    )
+    ops.append({
+        "op": "set-notes",
+        "slide": sid,
+        "text": (
+            "[PURPOSE]\n"
+            "Demonstrate how to lock distinct visual styles (35mm film, stop-motion clay, watercolor) and combine 5 distinct objects without attribute bleeding.\n\n"
+            "[VERBAL SCRIPT]\n"
+            "\"In Lab C, we test how specific material and lens vocabulary transforms the entire medium—from 35mm Kodak 500T film halation to a 12-frames-per-second stop-motion diorama made of polymer clay and felted wool. In Lab D, we stress-test multi-object composition: by numbering our five objects and anchoring each to a spatial zone, Nano Banana Pro renders every texture cleanly, while Gemini Omni simulates a full Rube Goldberg chain reaction.\"\n\n"
+            "[TRANSITION]\n"
+            "Now let's test Gemini Omni's kinetic typography and the latest Lyria 3.5 multimodal music models in Labs E and F."
+        ),
+    })
+
+    # =========================================================================
+    # SLIDE 05: Part I (3/3) — Kinetic Typography & Latest Lyria 3.5 Music Lab
+    # =========================================================================
+    sid = "SLIDE_05"
+    ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
+    add_header(
+        ops,
+        sid,
+        "Part I · Atomic Prompt Mastery Sandbox (Labs E & F)",
+        "Gemini Omni Kinetic Typography & Lyria 3.5 Multimodal Music Lab",
+        "Render in-video 3D typography that reacts to steam in Gemini Omni, and score images in 44.1 kHz stereo with Lyria 3.5.",
+        5,
+    )
+    add_split_case_study(
+        ops,
+        sid,
+        {
+            "icon": "bolt",
+            "accent": ACCENT_BLUE,
+            "title": "Lab E: In-Video Kinetic Typography (`gemini-omni-1.1-flash`)",
+            "body": "• Gemini Omni synchronizes legible on-screen text with physical motion.\n• Prompt 3D gold serif letters ('AWAKEN THE CRAFT') to materialize above the cup as rising coffee steam physically swirls and parts through the letters!",
+        },
+        {
+            "icon": "star",
+            "accent": ACCENT_PURPLE,
+            "title": "Lab F: Latest Lyria 3.5 & 3 Pro (`lyria-3.5` / `lyria-3-pro-preview`)",
+            "body": "• 44.1 kHz high-fidelity stereo audio from Text OR Image + Text!\n• Pass a cold-rain or warm-sunrise image directly to lyria-3.5.\n• Use structural tags ([Intro], [Verse], [Chorus], [Crescendo]) or lyria-3-clip-preview for exact 30s commercial beds.",
+        },
+        {
+            "accent": ACCENT_PURPLE,
+            "title": "Copy-Paste Lab E.1 (Omni Kinetic Text) & Lab F.1 (`lyria-3.5` 44.1kHz Commercial Score)",
+            "link_label": "Copy Labs E & F ↗",
+            "link_url": f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
+            "code": (
+                "[OMNI KINETIC TEXT]: Macro close-up of a steaming matte terracotta cappuccino cup on dark oak in golden light. As velvety steam rises,\n"
+                "minimalist 3D gold serif letters reading \"AWAKEN THE CRAFT\" materialize above the rim; rising steam physically swirls through the letters.\n"
+                "[LYRIA 3.5 SCORE]: 30-second commercial soundtrack in 44.1kHz stereo, 92 BPM: [0:00-0:08 Intro] Sparse felt piano & rain;\n"
+                "[0:08-0:20 Groove] Warm fingerpicked acoustic guitar & upright bass; [0:20-0:30 Crescendo] Uplifting chamber strings in major key."
+            ),
+        },
+    )
+    add_takeaway_banner(
+        ops,
+        sid,
+        "Lyria 3.5 Multimodal Secret: Pass your storyboard keyframe image + text prompt into lyria-3.5 so the music matches the exact lighting mood!",
+        f"{GITHUB_BLOB}/prompts/00-atomic-prompt-sandbox.md",
+    )
+    ops.append({
+        "op": "set-notes",
+        "slide": sid,
+        "text": (
+            "[PURPOSE]\n"
+            "Showcase Gemini Omni's kinetic typography synchronization and introduce the latest Lyria 3.5 / Lyria 3 Pro / Lyria 3 Clip music models.\n\n"
+            "[VERBAL SCRIPT]\n"
+            "\"Before we finish Part I, look at two game-changing capabilities. First, Gemini Omni 1.1 Flash can render legible 3D kinetic typography inside the video that physically interacts with rising steam. Second, with the latest Lyria 3.5 and Lyria 3 Pro models, we get 44.1 kHz stereo music with full structural control, vocals or instrumentals, and multimodal image-to-music—meaning you can feed your storyboard frame directly into Lyria 3.5 to score the visual mood!\"\n\n"
+            "[TRANSITION]\n"
+            "Now let's review how Gemini Omni 1.1 Flash powers our video architecture across Google Flow and AI Studio."
+        ),
+    })
+
+    # =========================================================================
+    # SLIDE 06: Platform Architecture — Why Focus on Gemini Omni 1.1 Flash
+    # =========================================================================
+    sid = "SLIDE_06"
+    ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
+    add_header(
+        ops,
+        sid,
+        "Video & Audio Architecture · Gemini Omni 1.1 Flash + Google Flow",
+        "Why We Focus on Gemini Omni (`gemini-omni-1.1-flash`) for Video Production",
+        "Combining multimodal reference fusion, conversational video editing, keyframe interpolation, and 360p-to-4K scaling.",
+        6,
     )
     add_three_cards(ops, sid, [
         {
-            "icon": "lock",
+            "icon": "hub",
+            "accent": ACCENT_BLUE,
+            "title": "1. Multimodal References\n(Up to 5 Img + 3 Vid)",
+            "body": "• Simultaneously pass Text + up to 5 Image References + up to 3 Video References (3s).\n• Lock Character A + Character B + Set + Hero Prop in one shot with native synchronized audio.",
+            "link_label": "Open Gemini Omni ↗",
+            "link_url": OMNI_STUDIO_URL,
+        },
+        {
+            "icon": "bolt",
             "accent": ACCENT_AMBER,
-            "title": "1. Ingredients Panel\n(Asset & Identity Vault)",
-            "body": "• Google Flow: Create or upload Character, Scene, and Object Ingredients (Nano Banana Pro / Imagen).\n• Cross-Platform: Generate a 4-Angle Character Turnaround Sheet + Empty Location Plates as reference images.",
+            "title": "2. Conversational Editing\n& First/Last Keyframes",
+            "body": "• Multi-turn chat editing via Interactions API: swap lighting, angles, or props while keeping the take.\n• First & Last Frame anchoring interpolates smooth camera transitions.",
             "link_label": "Open Google Flow ↗",
             "link_url": FLOW_URL,
         },
         {
-            "icon": "bolt",
-            "accent": ACCENT_BLUE,
-            "title": "2. Dual Video Engines\n(Ingredients vs. Frames)",
-            "body": "• Ingredients to Video: Blend up to 3 references (Character + Set + Prop) with Veo 3.1 camera prompts.\n• Frames to Video: Lock exact First Frame + Last Frame to interpolate smooth macro transitions.",
-            "link_label": "Google AI Studio ↗",
-            "link_url": AISTUDIO_URL,
-        },
-        {
-            "icon": "hub",
+            "icon": "star",
             "accent": ACCENT_GREEN,
-            "title": "3. Scenebuilder Timeline\n(Extend, Jump To & Audio)",
-            "body": "• Extend: Lengthen a clip seamlessly from its final frames.\n• Jump To: Bridge a character into a new scene/angle.\n• Audio: Veo 3.1 native lip-sync + Gemini 3.8 Flash TTS + Lyria 3 score.",
+            "title": "3. 360p -> 4K Upscaling\n& 40s Scene Extension",
+            "body": "• Rapidly prototype choreography in 360p ($0.034/s) or 720p, then upscale winning takes to 1080p/4K.\n• Extend clips in 3–10s increments up to 40 seconds total.",
             "link_label": "Cross-Platform Matrix ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
         },
@@ -755,7 +948,7 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "Model Stack: gemini-3.8-flash (Story) · gemini-3-pro-image (Nano Banana Pro) · veo-3.1 · gemini-3.8-flash-tts · lyria-3",
+        "2026 Model Stack: gemini-3.8-flash (Story) · gemini-3-pro-image (Ingredients) · gemini-omni-1.1-flash (Video) · gemini-3.8-flash-tts · lyria-3.5",
         GITHUB_REPO,
     )
     ops.append({
@@ -763,26 +956,26 @@ def build_all_slides():
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Orient participants to the three core workspaces in Google Flow (Ingredients, Video Generation Modes, Scenebuilder) and their cross-platform equivalents.\n\n"
+            "Explain the architectural advantages of Gemini Omni 1.1 Flash as the primary video generation and editing model alongside Google Flow.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Google Flow gives us three superpowers in one browser tab: the Ingredients Panel to pin our characters, sets, and products; two video generation modes—Ingredients to Video and Frames to Video powered by Veo 3.1; and Scenebuilder to extend and sequence clips. And if you run this in Vertex AI, AI Studio, or Runway, the exact same reference images and prompts work seamlessly.\"\n\n"
+            "\"Why are we centering our video workflow on Gemini Omni 1.1 Flash? Three reasons: first, it accepts up to five reference images and three reference videos simultaneously; second, it supports multi-turn conversational video editing alongside First and Last Frame keyframing; and third, you can draft rapidly at 360p, extend scenes in 10-second increments up to 40 seconds, and upscale your final cut to 4K.\"\n\n"
             "[TRANSITION]\n"
-            "Let's begin hands-on with Stage 0: writing our two-sentence micro-story seed."
+            "Now let's begin Part II: building our 30-second commercial 'Solis — The 6:00 AM Spark' starting with Stage 0."
         ),
     })
 
     # =========================================================================
-    # SLIDE 04: Stage 0 — The 2-Sentence Micro-Story Seed
+    # SLIDE 07: Part II · Stage 0 — The 2-Sentence Micro-Story Seed
     # =========================================================================
-    sid = "SLIDE_04"
+    sid = "SLIDE_07"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 0 · Incremental Layer 1 of 7: Narrative Foundation",
+        "Part II · Stage 0 (Layer 1 of 7): Narrative Foundation",
         "Start with a 2-Sentence Story Seed & Expand to a 3-Act Micro-Arc",
-        "Constrain the commercial to 30 seconds, 2 characters, 2 contrasting locations, and 1 hero prop before generating visuals.",
-        4,
+        "Constrain the commercial to 30 seconds, 2 characters, 2 contrasting Kelvin lighting worlds, and 1 hero prop.",
+        7,
     )
     add_split_case_study(
         ops,
@@ -796,8 +989,8 @@ def build_all_slides():
         {
             "icon": "star",
             "accent": ACCENT_CYAN,
-            "title": "3-Act Visual & Lighting Arc (30 Seconds)",
-            "body": "• Act I (0–8s): Cold Cyan Rain — Maya stuck at her studio desk.\n• Act II (8–22s): Warm Amber Glow — Leo slides the Solis cup across the counter; a 2-line conversation.\n• Act III (22–30s): Golden Sunrise — Maya sketches the bridge arch.",
+            "title": "3-Act Visual & Kelvin Lighting Arc (30 Seconds)",
+            "body": "• Act I (0–8s): 7500K Cold Cyan Rain — Maya stuck at her studio desk.\n• Act II (8–22s): 2700K Warm Amber Glow — Leo slides the Solis cup across the counter; a 2-line conversation.\n• Act III (22–30s): 3000K Golden Sunrise — Maya sketches the bridge arch.",
         },
         {
             "accent": ACCENT_AMBER,
@@ -816,7 +1009,7 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "Color & Mood Arc: Cold Cyan Pre-Dawn Rain (Problem) -> Warm Amber Edison Café (Connection) -> Golden Sunrise (Transformation).",
+        "Color & Mood Arc: 7500K Cold Pre-Dawn Rain (Problem) -> 2700K Warm Edison Café (Connection) -> Golden Sunrise (Transformation).",
         f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
     )
     ops.append({
@@ -826,24 +1019,24 @@ def build_all_slides():
             "[PURPOSE]\n"
             "Demonstrate how a 2-sentence story seed is expanded into a constrained 3-act commercial beat sheet.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Every great commercial is built on a clear contrast. Our story seed is just two sentences: Maya is an architect stuck on a blank blueprint at 5:45 AM in the cold rain; she steps into Leo's glowing corner café, shares a laugh over a terracotta cup of Solis espresso, and returns at sunrise to draw her bridge. Notice how we constrain the world to two characters, two locations, and one prop.\"\n\n"
+            "\"Notice how we apply our Kelvin lighting lesson from Part I directly to our story structure: Act I is 7500K cold cyan rain at 5:45 AM; Act II is 2700K warm amber Edison light inside Leo's corner café; and Act III is golden morning sunrise flooding Maya's studio desk.\"\n\n"
             "[TRANSITION]\n"
-            "Now that we know who Maya and Leo are, how do we make sure their faces look identical in every shot? Welcome to Stage 1."
+            "Now let's lock Maya and Leo's faces in Stage 1 so they never drift across our 6 shots."
         ),
     })
 
     # =========================================================================
-    # SLIDE 05: Stage 1 — Character Generation & The Face Consistency Formula
+    # SLIDE 08: Stage 1 — Character Generation & The Face Consistency Formula
     # =========================================================================
-    sid = "SLIDE_05"
+    sid = "SLIDE_08"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 1 · Incremental Layer 2 of 7: Character & Face Consistency",
-        "The 3-Pillar System for Zero Face Drift Across Shots & Platforms",
+        "Part II · Stage 1 (Layer 2 of 7): Character & Face Consistency",
+        "The 3-Pillar System for Zero Face Drift in Gemini Omni & Google Flow",
         "Combine a verbatim 35-word Identity Anchor Block, a neutral 5600K studio portrait, and a 4-Angle Turnaround Sheet.",
-        5,
+        8,
     )
     add_three_cards(ops, sid, [
         {
@@ -866,7 +1059,7 @@ def build_all_slides():
             "icon": "hub",
             "accent": ACCENT_PURPLE,
             "title": "Pillar 3 · The 4-Angle\nTurnaround Sheet",
-            "body": "• Prompt Nano Banana Pro (gemini-3-pro-image) for a 4-panel sheet in one 16:9 frame: Front, 45°, Profile, Smiling Close-Up.\n• Crop panels to feed angle-matched references on any platform!",
+            "body": "• Prompt Nano Banana Pro (gemini-3-pro-image) for a 4-panel sheet in one 16:9 frame: Front, 45°, Profile, Smiling Close-Up.\n• Pass angle-matched panels into gemini-omni-1.1-flash (supports up to 5 image refs!).",
             "link_label": "Turnaround Prompt ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
         },
@@ -874,7 +1067,7 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "Pro Tip: Distinct accessories (round tortoiseshell glasses + ochre knit cardigan) act as high-weight visual anchors for video models.",
+        "Pro Tip: Distinct accessories (round tortoiseshell glasses + ochre knit cardigan) act as high-weight visual anchors in Gemini Omni.",
         f"{GITHUB_BLOB}/workshop-guide/01-instructor-playbook.md",
     )
     ops.append({
@@ -882,26 +1075,26 @@ def build_all_slides():
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Teach the 3-pillar technique that guarantees facial and wardrobe consistency in Google Flow and external tools.\n\n"
+            "Teach the 3-pillar technique that guarantees facial and wardrobe consistency in Gemini Omni and Google Flow.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Why do faces drift in AI video? Because users rely on a single image reference with a vague text prompt, or they generate a reference portrait with heavy neon shadows that bleed into later shots. Our 3-pillar fix combines a verbatim 35-word Identity Anchor Block, a neutral 5600K studio portrait pinned in Google Flow's Ingredients Panel, and a 4-angle turnaround sheet for cross-platform angle matching.\"\n\n"
+            "\"To guarantee zero face drift in Gemini Omni and Google Flow, we combine three pillars: a verbatim 35-word Identity Anchor Block, a neutral 5600K studio portrait, and a 4-angle turnaround sheet generated in Nano Banana Pro. Because Gemini Omni accepts up to five reference images per call, you can feed both front and 45-degree angles simultaneously.\"\n\n"
             "[TRANSITION]\n"
-            "Let's copy and run the exact character prompts for Maya and Leo right now."
+            "Let's copy and run the character prompts for Maya and Leo right now."
         ),
     })
 
     # =========================================================================
-    # SLIDE 06: Live Lab #1 — Character & Face Consistency Prompts
+    # SLIDE 09: Live Lab #1 — Character & Face Consistency Prompts
     # =========================================================================
-    sid = "SLIDE_06"
+    sid = "SLIDE_09"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
         "Stage 1 Hands-On Lab · Character Ingredients (`[CHAR_MAYA]` & `[CHAR_LEO]`)",
         "Live Lab #1: Generating Locked Character Portraits & Turnaround Sheets",
-        "Run these prompts in Google Flow's Ingredients Panel (or Nano Banana Pro / gemini-3-pro-image) and pin both characters.",
-        6,
+        "Run these prompts in `gemini-3-pro-image` (Nano Banana Pro) or Google Flow's Ingredients Panel and pin both characters.",
+        9,
     )
     add_split_case_study(
         ops,
@@ -935,7 +1128,7 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "In Google Flow: Open 'Ingredients' -> Create Ingredient -> Generate Maya & Leo -> Pin both to your project asset library.",
+        "In Google Flow / AI Studio: Generate Maya & Leo in Nano Banana Pro -> Save as reference assets for Gemini Omni 1.1 Flash.",
         FLOW_URL,
     )
     ops.append({
@@ -945,39 +1138,39 @@ def build_all_slides():
             "[PURPOSE]\n"
             "Provide the exact copy-paste prompts for generating Maya, Leo, and Maya's 4-panel turnaround sheet.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Copy Prompt 1.1 and 1.3 into Google Flow's Ingredients creator—or Prompt 1.2 into Gemini 3 Pro Image if you want the 4-angle sheet. Notice how specific the landmarks are: 'subtle freckles across the nose', 'wavy raven hair tied in a loose low clip', 'round tortoiseshell glasses', and 'oversized ochre knit cardigan.' Once generated, pin Maya and Leo to your Ingredients tray.\"\n\n"
+            "\"Copy Prompts 1.1, 1.2, and 1.3 into Google Flow's Ingredients creator or AI Studio with Nano Banana Pro. Once generated, pin Maya and Leo to your asset library.\"\n\n"
             "[TRANSITION]\n"
-            "Now that our two actors are cast and locked, we need to build the sets and the hero coffee cup in Stage 2."
+            "Now that our two actors are cast and locked, let's build our empty location plates and the Solis terracotta cup in Stage 2."
         ),
     })
 
     # =========================================================================
-    # SLIDE 07: Stage 2 — Scene & Product World Generation
+    # SLIDE 10: Stage 2 — Scene & Product World Generation
     # =========================================================================
-    sid = "SLIDE_07"
+    sid = "SLIDE_10"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 2 · Incremental Layer 3 of 7: Environments & Hero Product",
+        "Part II · Stage 2 (Layer 3 of 7): Environments & Hero Product",
         "Build the Stage Before Calling the Actors: Empty Plates & Product Lock",
         "Generate actor-free Location Ingredients and a macro Product Ingredient so room layouts and brand logos stay rock-solid.",
-        7,
+        10,
     )
     add_three_cards(ops, sid, [
         {
             "icon": "cloud",
             "accent": ACCENT_CYAN,
-            "title": "Scene Ingredient A\n`[SCENE_STUDIO]` (Act I)",
-            "body": "• Minimalist architect's loft desk at 5:45 AM before dawn.\n• Tall rain-streaked industrial window + cool cyan-blue drafting lamp.\n• Explicitly prompt: 'Empty chair, no people' so the plate is clean.",
+            "title": "Scene Ingredient A\n`[SCENE_STUDIO]` (7500K)",
+            "body": "• Minimalist architect's loft desk at 5:45 AM before dawn.\n• Tall rain-streaked industrial window + cool 7500K cyan drafting lamp.\n• Explicitly prompt: 'Empty chair, no people' so the plate is clean.",
             "link_label": "Prompt 2.1 ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
         },
         {
             "icon": "bolt",
             "accent": ACCENT_AMBER,
-            "title": "Scene Ingredient B\n`[SCENE_CAFE]` (Act II)",
-            "body": "• Cozy wood-paneled artisan espresso bar at dawn.\n• Warm amber Edison bulbs, brass espresso machine, reclaimed oak counter.\n• Fogged rainy window in background for visual contrast.",
+            "title": "Scene Ingredient B\n`[SCENE_CAFE]` (2700K)",
+            "body": "• Cozy wood-paneled artisan espresso bar at dawn.\n• Warm 2700K amber Edison bulbs, brass espresso machine, oak counter.\n• Fogged rainy window in background for visual contrast.",
             "link_label": "Prompt 2.2 ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
         },
@@ -1003,24 +1196,24 @@ def build_all_slides():
             "[PURPOSE]\n"
             "Explain why location plates must be generated empty (without people) and how to lock product typography.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"In Stage 2, we think like production designers. If you generate a coffee shop that already has a random person standing behind the counter, and then you try to insert Leo, the model gets confused. Always include 'Empty chair, no people' in your Scene Ingredients. And for our hero product, we use Nano Banana Pro to render the matte terracotta cup with the exact gold 'SOLIS' logo.\"\n\n"
+            "\"In Stage 2, always include 'Empty chair, no people' in your Scene Ingredients so Gemini Omni never has to overwrite a random background person with Maya or Leo.\"\n\n"
             "[TRANSITION]\n"
-            "Let's run the three Stage 2 prompts to populate our Ingredients tray with both sets and the hero cup."
+            "Let's run the three Stage 2 prompts to populate our asset library with both sets and the hero cup."
         ),
     })
 
     # =========================================================================
-    # SLIDE 08: Live Lab #2 — Scene & Product Ingredient Prompts
+    # SLIDE 11: Live Lab #2 — Scene & Product Ingredient Prompts
     # =========================================================================
-    sid = "SLIDE_08"
+    sid = "SLIDE_11"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
         "Stage 2 Hands-On Lab · Scene & Object Ingredients",
         "Live Lab #2: Generating `[SCENE_STUDIO]`, `[SCENE_CAFE]` & `[PROP_CUP]`",
-        "Create and pin these 3 visual assets so your Ingredients library holds all 5 core building blocks of the commercial.",
-        8,
+        "Create and pin these 3 visual assets so your project holds all 5 core building blocks of the commercial.",
+        11,
     )
     add_split_case_study(
         ops,
@@ -1029,13 +1222,13 @@ def build_all_slides():
             "icon": "cloud",
             "accent": ACCENT_CYAN,
             "title": "Prompt 2.1 — Cold Rainy Studio (`[SCENE_STUDIO]`)",
-            "body": "\"Wide establishing interior shot of a minimalist architect's loft desk by a tall rain-streaked industrial window at 5:45 AM before dawn. Empty chair, no people. A drafting lamp casts a cool cyan-blue pool of light over an unrolled blank blueprint and scale ruler. 35mm anamorphic lens.\"",
+            "body": "\"Wide establishing interior shot of a minimalist architect's loft desk by a tall rain-streaked industrial window at 5:45 AM before dawn. Empty chair, no people. A drafting lamp casts a cool 7500K cyan-blue pool of light over an unrolled blank blueprint and scale ruler. 35mm anamorphic lens.\"",
         },
         {
             "icon": "bolt",
             "accent": ACCENT_AMBER,
             "title": "Prompt 2.2 — Warm Corner Café (`[SCENE_CAFE]`)",
-            "body": "\"Medium-wide interior shot of a cozy, wood-paneled artisan espresso bar at dawn. Empty frame with no people. Warm amber Edison bulbs and a polished brass espresso machine gleam with gentle steam rising. Rain outside fogged window, reclaimed oak counter in foreground.\"",
+            "body": "\"Medium-wide interior shot of a cozy, wood-paneled artisan espresso bar at dawn. Empty frame with no people. Warm 2700K amber Edison bulbs and a polished brass espresso machine gleam with gentle steam rising. Rain outside fogged window, reclaimed oak counter in foreground.\"",
         },
         {
             "accent": ACCENT_GREEN,
@@ -1053,7 +1246,7 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "Checkpoint: You now have 5 pinned Ingredients — [CHAR_MAYA], [CHAR_LEO], [SCENE_STUDIO], [SCENE_CAFE], and [PROP_CUP].",
+        "Checkpoint: You now have 5 locked Ingredients — [CHAR_MAYA], [CHAR_LEO], [SCENE_STUDIO], [SCENE_CAFE], and [PROP_CUP].",
         FLOW_URL,
     )
     ops.append({
@@ -1063,38 +1256,38 @@ def build_all_slides():
             "[PURPOSE]\n"
             "Guide participants through generating the two empty location plates and the Solis terracotta cup ingredient.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Run Prompts 2.1, 2.2, and 2.3 now. Look at the visual contrast between Scene A (moody teal and cyan rain) and Scene B (warm amber Kodak 500T film glow). By pinning these three assets alongside Maya and Leo, we have all five ingredients needed to storyboard the entire commercial.\"\n\n"
+            "\"Run Prompts 2.1, 2.2, and 2.3 now. With Maya, Leo, the Studio, the Café, and the Solis Cup generated, we have all five visual building blocks ready for storyboarding.\"\n\n"
             "[TRANSITION]\n"
-            "Before we touch video generation, let's assemble our 6-shot visual storyboard in Stage 3."
+            "Let's assemble our 6-shot visual storyboard in Stage 3."
         ),
     })
 
     # =========================================================================
-    # SLIDE 09: Stage 3 — Visual Storyboarding & Continuity Bridges
+    # SLIDE 12: Stage 3 — Visual Storyboarding & Continuity Bridges
     # =========================================================================
-    sid = "SLIDE_09"
+    sid = "SLIDE_12"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 3 · Incremental Layer 4 of 7: Visual Storyboarding",
-        "The 6-Shot Commercial Storyboard & Ingredient Combination Matrix",
-        "Lock framing, lighting transitions, and Start/End keyframe pairs in still images before spending video compute.",
-        9,
+        "Part II · Stage 3 (Layer 4 of 7): Visual Storyboarding",
+        "The 6-Shot Commercial Storyboard & Reference Combination Matrix",
+        "Lock framing, Kelvin lighting transitions, and First/Last keyframe pairs in still images before generating video.",
+        12,
     )
     add_grid_2x2(ops, sid, [
         {
             "icon": "cloud",
             "accent": ACCENT_CYAN,
             "title": "Shots 1 & 2 · Act I -> Act II Threshold (0–10s)",
-            "body": "• Shot 1: [CHAR_MAYA] + [SCENE_STUDIO] — Medium close-up at 5:45 AM; cold cyan rain reflects on her glasses.\n• Shot 2: [CHAR_MAYA] + [SCENE_CAFE] — Tracking shot stepping out of blue rain into warm amber café glow.",
+            "body": "• Shot 1: [CHAR_MAYA] + [SCENE_STUDIO] — Medium close-up at 5:45 AM; cold 7500K cyan rain reflects on her glasses.\n• Shot 2: [CHAR_MAYA] + [SCENE_CAFE] — Tracking shot stepping out of blue rain into warm 2700K amber café glow.",
             "link_label": "Keyframes 3.1 & 3.2 ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
         {
             "icon": "star",
             "accent": ACCENT_AMBER,
-            "title": "Shot 3 · Hero Product Start -> End Pair (10–15s)",
+            "title": "Shot 3 · Hero Product First -> Last Pair (10–15s)",
             "body": "• First Frame: Espresso pouring in dual streams into the matte terracotta SOLIS cup.\n• Last Frame: Leo's hand sliding the steaming SOLIS cup across the oak counter toward the camera.",
             "link_label": "Keyframe Pair 3.3 ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
@@ -1103,7 +1296,7 @@ def build_all_slides():
             "icon": "hub",
             "accent": ACCENT_PURPLE,
             "title": "Shots 4 & 5 · Two-Character Conversation (15–25s)",
-            "body": "• Shot 4 (OTS): [CHAR_LEO] on right looking screen-left over Maya's shoulder.\n• Shot 5 (Reverse): [CHAR_MAYA] on left looking screen-right, holding the SOLIS cup and smiling.",
+            "body": "• Shot 4 (OTS): [CHAR_LEO] on right looking screen-left over Maya's shoulder (+ [SCENE_CAFE] + [PROP_CUP]).\n• Shot 5 (Reverse): [CHAR_MAYA] on left looking screen-right, holding the SOLIS cup and smiling.",
             "link_label": "Keyframes 3.4 & 3.5 ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
@@ -1111,7 +1304,7 @@ def build_all_slides():
             "icon": "bolt",
             "accent": ACCENT_GREEN,
             "title": "Shot 6 · Act III Spark Reignited Finale (25–30s)",
-            "body": "• First Frame: Golden sunrise hits the studio desk as Maya sets the SOLIS cup beside the blank blueprint.\n• Last Frame: High-angle over shoulder as her charcoal pencil sweeps a bold bridge arch.",
+            "body": "• First Frame: Golden sunrise hits the studio desk as Maya sets the SOLIS cup beside the blank blueprint.\n• Last Frame: High-angle over shoulder as her pencil sweeps a bold bridge arch + Kinetic 'SOLIS' title.",
             "link_label": "Keyframe Pair 3.6 ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
@@ -1119,7 +1312,7 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "Storyboarding Rule: Every shot combines at most 3 Ingredients (Character + Location + Prop) for maximum model adherence.",
+        "Gemini Omni Advantage: Pass up to 5 reference images per shot (e.g., Leo + Maya + Café + SOLIS Cup in Shot 4)!",
         f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
     )
     ops.append({
@@ -1129,24 +1322,24 @@ def build_all_slides():
             "[PURPOSE]\n"
             "Map out all 6 shots of the 30-second commercial and show which Ingredients combine in each shot.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Here is our complete 6-shot commercial storyboard. Notice how every single shot is just a combination of the 5 ingredients we already created: Shot 1 combines Maya and the Studio; Shot 2 combines Maya and the Café; Shot 3 combines Leo, the Café, and the Solis Cup using a First and Last Frame pair; Shots 4 and 5 are our Over-the-Shoulder conversation; and Shot 6 brings Maya and the Solis Cup back to the sunlit studio.\"\n\n"
+            "\"Here is our complete 6-shot commercial storyboard. Every single shot is a deterministic combination of our 5 locked assets. Notice how Shots 3 and 6 use First and Last Frame pairs for keyframe interpolation in Gemini Omni.\"\n\n"
             "[TRANSITION]\n"
-            "Let's look at how to prompt composite storyboard keyframes and Start/End frame pairs."
+            "Let's look at the exact prompts for compositing these storyboard keyframes."
         ),
     })
 
     # =========================================================================
-    # SLIDE 10: Live Lab #3 — Storyboard Keyframe Compositing
+    # SLIDE 13: Live Lab #3 — Storyboard Keyframe Compositing
     # =========================================================================
-    sid = "SLIDE_10"
+    sid = "SLIDE_13"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 3 Hands-On Lab · Compositing Keyframes & Start/End Pairs",
+        "Stage 3 Hands-On Lab · Compositing Keyframes & First/Last Pairs",
         "Live Lab #3: Generating Storyboard Stills Before Animating Video",
-        "Combine Character + Scene references into still frames to verify composition and prepare First/Last frames for Veo 3.1.",
-        10,
+        "Combine Character + Scene references into still frames to verify composition and prepare First/Last frames for Gemini Omni.",
+        13,
     )
     add_split_case_study(
         ops,
@@ -1155,12 +1348,12 @@ def build_all_slides():
             "icon": "lock",
             "accent": ACCENT_BLUE,
             "title": "Keyframe 3.1 — Shot 1 Start Still (Maya + Studio)",
-            "body": "Attach [CHAR_MAYA] + [SCENE_STUDIO]: Maya sits at the rain-streaked architect's desk at 5:45 AM resting her chin on her hand, staring at the blank blueprint. Cool cyan window light reflects on her tortoiseshell glasses.",
+            "body": "Attach [CHAR_MAYA] + [SCENE_STUDIO]: Maya sits at the rain-streaked architect's desk at 5:45 AM resting her chin on her hand, staring at the blank blueprint. Cool 7500K cyan window light reflects on her tortoiseshell glasses.",
         },
         {
             "icon": "bolt",
             "accent": ACCENT_AMBER,
-            "title": "Keyframe 3.3 — Shot 3 Start & End Frame Pair",
+            "title": "Keyframe 3.3 — Shot 3 First & Last Frame Pair",
             "body": "• First Frame: Macro shot under brass portafilter pouring espresso into the terracotta SOLIS cup.\n• Last Frame: Leo's hand sliding the steaming SOLIS cup across the reclaimed oak counter into foreground close-up.",
         },
         {
@@ -1180,7 +1373,7 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "Why generate Start & End frames for Shot 3? Because 'Frames to Video' guarantees the SOLIS logo lands sharply in the final frame!",
+        "Why generate First & Last frames for Shot 3? Because Gemini Omni's keyframe anchoring guarantees the SOLIS logo lands sharply!",
         f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
     )
     ops.append({
@@ -1190,47 +1383,47 @@ def build_all_slides():
             "[PURPOSE]\n"
             "Show how to composite reference ingredients into storyboard stills and Start/End frame pairs.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"When you want a hero product shot to end in a crystal-clear close-up with an exact brand logo, never leave the ending to chance. By generating both the First Frame (espresso pouring) and the Last Frame (Leo sliding the cup toward the lens) as still images first, Google Flow's Frames to Video mode will smoothly bridge the motion between them.\"\n\n"
+            "\"By generating both the First Frame (espresso pouring) and the Last Frame (Leo sliding the cup toward the lens) as still images first, Gemini Omni 1.1 Flash's keyframe interpolation smoothly bridges the motion between them while keeping the gold SOLIS logo razor-sharp.\"\n\n"
             "[TRANSITION]\n"
-            "Now let's move to Stage 4 and bring our storyboard to life with camera movement and Veo 3.1 physics."
+            "Now let's move to Stage 4 and animate our shots with Gemini Omni 1.1 Flash."
         ),
     })
 
     # =========================================================================
-    # SLIDE 11: Stage 4 — Animating with Ingredients-to-Video & Frames-to-Video
+    # SLIDE 14: Stage 4 — Video Generation with Gemini Omni 1.1 Flash
     # =========================================================================
-    sid = "SLIDE_11"
+    sid = "SLIDE_14"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 4 · Incremental Layer 5 of 7: Motion & Camera Directing",
-        "Mastering 'Ingredients to Video', 'Frames to Video' & Camera Syntax",
-        "Once visuals are anchored in references, dedicate your video prompt to camera movement, physical action, and sound.",
-        11,
+        "Part II · Stage 4 (Layer 5 of 7): Gemini Omni Video Directing",
+        "Animating with `gemini-omni-1.1-flash`: Multi-Ref, Keyframes & 4K",
+        "Combine up to 5 image references, First/Last Frame keyframing, 360p fast prototyping, and conversational edits.",
+        14,
     )
     add_three_cards(ops, sid, [
         {
             "icon": "hub",
             "accent": ACCENT_BLUE,
-            "title": "Mode A · Ingredients\nto Video (Up to 3 Refs)",
-            "body": "• Upload [CHAR_MAYA] + [SCENE_STUDIO] + [PROP_CUP].\n• Best for natural acting, subtle facial expressions, and continuous camera moves (Shots 1, 2, 4, 5).\n• Always include the 35-word Identity Anchor Block.",
-            "link_label": "Open Google Flow ↗",
-            "link_url": FLOW_URL,
+            "title": "Mode A · Multi-Reference\nVideo (Up to 5 Img Refs)",
+            "body": "• Pass [CHAR_MAYA] + [SCENE_STUDIO] + [PROP_CUP] into gemini-omni-1.1-flash (or Flow Ingredients to Video).\n• Best for natural acting & continuous camera moves (Shots 1, 2, 4, 5).",
+            "link_label": "Open Gemini Omni ↗",
+            "link_url": OMNI_STUDIO_URL,
         },
         {
             "icon": "bolt",
             "accent": ACCENT_AMBER,
-            "title": "Mode B · Frames to\nVideo (First + Last)",
-            "body": "• Upload First Frame + Last Frame.\n• Veo 3.1 interpolates camera travel, lighting shift, and fluid physics between the two keyframes.\n• Best for product reveals & match cuts (Shots 3 & 6).",
+            "title": "Mode B · First & Last\nFrame Keyframing",
+            "body": "• Anchor both First Frame + Last Frame in gemini-omni-1.1-flash (or Flow Frames to Video).\n• Perfect for camera orbits, macro product reveals, and match cuts (Shots 3 & 6).",
             "link_label": "Stage 4 Guide ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
         {
             "icon": "code",
             "accent": ACCENT_PURPLE,
-            "title": "The 7-Part Cinematic\nVideo Prompt Formula",
-            "body": "1. Shot Size & Angle\n2. Camera Movement (dolly-in, tracking)\n3. Identity Anchor + Action\n4. Scene & Lighting\n5. Lens (35mm anamorphic)\n6. Dialogue in 'quotes'\n7. Audio / SFX cues",
+            "title": "Draft at 360p -> Edit\nConversationally -> 4K",
+            "body": "• Step 1: Generate fast 360p/720p draft (3s–10s).\n• Step 2: Refine lighting or angle via multi-turn chat.\n• Step 3: Upscale winning take to crisp 1080p or 4K at 24fps!",
             "link_label": "Prompt Formula ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
         },
@@ -1238,34 +1431,34 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "Camera Vocabulary That Works Best in Veo 3.1: 'Slow smooth dolly-in', 'Lateral tracking shot', 'Over-the-shoulder', 'Macro push-in'.",
-        f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
+        "Gemini Omni Workflow: Draft at 360p ($0.034/s) -> Conversational Edit -> Upscale final hero shot to 4K!",
+        OMNI_STUDIO_URL,
     )
     ops.append({
         "op": "set-notes",
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Explain when to use Ingredients to Video vs. Frames to Video in Google Flow, and introduce the 7-part video prompt structure.\n\n"
+            "Teach the 3-mode video production workflow in Gemini Omni 1.1 Flash: Multi-Reference Video, First/Last Frame Keyframing, and 360p-to-4K conversational iteration.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"In Stage 4, we choose between Google Flow's two flagship video modes: use Ingredients to Video when you want open-ended acting with up to three reference assets, and use Frames to Video when you want an exact transition from a First Frame to a Last Frame. Follow the 7-part prompt formula so camera movement and physical action come first.\"\n\n"
+            "\"In Stage 4, we unleash Gemini Omni 1.1 Flash. Use Multi-Reference Video for open-ended acting in Shots 1, 2, 4, and 5; use First and Last Frame Keyframing for exact product transitions in Shots 3 and 6; and iterate at 360p before upscaling your winning take to 4K.\"\n\n"
             "[TRANSITION]\n"
-            "Let's copy and run our video generation prompts for Shots 1, 2, and 3."
+            "Let's copy and run our Gemini Omni video prompts for Shots 1, 2, and 3."
         ),
     })
 
     # =========================================================================
-    # SLIDE 12: Live Lab #4 — Motion & Camera Directing Prompts (Shots 1–3)
+    # SLIDE 15: Live Lab #4 — Gemini Omni Video Prompts (Shots 1–3)
     # =========================================================================
-    sid = "SLIDE_12"
+    sid = "SLIDE_15"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 4 Hands-On Lab · Animating Shots 1, 2 & 3 in Veo 3.1",
-        "Live Lab #4: Running 'Ingredients to Video' & 'Frames to Video'",
+        "Stage 4 Hands-On Lab · Animating Shots 1, 2 & 3 in `gemini-omni-1.1-flash`",
+        "Live Lab #4: Running Multi-Reference & First/Last Frame Video",
         "Generate the opening creative block (Shot 1), the café entrance (Shot 2), and the macro espresso slide (Shot 3).",
-        12,
+        15,
     )
     add_split_case_study(
         ops,
@@ -1273,25 +1466,25 @@ def build_all_slides():
         {
             "icon": "hub",
             "accent": ACCENT_BLUE,
-            "title": "Shot 1 Setup — Ingredients to Video (`Veo 3.1`)",
-            "body": "• Attach Ingredients: [CHAR_MAYA] + [SCENE_STUDIO]\n• Camera: Slow, smooth dolly-in toward medium close-up.\n• Action: Maya exhales a quiet sigh, taps her wooden pencil twice on the blank blueprint, glances at the rain.",
+            "title": "Shot 1 — Multi-Ref Video (`gemini-omni-1.1-flash`)",
+            "body": "• Attach Refs: [CHAR_MAYA] + [SCENE_STUDIO]\n• Camera: Slow, smooth dolly-in toward medium close-up.\n• Action: Maya exhales a quiet sigh, taps her wooden pencil twice on the blank blueprint, glances at the rain.",
         },
         {
             "icon": "bolt",
             "accent": ACCENT_AMBER,
-            "title": "Shot 3 Setup — Frames to Video (`First` -> `Last`)",
+            "title": "Shot 3 — First & Last Frame Keyframing",
             "body": "• First Frame: Espresso pouring into SOLIS cup.\n• Last Frame: Leo's hand sliding SOLIS cup to foreground.\n• Camera: 100mm macro tracking shot, 60fps slow-motion feel with rising golden steam.",
         },
         {
             "accent": ACCENT_BLUE,
-            "title": "Copy-Paste Prompt 4.1 — Shot 1 Video ('Ingredients to Video' with Native Audio)",
+            "title": "Copy-Paste Prompt 4.1 — Shot 1 Video (`gemini-omni-1.1-flash` with Native Synchronized Audio)",
             "link_label": "Copy Shots 1–3 Prompts ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
             "code": (
                 "Slow, smooth dolly-in toward a medium close-up of Maya, a 29-year-old Latina architect with warm olive skin, subtle freckles,\n"
                 "wavy raven hair in a low clip, round tortoiseshell glasses, and an ochre knit cardigan, sitting at her drafting table by a\n"
                 "rain-streaked window at 5:45 AM. She exhales a quiet sigh, taps her wooden pencil twice against the blank blueprint, and\n"
-                "glances out at the rain. Cold cyan streetlamp reflections glide across her glasses. 35mm anamorphic lens.\n"
+                "glances out at the rain. Cold 7500K cyan streetlamp reflections glide across her glasses. 35mm anamorphic lens.\n"
                 "Audio: Soft rhythmic rain pattering against window glass, distant thunder, two crisp wooden pencil taps, and a quiet sigh."
             ),
         },
@@ -1299,34 +1492,34 @@ def build_all_slides():
     add_takeaway_banner(
         ops,
         sid,
-        "Notice the 'Audio:' cue at the end: Veo 3.1 natively synthesizes synchronized rain, pencil taps, and espresso extraction SFX.",
-        FLOW_URL,
+        "Gemini Omni natively generates synchronized rain, wooden pencil taps, and espresso extraction foley with every video clip!",
+        OMNI_STUDIO_URL,
     )
     ops.append({
         "op": "set-notes",
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Provide the executable video prompts for Shots 1–3 demonstrating Ingredients-to-Video and Frames-to-Video.\n\n"
+            "Provide the executable Gemini Omni video prompts for Shots 1–3.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Let's run Prompt 4.1 in Ingredients to Video with Maya and the Studio attached, and Prompt 4.3 in Frames to Video with our Shot 3 First and Last frames. Notice how adding a dedicated 'Audio:' line at the bottom tells Veo 3.1 to generate the exact foley sound effects—two wooden pencil taps on paper and rain against glass.\"\n\n"
+            "\"Run Prompt 4.1 with Maya and the Studio attached, and Prompt 4.3 with our Shot 3 First and Last frames. Gemini Omni natively generates the synchronized foley sound effects—two wooden pencil taps on paper and rain against glass.\"\n\n"
             "[TRANSITION]\n"
-            "Now we reach Stage 5: piling on spoken dialogue and directing a two-character conversation."
+            "Now we reach Stage 5: piling on two-character dialogue, Gemini 3.8 Flash TTS, and our Lyria 3.5 multimodal musical score."
         ),
     })
 
     # =========================================================================
-    # SLIDE 13: Stage 5 — Directing Two-Character Dialogue & The 180° Rule
+    # SLIDE 16: Stage 5 — Directing Two-Character Dialogue & Lyria 3.5 Score
     # =========================================================================
-    sid = "SLIDE_13"
+    sid = "SLIDE_16"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 5 · Incremental Layer 6 of 7: Dialogue, Conversation & Audio",
-        "How to Direct Believable Two-Character Conversations in AI Video",
-        "Combine the 180-Degree Eyeline Rule, single-quoted dialogue prompts, Gemini 3.8 Flash TTS, and Lyria 3 music.",
-        13,
+        "Part II · Stage 5 (Layer 6 of 7): Dialogue, TTS & Lyria 3.5 Music",
+        "Directing Two-Character Conversations & Multimodal Scoring in Lyria 3.5",
+        "Combine the 180° Eyeline Rule, Gemini Omni lip-sync, Gemini 3.8 Flash TTS, and Lyria 3.5 (44.1 kHz Text + Image scoring).",
+        16,
     )
     add_grid_2x2(ops, sid, [
         {
@@ -1340,59 +1533,59 @@ def build_all_slides():
         {
             "icon": "bolt",
             "accent": ACCENT_BLUE,
-            "title": "2. Veo 3.1 Native Lip-Sync Dialogue Syntax",
-            "body": "• Put spoken words in single quotes ('...') right after vocal tone:\n• \"Leo speaks in a warm, grounded baritone voice: 'Rough night with the blueprints?'\"\n• Keep dialogue to 8–12 words per 6–8s clip (~2 words/sec).",
+            "title": "2. Gemini Omni Native Lip-Sync Dialogue",
+            "body": "• Put spoken words in single quotes ('...') right after vocal tone:\n• \"Leo speaks in a warm baritone: 'Rough night with the blueprints?'\"\n• Keep dialogue to 8–12 words per 6–8s clip (~2 words/sec).",
             "link_label": "Dialogue Prompts ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
         {
             "icon": "psychology",
             "accent": ACCENT_PURPLE,
-            "title": "3. Expressive Voiceover (`gemini-3.8-flash-tts`)",
-            "body": "• For narrator taglines or cross-platform dubbing, use gemini-3.8-flash-tts with expressive voices (Kore, Charon, Aoede, Puck, Fenrir).\n• Supports affective tags: [sigh], [short pause].",
+            "title": "3. Studio Voiceover (`gemini-3.8-flash-tts`)",
+            "body": "• Use gemini-3.8-flash-tts with expressive voices (Kore, Charon, Aoede, Puck, Fenrir) for the brand tagline.\n• Supports affective tags: [sigh], [short pause].",
             "link_label": "TTS Prompt 5.3 ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
         {
             "icon": "star",
             "accent": ACCENT_GREEN,
-            "title": "4. Custom 30s Commercial Score (`lyria-3`)",
-            "body": "• Prompt Lyria 3 for a 3-part dynamic arc: sparse felt piano (0–8s) -> warm acoustic guitar on café chime (9–20s) -> uplifting strings crescendo (21–30s) in 48kHz stereo.",
-            "link_label": "Lyria 3 Prompt ↗",
+            "title": "4. Latest Lyria 3.5 Score (`lyria-3.5` / `lyria-3-pro`)",
+            "body": "• Pass Keyframe 3.3 Image + Text into lyria-3.5 (or lyria-3-clip-preview) for 44.1 kHz stereo music: sparse felt piano (0–8s) -> warm acoustic guitar (8–20s) -> strings crescendo (20–30s).",
+            "link_label": "Lyria 3.5 Prompt ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
     ])
     add_takeaway_banner(
         ops,
         sid,
-        "Golden Rule for Lip-Sync: Never exceed 12–14 spoken words in an 8-second clip so the character's cadence feels natural and unhurried.",
-        f"{GITHUB_BLOB}/workshop-guide/01-instructor-playbook.md",
+        "Audio Stack: gemini-omni-1.1-flash (Lip-Sync + Foley) + gemini-3.8-flash-tts (Voiceover) + lyria-3.5 (44.1kHz Multimodal Score).",
+        f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
     )
     ops.append({
         "op": "set-notes",
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Teach the 180-degree camera axis rule for two-character conversations and the 3-part audio stack (Veo 3.1 native dialogue, Gemini 3.8 Flash TTS, and Lyria 3).\n\n"
+            "Teach the 180-degree camera axis rule for two-character conversations and the upgraded 3-part audio stack (Gemini Omni native lip-sync, Gemini 3.8 Flash TTS, and Lyria 3.5).\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"When two AI characters talk to each other in separate clips, why do they often look like they're talking to a wall? Because the prompt didn't lock screen direction. In Shot 4, we place Leo on the right of the frame looking screen-left over Maya's shoulder. In Shot 5, we place Maya on the left of the frame looking screen-right. When you cut those two clips together, their eyes lock across the counter!\"\n\n"
+            "\"In Stage 5, we combine the 180-degree eyeline rule with our upgraded audio stack: Gemini Omni 1.1 Flash renders Leo and Maya's lip-synced dialogue, Gemini 3.8 Flash TTS delivers the studio narrator tagline in the 'Kore' voice, and Lyria 3.5 takes both our text prompt and Keyframe 3.3 image to compose a 44.1 kHz stereo score.\"\n\n"
             "[TRANSITION]\n"
-            "Let's run the exact Shot 4 and Shot 5 conversation prompts right now."
+            "Let's run the Shot 4, Shot 5, TTS, and Lyria 3.5 prompts right now."
         ),
     })
 
     # =========================================================================
-    # SLIDE 14: Live Lab #5 — Two-Character Conversation Prompts (Shots 4 & 5)
+    # SLIDE 17: Live Lab #5 — Two-Character Conversation & Lyria 3.5 Prompts
     # =========================================================================
-    sid = "SLIDE_14"
+    sid = "SLIDE_17"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 5 Hands-On Lab · Shot-Reverse-Shot Dialogue in Veo 3.1",
-        "Live Lab #5: Directing Leo & Maya's Café Counter Conversation",
-        "Run Shot 4 (Over-the-Shoulder on Leo) and Shot 5 (Reverse Close-Up on Maya) with synchronized spoken dialogue.",
-        14,
+        "Stage 5 Hands-On Lab · Shot-Reverse-Shot Dialogue & Lyria 3.5",
+        "Live Lab #5: Directing Leo & Maya's Conversation + Lyria 3.5 Score",
+        "Run Shot 4 (OTS on Leo) and Shot 5 (Reverse on Maya) in `gemini-omni-1.1-flash`, then score with `lyria-3.5`.",
+        17,
     )
     add_split_case_study(
         ops,
@@ -1411,14 +1604,14 @@ def build_all_slides():
         },
         {
             "accent": ACCENT_PURPLE,
-            "title": "Copy-Paste Prompt 5.2 & 5.3 — Maya's Reverse Shot + Gemini 3.8 Flash TTS Tagline",
+            "title": "Copy-Paste Prompts 5.2, 5.3 & 5.4 — Omni Reverse Shot + `gemini-3.8-flash-tts` + `lyria-3.5`",
             "link_label": "Copy Stage 5 Prompts ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
             "code": (
-                "[SHOT 5 - VEO 3.1]: Reverse-angle medium close-up of Maya, a 29-year-old Latina architect with warm olive skin, round\n"
-                "tortoiseshell glasses, and ochre knit cardigan on the left of the frame, looking screen-right. She wraps both hands around\n"
-                "the terracotta SOLIS cup, smiles, and replies softly: 'You just saved the whole skyline, Leo.' Warm golden key light, 50mm.\n"
-                "[VOICEOVER - gemini-3.8-flash-tts (Voice: Kore)]: \"[sigh] Every bold idea starts before the sun rises. [short pause] Solis. Awaken the craft.\""
+                "[SHOT 5 - gemini-omni-1.1-flash]: Reverse-angle medium close-up of Maya on the left looking screen-right, holding the terracotta SOLIS cup.\n"
+                "She smiles and replies softly: 'You just saved the whole skyline, Leo.' Warm golden key light, 50mm lens.\n"
+                "[TTS - gemini-3.8-flash-tts (Kore)]: \"[sigh] Every bold idea starts before the sun rises. [short pause] Solis. Awaken the craft.\"\n"
+                "[SCORE - lyria-3.5 (44.1kHz)]: [0:00-0:08] Sparse felt piano & rain -> [0:08-0:20] Warm acoustic guitar -> [0:20-0:30] Strings crescendo."
             ),
         },
     )
@@ -1426,122 +1619,64 @@ def build_all_slides():
         ops,
         sid,
         "Verify Across Shots 4 & 5: Leo looks left -> Maya looks right -> The terracotta SOLIS cup sits on the oak counter between them.",
-        FLOW_URL,
+        OMNI_STUDIO_URL,
     )
     ops.append({
         "op": "set-notes",
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Provide the copy-paste conversation prompts for Shot 4, Shot 5, and the Gemini 3.8 Flash TTS brand tagline.\n\n"
+            "Provide the copy-paste conversation prompts for Shot 4, Shot 5, Gemini 3.8 Flash TTS, and Lyria 3.5.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Copy Prompt 5.1 and Prompt 5.2 into Google Flow. Watch how Shot 4 frames Leo over Maya's ochre-cardigan shoulder on the left, and Shot 5 flips the camera to Maya on the left looking right. Then generate the final narrator voiceover using gemini-3.8-flash-tts with the expressive 'Kore' voice.\"\n\n"
+            "\"Copy Prompts 5.1 through 5.4. Watch how Shot 4 frames Leo over Maya's ochre-cardigan shoulder on the left, and Shot 5 flips the camera to Maya on the left looking right. Then generate the voiceover with gemini-3.8-flash-tts and the 44.1 kHz score with lyria-3.5.\"\n\n"
             "[TRANSITION]\n"
-            "Now let's bring all 6 shots into Google Flow's Scenebuilder in Stage 6 to finish our 30-second commercial."
+            "Finally, let's move to Stage 6 to apply Gemini Omni conversational edits, 10s scene extensions, and kinetic typography."
         ),
     })
 
     # =========================================================================
-    # SLIDE 15: Stage 6 — Scenebuilder Assembly (`Extend`, `Jump To` & J/L Cuts)
+    # SLIDE 18: Stage 6 — Omni Conversational Edit, 40s Extend & Repo Wrap-Up
     # =========================================================================
-    sid = "SLIDE_15"
+    sid = "SLIDE_18"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Stage 6 · Incremental Layer 7 of 7: Scenebuilder Timeline Assembly",
-        "Finishing the Commercial with `Extend`, `Jump To` & J/L Audio Cuts",
-        "Stitch your 6 shots in Scenebuilder, lengthen emotional reactions, and bridge Maya back to her sunlit studio.",
-        15,
+        "Part II · Stage 6 (Layer 7 of 7): Conversational Edit, Extend & Resources",
+        "Finishing with Gemini Omni Conversational Edit, 40s Extend & Repo",
+        "Refine takes conversationally, extend clips up to 40s, sync kinetic brand text, and explore all 3 commercial packs on GitHub.",
+        18,
     )
     add_three_cards(ops, sid, [
         {
             "icon": "bolt",
             "accent": ACCENT_BLUE,
-            "title": "1. Scenebuilder `Extend`\n(Lengthen Reaction Beats)",
-            "body": "• Select the end of Shot 5 in Scenebuilder and click 'Extend'.\n• Prompt: 'Continue seamlessly as Maya takes her first slow sip from the terracotta SOLIS cup; her eyes widen with sudden inspiration.'",
+            "title": "1. Omni Conversational\nEdit & 40s Extension",
+            "body": "• Multi-turn edit on Shot 5: intensify 2700K golden rim light & steam without losing Maya's acting.\n• Extend in 3–10s increments (up to 40s) as Maya takes her first sip!",
             "link_label": "Prompt 6.1 ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
         {
-            "icon": "hub",
+            "icon": "star",
             "accent": ACCENT_AMBER,
-            "title": "2. Scenebuilder `Jump To`\n(Scene Match-Cut Finale)",
-            "body": "• From the end of Shot 5, click 'Jump To' (or use Frames to Video) for Shot 6.\n• Transitions Maya and the SOLIS cup directly into golden sunrise at her studio desk as she sketches the bridge arch.",
+            "title": "2. Shot 6 Finale with\nKinetic Typography",
+            "body": "• Maya's charcoal pencil sweeps a bold bridge arch in golden sunrise.\n• Clean gold serif text 'SOLIS — AWAKEN THE CRAFT' materializes in the rising coffee steam (4K upscale).",
             "link_label": "Prompt 6.2 ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
         {
-            "icon": "check",
-            "accent": ACCENT_GREEN,
-            "title": "3. The J-Cut / L-Cut\nPro Editing Secret",
-            "body": "• Never cut audio and video on the exact same millisecond.\n• Let the last 0.5s of Leo's line ('the lines always follow...') trail over the visual cut to Shot 6 as Maya's pencil touches the paper!",
-            "link_label": "Editing Checklist ↗",
-            "link_url": f"{GITHUB_BLOB}/workshop-guide/01-instructor-playbook.md",
-        },
-    ])
-    add_takeaway_banner(
-        ops,
-        sid,
-        "Final Output: A cohesive 30-second commercial with locked character faces, consistent product branding, and two-way dialogue!",
-        f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
-    )
-    ops.append({
-        "op": "set-notes",
-        "slide": sid,
-        "text": (
-            "[PURPOSE]\n"
-            "Show how to use Scenebuilder's Extend and Jump To features plus J/L audio cuts to assemble the final 30-second commercial.\n\n"
-            "[VERBAL SCRIPT]\n"
-            "\"In Stage 6, we assemble our 6 clips inside Scenebuilder. First, we use Extend on Shot 5 so Maya has time to take a sip after her line. Next, we use Jump To to transition her back to the sunlit studio for Shot 6. Finally, apply a classic L-cut by letting Leo's voice trail half a second into Shot 6 as Maya's charcoal pencil draws the bridge arch.\"\n\n"
-            "[TRANSITION]\n"
-            "Let's wrap up with our bonus industry templates and the GitHub repository links."
-        ),
-    })
-
-    # =========================================================================
-    # SLIDE 16: Workshop Resources, Bonus Templates & GitHub Repository
-    # =========================================================================
-    sid = "SLIDE_16"
-    ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
-    add_header(
-        ops,
-        sid,
-        "Workshop Wrap-Up · Templates, Prompt Library & GitHub Repo",
-        "Build Your Own Brand Story: Resources & Bonus Industry Templates",
-        "Clone the workshop repository to access all Stage 0–6 prompts, two bonus commercial packs, and the web companion.",
-        16,
-    )
-    add_three_cards(ops, sid, [
-        {
             "icon": "code",
-            "accent": ACCENT_BLUE,
-            "title": "GitHub Repository &\nInteractive Web Portal",
-            "body": "• Complete Facilitator Playbook\n• Student Incremental Workbook\n• Interactive Copy-Paste Web App (docs/index.html)\n• Universal Prompt Templates",
+            "accent": ACCENT_GREEN,
+            "title": "3. GitHub Repo & 3\nFull Commercial Packs",
+            "body": "• Part I Atomic Prompt Sandbox\n• Pack 1: Solis Artisan Coffee\n• Pack 2: NovaPay Fintech\n• Pack 3: Kuntur Outdoor Gear\n• Interactive Web Portal",
             "link_label": "Open GitHub Repo ↗",
             "link_url": GITHUB_REPO,
         },
-        {
-            "icon": "bolt",
-            "accent": ACCENT_AMBER,
-            "title": "3 Ready-to-Run\nCommercial Story Packs",
-            "body": "• Pack 1: Solis Artisan Coffee (Architect + Barista)\n• Pack 2: NovaPay Fintech (Florist + Groom in Rainstorm)\n• Pack 3: Kuntur Outdoor Gear (Photographer + Andean Guide)",
-            "link_label": "Master Prompt Library ↗",
-            "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
-        },
-        {
-            "icon": "cloud",
-            "accent": ACCENT_GREEN,
-            "title": "Launch Google Flow &\nGoogle AI Studio",
-            "body": "• Google Flow Workspace: labs.google/fx/tools/flow\n• Enterprise Flow: flow.cloud.google.com\n• Google AI Studio: aistudio.google.com",
-            "link_label": "Launch Google Flow ↗",
-            "link_url": FLOW_URL,
-        },
     ])
     add_takeaway_banner(
         ops,
         sid,
-        "Star & Fork the Workshop Repository: https://github.com/AllInVaders/google-flow-storytelling-workshop",
+        "Star & Fork the Updated Workshop Repo: https://github.com/AllInVaders/google-flow-storytelling-workshop",
         GITHUB_REPO,
     )
     ops.append({
@@ -1549,46 +1684,56 @@ def build_all_slides():
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Provide participants with all links to the GitHub repository, bonus story templates (Fintech & Retail), and Google Flow workspace.\n\n"
+            "Show how to finish the commercial using Gemini Omni conversational editing, 10s scene extension, kinetic typography, and J/L cuts, and share the GitHub repo links.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"You now have the complete 7-stage incremental storytelling framework. In the GitHub repository, you'll find every prompt we ran today for Solis Coffee, plus two bonus commercial story packs for Fintech (NovaPay) and Retail (Kuntur Gear), along with our fill-in-the-blank Identity Anchor templates so you can build your own brand story immediately.\"\n\n"
+            "\"In Stage 6, we use Gemini Omni's conversational editing to boost the golden rim light on Shot 5, extend her reaction by 4 seconds, and render Shot 6 with kinetic gold typography reading 'SOLIS — AWAKEN THE CRAFT' synced to the rising steam. Everything we covered today—both Part I's Atomic Prompt Sandbox and Part II's 7-stage incremental build—is live in our GitHub repository!\"\n\n"
             "[TRANSITION]\n"
-            "Thank you, and happy filmmaking in Google Flow!"
+            "Thank you, and happy filmmaking with Google Flow, Gemini Omni 1.1 Flash, and Lyria 3.5!"
         ),
     })
 
     return ops
 
 
-def main():
-    print("1. Creating new Google Slides presentation via gslides CLI...")
-    create_cmd = [
-        GSLIDES,
-        "mutate",
-        "create",
-        "--title",
-        "Google Flow & GenMedia: Incremental Storytelling Workshop (Playbook & Prompts)",
-        "--json",
-    ]
-    res = subprocess.run(create_cmd, capture_output=True, text=True, check=True)
-    out_text = res.stdout.strip()
-    print("Create output:", out_text)
+def get_existing_slide_ids(pres_id):
+    cmd = [GSLIDES, "readonly", "info", pres_id, "--json"]
+    res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    if res.returncode != 0:
+        return None
     try:
-        data = json.loads(out_text)
-        pres_id = data.get("presentationId") or data.get("id")
+        data = json.loads(res.stdout)
+        slides = data.get("slides", [])
+        return [s.get("objectId") for s in slides if s.get("objectId")]
     except Exception:
-        pres_id = None
-    if not pres_id:
-        m = re.search(r"([a-zA-Z0-9_-]{25,})", out_text)
-        pres_id = m.group(1)
+        return None
 
-    print(f"Created Presentation ID: {pres_id}")
-    ops = build_all_slides()
+
+def main():
+    pres_id = os.environ.get("PRES_ID", DEFAULT_PRES_ID)
+    existing_ids = get_existing_slide_ids(pres_id)
+    if existing_ids:
+        print(f"1. Updating existing Google Slides presentation in-place: {pres_id} ({len(existing_ids)} old slides)...")
+    else:
+        print("1. Creating new Google Slides presentation via gslides CLI...")
+        create_cmd = [
+            GSLIDES,
+            "mutate",
+            "create",
+            "--title",
+            "Google Flow, Gemini Omni & Lyria 3.5: Incremental Storytelling Workshop",
+            "--json",
+        ]
+        res = subprocess.run(create_cmd, capture_output=True, text=True, check=True)
+        data = json.loads(res.stdout.strip())
+        pres_id = data.get("presentationId") or data.get("id")
+        existing_ids = ["p"]
+
+    ops = build_all_slides(existing_ids)
     batch_file = "/tmp/flow_workshop_slides_batch.json"
     with open(batch_file, "w", encoding="utf-8") as f:
         json.dump(ops, f, indent=2)
 
-    print(f"2. Executing batch update ({len(ops)} operations across 16 slides)...")
+    print(f"2. Executing batch update ({len(ops)} operations across 18 slides)...")
     batch_cmd = [GSLIDES, "mutate", "batch", pres_id, "-f", batch_file, "--json"]
     subprocess.run(batch_cmd, capture_output=True, text=True, check=True)
     print("Batch completed successfully!")
