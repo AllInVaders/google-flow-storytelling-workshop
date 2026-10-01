@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Google Flow, Gemini Omni & Lyria 3.5 — Incremental Storytelling Workshop</title>
+  <title>Google Flow & Gemini Omni — Incremental Storytelling Workshop</title>
   <style>
     :root {
       --bg: #0b1120;
@@ -68,7 +68,7 @@
     .container { max-width: 1120px; margin: 2rem auto; padding: 0 1.25rem; }
     .stage-nav {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
       gap: 0.6rem;
       margin-bottom: 2rem;
     }
@@ -118,333 +118,280 @@
       padding: 1rem;
       white-space: pre-wrap;
       word-break: break-word;
-      font-family: "SFMono-Regular", Consolas, monospace;
+      font-family: "SFMono-Regular", Consolas, Menlo, monospace;
       font-size: 0.88rem;
       color: #e2e8f0;
-      margin-top: 0.6rem;
+      margin-top: 0.65rem;
     }
-    .dual-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .track-box {
-      background: rgba(30, 41, 59, 0.5);
-      border-left: 3px solid var(--accent);
-      padding: 0.85rem 1rem;
+    .copy-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 0.3rem 0.75rem;
       border-radius: 6px;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
     }
-    .track-box.alt { border-left-color: var(--emerald); }
-    .track-title { font-weight: 700; margin-bottom: 0.25rem; color: var(--accent); }
-    .track-box.alt .track-title { color: var(--emerald); }
+    .copy-btn:hover { background: rgba(56, 189, 248, 0.15); }
+    .stage-pane { display: none; }
+    .stage-pane.active { display: block; }
+    .callout {
+      border-left: 4px solid var(--emerald);
+      background: rgba(16, 185, 129, 0.08);
+      padding: 0.9rem 1.1rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.25rem;
+      font-size: 0.94rem;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="badge">Google Flow · Gemini Omni 1.1 Flash · Lyria 3.5</div>
-    <h1>Google Flow &amp; GenMedia: Incremental Storytelling</h1>
+    <div class="badge">Google Flow · Gemini Omni Flash · Nano Banana Pro</div>
+    <h1>Google Flow & Gemini Omni Storytelling Workshop</h1>
     <p class="subtitle">
-      Part I tests isolated, high-impact prompt variables (Camera Angles, Kelvin Warmth, Visual Styles, 5-Object Composition, Gemini Omni Conversational Edits &amp; Lyria 3.5 Music). Part II layers them into a cohesive 30-second commercial.
+      Part I tests isolated creative levers in Google Flow (Camera Angles, Warmth, Styles & Physics).
+      Part II builds a 30-second commercial by creating <code>@Maya</code> and <code>@Leo</code> once and referencing them across 5 incremental steps.
     </p>
     <div class="top-links">
       <a class="btn primary" href="https://labs.google/fx/tools/flow" target="_blank" rel="noopener">Open Google Flow ↗</a>
-      <a class="btn primary" href="https://aistudio.google.com?model=gemini-omni-1.1-flash" target="_blank" rel="noopener">Open Gemini Omni in AI Studio ↗</a>
-      <a class="btn amber" id="slides-link" href="https://docs.google.com/presentation/d/1RvTUXHZ1RYTo92FfgsawQ3dUK2bK1DDbZAPO0LVwhl0/edit" target="_blank" rel="noopener">Workshop Google Slides ↗</a>
-      <a class="btn" href="https://github.com/AllInVaders/google-flow-storytelling-workshop/blob/main/prompts/00-atomic-prompt-sandbox.md" target="_blank" rel="noopener">Part I: Atomic Sandbox ↗</a>
-      <a class="btn" href="https://github.com/AllInVaders/google-flow-storytelling-workshop/blob/main/workshop-guide/02-student-incremental-labs.md" target="_blank" rel="noopener">Student Lab Guide ↗</a>
-      <a class="btn" href="https://github.com/AllInVaders/google-flow-storytelling-workshop/blob/main/prompts/solis-commercial-prompt-library.md" target="_blank" rel="noopener">Master Prompt Library ↗</a>
+      <a class="btn amber" href="https://docs.google.com/presentation/d/1RvTUXHZ1RYTo92FfgsawQ3dUK2bK1DDbZAPO0LVwhl0/edit" target="_blank" rel="noopener">Open 14-Slide Workshop Deck ↗</a>
+      <a class="btn" href="https://github.com/AllInVaders/google-flow-storytelling-workshop" target="_blank" rel="noopener">GitHub Repository ↗</a>
     </div>
   </header>
 
   <main class="container">
-    <div class="stage-nav" id="stage-nav"></div>
-    <div id="stage-content"></div>
+    <nav class="stage-nav">
+      <button class="stage-tab active" onclick="showTab('sandbox', this)">
+        <div class="stage-num">Part I · Labs A–D</div>
+        <div class="stage-name">Prompt Sandbox</div>
+      </button>
+      <button class="stage-tab" onclick="showTab('step1', this)">
+        <div class="stage-num">Part II · Step 1</div>
+        <div class="stage-name">2-Sentence Story</div>
+      </button>
+      <button class="stage-tab" onclick="showTab('step2', this)">
+        <div class="stage-num">Part II · Step 2</div>
+        <div class="stage-name">@Maya, @Leo & Sets</div>
+      </button>
+      <button class="stage-tab" onclick="showTab('step3', this)">
+        <div class="stage-num">Part II · Step 3</div>
+        <div class="stage-name">Storyboard Frames</div>
+      </button>
+      <button class="stage-tab" onclick="showTab('step4', this)">
+        <div class="stage-num">Part II · Step 4</div>
+        <div class="stage-name">Omni Video & Voice</div>
+      </button>
+      <button class="stage-tab" onclick="showTab('step5', this)">
+        <div class="stage-num">Part II · Step 5</div>
+        <div class="stage-name">Video Edit & Cut</div>
+      </button>
+    </nav>
+
+    <!-- PART I: SANDBOX -->
+    <section id="sandbox" class="stage-pane active">
+      <div class="callout">
+        <strong>Part I Goal (25 Min):</strong> In Google Flow, create project <code>00 - Flow Prompt Sandbox</code> and test one isolated variable at a time using <strong>Image &gt; Nano Banana Pro</strong> and <strong>Video &gt; Omni Flash</strong> (use <code>Omni 360p</code> for fast draft testing).
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Lab A.1 & A.3 — Extreme Worm's-Eye Angle & Single-Take Whip-Pan</h3>
+          <div>
+            <span class="tag">Nano Banana Pro + Omni Flash</span>
+            <button class="copy-btn" onclick="copyText('p-a1', this)">Copy Prompt</button>
+          </div>
+        </div>
+        <pre id="p-a1">Dynamic camera starting in a wide establishing shot of a sunlit industrial-chic cafe, then executing a fast whip-pan right and smooth dolly-in to an extreme macro close-up of dark espresso pouring from a brass portafilter into a matte terracotta cup, golden crema swirling, realistic steam rising, natural espresso pouring and cafe room-tone audio.</pre>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Lab B.3 — Real-Time 7500K Cold Blue to 2400K Golden Sunrise Shift</h3>
+          <div>
+            <span class="tag">Video &gt; Omni Flash (8s)</span>
+            <button class="copy-btn" onclick="copyText('p-b3', this)">Copy Prompt</button>
+          </div>
+        </div>
+        <pre id="p-b3">Fixed-tripod medium shot of an architect's drafting desk by a rain-streaked window. Over 8 seconds, the lighting transitions smoothly from cold 7500K blue pre-dawn shadows into warm 2400K golden sunrise beams flooding across the desk and illuminating a steaming terracotta coffee cup, gentle rain fading into morning birdsong.</pre>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Lab C.2 — 12fps Stop-Motion Clay & Felt Diorama</h3>
+          <div>
+            <span class="tag">Video &gt; Omni Flash (6s)</span>
+            <button class="copy-btn" onclick="copyText('p-c2', this)">Copy Prompt</button>
+          </div>
+        </div>
+        <pre id="p-c2">Handcrafted stop-motion animation at 12 frames per second of a miniature clay barista pouring cotton-wool steam and glossy resin espresso into a tiny terracotta clay mug on a balsa-wood counter, visible thumbprints on the clay, stitched felt apron texture, warm miniature stage lighting, playful tactile charm.</pre>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Lab D.3 — In-Video Kinetic Typography ("AWAKEN THE CRAFT")</h3>
+          <div>
+            <span class="tag">Video &gt; Omni Flash (6s)</span>
+            <button class="copy-btn" onclick="copyText('p-d3', this)">Copy Prompt</button>
+          </div>
+        </div>
+        <pre id="p-d3">Cinematic close-up of a steaming matte terracotta cup embossed with 'SOLIS' on an oak counter in golden morning sunlight. As the translucent white steam rises into the warm air, clean minimalist gold serif typography reading 'AWAKEN THE CRAFT' forms naturally in the center of the frame above the cup, soft acoustic chord and gentle cafe ambiance.</pre>
+      </div>
+    </section>
+
+    <!-- STEP 1: STORY -->
+    <section id="step1" class="stage-pane">
+      <div class="callout">
+        <strong>Step 1 Goal:</strong> Use the <strong>Google Flow Agent</strong> inside project <code>Solis - The 6AM Spark</code> to expand a 2-sentence story seed into a 5-shot beat sheet.
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Prompt 1.1 — 2-Sentence Story Seed to 5-Shot Beat Sheet</h3>
+          <div>
+            <span class="tag">Google Flow Agent</span>
+            <button class="copy-btn" onclick="copyText('p-11', this)">Copy Prompt</button>
+          </div>
+        </div>
+        <pre id="p-11">We are creating a 30-second commercial in Google Flow for 'Solis Artisan Coffee' titled 'The 6:00 AM Spark.'
+Story Seed: At 5:45 AM on a rainy morning, exhausted architect Maya stares at a blank blueprint in her cold studio until she walks into a warm neighborhood cafe where barista Leo slides her a steaming terracotta cup of Solis coffee. One sip sparks her creativity and transforms her blank page into a sunlit bridge design.
+
+Break this story into a concise 5-shot beat sheet for Google Flow:
+- Shot 1 (Studio - Creative Block, 6s)
+- Shot 2 (Cafe Arrival - Transition from Cold Rain to Warm Glow, 6s)
+- Shot 3 (The Craft - Leo Pours & Slides the Solis Cup, 6s)
+- Shot 4 (Dialogue - Leo's Encouragement, 6s)
+- Shot 5 (Dialogue, First Sip & Creative Spark Finale, 6s)
+For each shot, list only: Shot #, Setting (@Studio or @Cafe), Characters (@Maya, @Leo), Action, and Lighting Shift.</pre>
+      </div>
+    </section>
+
+    <!-- STEP 2: CHARACTERS & SETS -->
+    <section id="step2" class="stage-pane">
+      <div class="callout">
+        <strong>⚠️ Golden Rule of Google Flow Characters:</strong> Create <code>Maya</code> and <code>Leo</code> <strong>once</strong> in <strong>Left Sidebar &gt; Characters &gt; New Character</strong> (and attach their Voice). After that, <strong>never re-describe their physical traits again</strong>—only refer to <code>@Maya</code> and <code>@Leo</code>!
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Character 1 — Create <code>@Maya</code> Once (Voice: Warm Alto)</h3>
+          <div>
+            <span class="tag">Characters &gt; New Character</span>
+            <button class="copy-btn" onclick="copyText('p-maya', this)">Copy Prompt</button>
+          </div>
+        </div>
+        <pre id="p-maya">29-year-old Latina architect with warm olive skin, subtle freckles across the nose, shoulder-length wavy raven hair pinned in a loose low clip, round tortoiseshell eyeglasses, wearing a mustard-ochre ribbed knit cardigan over a crisp white crew-neck tee, neutral 5600K studio lighting, clean slate-gray background, photorealistic portrait.</pre>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Character 2 — Create <code>@Leo</code> Once (Voice: Warm Baritone)</h3>
+          <div>
+            <span class="tag">Characters &gt; New Character</span>
+            <button class="copy-btn" onclick="copyText('p-leo', this)">Copy Prompt</button>
+          </div>
+        </div>
+        <pre id="p-leo">42-year-old artisan barista with medium-brown skin, silver-flecked short curly hair, neatly trimmed beard, warm smile lines around the eyes, wearing a washed indigo denim apron over a charcoal henley with rolled sleeves, neutral 5600K studio lighting, clean slate-gray background, photorealistic portrait.</pre>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Ingredients — Create <code>@Studio</code>, <code>@Cafe</code> & <code>@SolisCup</code></h3>
+          <div>
+            <span class="tag">Image &gt; Nano Banana Pro</span>
+            <button class="copy-btn" onclick="copyText('p-sets', this)">Copy Prompts</button>
+          </div>
+        </div>
+        <pre id="p-sets">[@Studio]: Empty architectural studio loft at 5:45 AM before dawn, wide establishing shot, rain-streaked floor-to-ceiling industrial glass window overlooking a misty blue-hour city skyline, tilted birchwood drafting table with a blank white blueprint roll, brass desk lamp turned off, cold 7000K slate-blue lighting, 24mm lens, no people.
+
+[@Cafe]: Empty neighborhood artisan coffee shop interior at 6:00 AM, reclaimed oak counter in the foreground, gleaming vintage brass espresso machine, warm 2700K Edison pendant bulbs glowing against exposed brick, rain visible on the front glass window, inviting golden-amber atmosphere, 35mm lens, no people.
+
+[@SolisCup]: Product close-up of a handcrafted matte terracotta ceramic cappuccino cup with a cream ceramic interior resting on a matching terracotta saucer, subtle minimalist embossed wordmark 'SOLIS' on the front of the cup, rich dark espresso with velvety hazelnut-brown microfoam rosette latte art, soft studio lighting.</pre>
+      </div>
+    </section>
+
+    <!-- STEP 3: STORYBOARD -->
+    <section id="step3" class="stage-pane">
+      <div class="callout">
+        <strong>Step 3 Goal:</strong> Generate your 5 storyboard frames in <strong>Image &gt; Nano Banana Pro</strong> using only <code>@Maya</code>, <code>@Leo</code>, <code>@Studio</code>, <code>@Cafe</code>, and <code>@SolisCup</code> tags!
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Frames 3.1 to 3.5 — Storyboard Prompts Using <code>@Maya</code> & <code>@Leo</code></h3>
+          <div>
+            <span class="tag">Image &gt; Nano Banana Pro</span>
+            <button class="copy-btn" onclick="copyText('p-board', this)">Copy Prompts</button>
+          </div>
+        </div>
+        <pre id="p-board">[Frame 3.1 - Shot 1]: @Maya sitting at the drafting desk inside @Studio at 5:45 AM, leaning on her elbow and staring tiredly at the blank white blueprint, holding a charcoal pencil loosely, cold blue pre-dawn window light, medium shot, 35mm lens.
+
+[Frame 3.2 - Shot 2]: @Maya stepping inside @Cafe out of the morning rain, looking toward the warm glowing espresso counter with quiet relief, cool blue rain outside the door contrasting with warm golden light inside, medium wide shot, 35mm lens.
+
+[Frame 3.3 - Shot 3 Start Frame]: @Leo standing behind the oak counter in @Cafe, pulling a fresh espresso shot from the brass machine into @SolisCup as aromatic steam rises, warm 2700K pendant lighting, medium shot, 50mm lens.
+
+[Frame 3.4 - Shot 3 End Frame]: Close-up on the oak counter in @Cafe as @Leo's hand finishes sliding the steaming @SolisCup into the foreground in front of @Maya, warm golden morning light catching the rising steam, shallow depth of field, 50mm lens.
+
+[Frame 3.5 - Shot 5]: Medium close-up of @Maya in @Cafe wrapping both hands around @SolisCup, inhaling the warm steam with her eyes brightening in a moment of sudden creative inspiration, warm 2400K golden sunrise light streaming across the counter, 50mm lens.</pre>
+      </div>
+    </section>
+
+    <!-- STEP 4: OMNI VIDEO & VOICE -->
+    <section id="step4" class="stage-pane">
+      <div class="callout">
+        <strong>Step 4 Goal:</strong> Switch to <strong>Video &gt; Omni Flash</strong> (`6s`, `Omni 360p` draft mode). Reference <code>@Maya</code> and <code>@Leo</code> (their bundled voices automatically speak the dialogue!) and use <strong>+ Add start frame</strong> / <strong>+ Add end frame</strong> on Shot 3.
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Clips 4.1 to 4.5 — Omni Flash Video & Spoken Dialogue Prompts</h3>
+          <div>
+            <span class="tag">Video &gt; Omni Flash (6s)</span>
+            <button class="copy-btn" onclick="copyText('p-video', this)">Copy Prompts</button>
+          </div>
+        </div>
+        <pre id="p-video">[Clip 4.1 - Shot 1]: Slow push-in medium shot of @Maya sitting at the drafting table in @Studio, rubbing her temple and tapping her charcoal pencil against the blank white blueprint while rain patters softly against the cold blue window glass.
+
+[Clip 4.2 - Shot 2]: Smooth tracking shot following @Maya as she walks into @Cafe, shaking a drop of rain from her sleeve and walking up to the warm sunlit oak espresso bar, gentle door chime and cozy cafe ambiance.
+
+[Clip 4.3 - Shot 3 (Attach Frame 3.3 as Start Frame + Frame 3.4 as End Frame)]: Smooth camera tilt and follow as @Leo finishes pouring rich crema into @SolisCup and slides the steaming cup smoothly across the oak counter in @Cafe toward @Maya, espresso machine hiss and ceramic saucer slide audio.
+
+[Clip 4.4 - Shot 4 (Leo Speaks)]: Over-the-shoulder medium shot from behind @Maya on the left, focusing on @Leo on the right looking screen-left across the counter in @Cafe with a warm smile. @Leo says: "Rough night with the blueprints? Start with this."
+
+[Clip 4.5 - Shot 5 (Maya Drinks Coffee & Replies)]: Reverse-angle medium close-up of @Maya on the left looking screen-right in @Cafe. @Maya drinks coffee from @SolisCup, lowers the cup with a warm inspired smile, and says: "You just saved the whole skyline, Leo."</pre>
+      </div>
+    </section>
+
+    <!-- STEP 5: EDIT & SCENEBUILDER -->
+    <section id="step5" class="stage-pane">
+      <div class="callout">
+        <strong>Step 5 Goal:</strong> Use <strong>Omni Flash Video Edit</strong> (up to 3 conversational turns) to relight Clip 4.5 and add the brand title overlay, then assemble Clips 4.1–4.5 in <strong>Scenebuilder</strong> and upscale to <code>720p</code> (0 credits).
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Edits 5.1 & 5.2 — 2-Turn Conversational Video Edit on Clip 4.5</h3>
+          <div>
+            <span class="tag">Omni Flash Video Edit</span>
+            <button class="copy-btn" onclick="copyText('p-edit', this)">Copy Prompts</button>
+          </div>
+        </div>
+        <pre id="p-edit">[Turn 1 - Relight]: Intensify the warm 2400K golden sunrise beams streaming through the window behind @Maya and make the rising coffee steam from @SolisCup glow softly in the backlight.
+
+[Turn 2 - Title Overlay]: In the final 2 seconds as the steam rises, fade in clean minimalist gold serif text in the upper center reading 'SOLIS — AWAKEN THE CRAFT'.</pre>
+      </div>
+    </section>
   </main>
 
   <script>
-    const STAGES = [
-      {
-        num: "Part I · Sandbox",
-        name: "Atomic Prompt Lab",
-        badge: "Pre-Production Warm-Up · Isolate 1 Variable at a Time",
-        summary: "Before building a full multi-shot commercial, test extreme, isolated characteristics on Image (gemini-3-pro-image), Video (gemini-omni-1.1-flash), and Music (lyria-3.5): Camera Angles, Kelvin Warmth, Styles, Multi-Object Physics, and Conversational Video Editing.",
-        flowTrack: "Run in Google AI Studio (gemini-omni-1.1-flash, gemini-3-pro-image, lyria-3.5) or Google Flow to see how a single variable transforms output.",
-        crossTrack: "Use Gemini Omni's conversational multi-turn editing to change angles or lighting without regenerating the scene from scratch.",
-        prompts: [
-          {
-            title: "Lab A — Single-Take Whip-Pan & Crane-Up Camera Choreography + Conversational Angle Edit",
-            tag: "gemini-omni-1.1-flash · Camera Angles",
-            text: `[TURN 1 — INITIAL GENERATION]:
-One continuous cinematic shot, no jump cuts. Start on an extreme low-angle macro view at counter height of a barista's hand tamping espresso grounds with a heavy brass tamper. The camera then whip-pans smoothly to the right in one fluid motion across the reclaimed oak counter, following a steaming matte terracotta cup as it slides toward an architect in tortoiseshell glasses, and cranes straight up into a high-angle overhead view looking down as she wraps both hands around the cup. Warm amber Edison lighting, 35mm lens, 24fps. Audio: Crisp metallic tamp click, smooth ceramic slide across wood, warm café murmur.
-
-[TURN 2 — CONVERSATIONAL CAMERA ANGLE EDIT]:
-Keep the exact same character, espresso bar, cup movement, and audio, but change the camera movement to a slow 180-degree orbital arc shot at eye level that circles smoothly around the terracotta cup as steam rises.`
-          },
-          {
-            title: "Lab B — Kelvin Color Temperature Shift (7500K Cold Blue -> 3000K Golden Sunrise) + Conversational Relight",
-            tag: "gemini-omni-1.1-flash · Warmth & Lighting",
-            text: `[TURN 1 — DYNAMIC LIGHTING SHIFT]:
-Static medium-wide shot of a rain-streaked architect's loft desk in cold 7500K blue pre-dawn shadow. Over 6 seconds, storm clouds outside the tall window part rapidly as a blazing 3000K golden sunrise breaks through, sweeping a warm diagonal beam of sunlight across the desk, illuminating a steaming terracotta espresso cup and turning the room from cold cyan to glowing amber. Volumetric light rays in the rising steam. Audio: Distant rain fading out as a warm, resonant morning acoustic chord swells.
-
-[TURN 2 — CONVERSATIONAL RELIGHT]:
-Keep the subject, framing, and camera motion identical, but relight the entire scene to warm 2200K candlelight with soft golden rim lighting and gentle chiaroscuro shadows.`
-          },
-          {
-            title: "Lab C — Radical Style: 12fps Tactile Stop-Motion Clay & Felt Diorama",
-            tag: "gemini-3-pro-image & gemini-omni-1.1-flash · Aesthetic Style",
-            text: `Handcrafted miniature stop-motion diorama of a cozy corner coffee shop in the rain. Every element is built from tactile physical craft materials: the barista and architect are sculpted from matte polymer clay with visible subtle thumbprint textures; the rising espresso steam is made of wispy needle-felted merino wool; the rain droplets on the window are clear blown glass beads; the counter is balsa wood. Lit by warm miniature LED practical bulbs, 100mm macro tilt-shift lens with shallow depth of field, animated at a charming 12fps stop-motion frame cadence as the clay barista slides the miniature cup across the counter.`
-          },
-          {
-            title: "Lab D — 5-Object Spatial Lock (Image) & Rube Goldberg Chain-Reaction Physics (Omni Video)",
-            tag: "gemini-3-pro-image & gemini-omni-1.1-flash · Multi-Object & Physics",
-            text: `[IMAGE — 5-OBJECT SPATIAL LOCK (gemini-3-pro-image)]:
-High-resolution studio tabletop composition on dark green Connemara marble featuring five distinct objects in exact spatial positions: (1) Center: a matte terracotta cappuccino cup with the word "SOLIS" embossed in gold leaf; (2) Left: round tortoiseshell eyeglasses with raindrops on the lenses; (3) Right: a vintage brushed-brass pocket watch open to 6:00; (4) Foreground: three roasted Arabica coffee beans on the corner of a folded cyan blueprint; (5) Background: a fluted glass water carafe catching a warm diagonal sunbeam. 85mm lens, f/5.6.
-
-[VIDEO — CHAIN-REACTION PHYSICS (gemini-omni-1.1-flash)]:
-Continuous smooth macro tracking shot following a precision chain reaction across a wooden café counter: a polished brass marble rolls down a grooved oak ruler, gently taps a row of three white brown-sugar dominoes which topple in sequence, nudging a brass spoon that tips into a matte terracotta cup filled with dark espresso, sending a delicate ripple across the golden crema as a wisp of steam curls upward. 60fps smooth motion. Audio: Rolling metallic hum, three crisp sugar-cube clicks, gentle ceramic clink, and liquid swirl.`
-          },
-          {
-            title: "Lab E & F — Gemini Omni Kinetic Typography Sync + Lyria 3.5 Multimodal Score",
-            tag: "gemini-omni-1.1-flash & lyria-3.5 · Kinetic Text & 44.1kHz Music",
-            text: `[OMNI VIDEO — IN-VIDEO KINETIC TYPOGRAPHY]:
-Macro cinematic close-up of a steaming matte terracotta cappuccino cup resting on a dark oak table in warm golden morning light. As a thick, velvety plume of golden steam rises from the cup toward the top of the frame, clean minimalist 3D gold serif letters reading "AWAKEN THE CRAFT" materialize in mid-air above the rim. The rising coffee steam physically swirls around and parts through the 3D gold letters. 85mm macro lens.
-
-[LYRIA 3.5 — MULTIMODAL COMMERCIAL SCORE (lyria-3.5 / lyria-3-pro-preview)]:
-30-second cinematic commercial soundtrack in 44.1kHz stereo, 92 BPM, instrumental only. [0:00–0:08 Intro]: Sparse, melancholic solo felt piano with soft room reverb (5:45 AM rain); [0:08–0:20 Main Groove]: Warm fingerpicked acoustic guitar and upright bass enter on a gentle upbeat groove; [0:20–0:30 Crescendo Outro]: Uplifting chamber strings (cello and violin) swell into a bright major-key resolution.`
-          }
-        ]
-      },
-      {
-        num: "Stage 0",
-        name: "Micro-Story Seed",
-        badge: "Incremental Layer 1 of 7 · Narrative Foundation",
-        summary: "Start with a 2-sentence commercial concept and expand it into a 3-Act emotional beat sheet (Cold 7500K Rain -> Warm 2700K Café -> Golden Sunrise).",
-        flowTrack: "Run in Flow Agent or Gemini (gemini-3.8-flash) to establish your 3-act narrative bible before generating visuals.",
-        crossTrack: "Run in any LLM. Constraining to 2 characters, 2 locations, and 1 hero prop makes the project 100% portable.",
-        prompts: [
-          {
-            title: "Prompt 0.1 — 2-Sentence Seed to 3-Act Commercial Beat Sheet",
-            tag: "gemini-3.8-flash · Story Architecture",
-            text: `Act as a Commercial Film Director. I have a two-sentence story seed for a 30-second brand commercial for "Solis Artisan Coffee":
-"At 5:45 AM in a rainy city, an exhausted architect staring at a blank blueprint steps into a glowing corner café. One shared laugh and a warm terracotta cup of espresso reignite her creative spark."
-
-Expand this seed into a tight 3-Act Micro-Story (Act I: The Creative Block, Act II: The Warm Encounter, Act III: The Spark Reignited). Keep it grounded in two characters (Maya, the architect; Leo, the barista), two locations (rainy studio desk, warm café counter), and one hero prop (the matte terracotta Solis cup).`
-          }
-        ]
-      },
-      {
-        num: "Stage 1",
-        name: "Character & Face Lock",
-        badge: "Incremental Layer 2 of 7 · Zero Identity Drift",
-        summary: "Lock facial identity across shots by pairing a neutral-lit Character Ingredient with a verbatim 35-word Identity Anchor Block and a 4-Angle Turnaround Sheet.",
-        flowTrack: "In Google Flow -> Ingredients Panel -> Create & Pin Character Ingredients for Maya and Leo.",
-        crossTrack: "Generate the 4-Panel Character Turnaround Sheet in gemini-3-pro-image (Nano Banana Pro), crop the angles, and pass up to 5 reference images into gemini-omni-1.1-flash.",
-        prompts: [
-          {
-            title: "Prompt 1.1 — Protagonist Master Ingredient ([CHAR_MAYA])",
-            tag: "Nano Banana Pro (gemini-3-pro-image) · Character Lock",
-            text: `Photorealistic cinematic portrait of Maya, a 29-year-old Latina architect with warm olive skin, subtle freckles across the nose, expressive dark brown eyes, shoulder-length wavy raven hair tied in a loose low clip, wearing an oversized ochre knit cardigan over a white crew-neck tee and round tortoiseshell glasses. Neutral studio backdrop with soft 5600K key light, 85mm prime lens, f/2.0, natural skin texture, zero retouching, front-facing three-quarter angle, calm neutral expression, no text.`
-          },
-          {
-            title: "Prompt 1.2 — 4-Angle Face Consistency Turnaround Sheet",
-            tag: "Nano Banana Pro (gemini-3-pro-image) · Cross-Platform Sheet",
-            text: `A 4-panel character reference sheet on a clean neutral grey background showing the exact same woman in four views: (1) Front view neutral expression, (2) 45-degree three-quarter view with a tired sigh, (3) Side profile looking down thoughtfully, (4) Front close-up with a warm, genuine smile. Subject: Maya, a 29-year-old Latina architect with warm olive skin, subtle freckles across the nose, expressive dark brown eyes, shoulder-length wavy raven hair tied in a loose low clip, wearing an oversized ochre knit cardigan over a white crew-neck tee and round tortoiseshell glasses. Identical facial structure and glasses across all panels, 85mm lens, no text.`
-          },
-          {
-            title: "Prompt 1.3 — Co-Star Master Ingredient ([CHAR_LEO])",
-            tag: "Nano Banana Pro (gemini-3-pro-image) · Co-Star Lock",
-            text: `Photorealistic cinematic portrait of Leo, a 45-year-old artisanal barista with a neatly trimmed salt-and-pepper beard, warm crinkles around hazel eyes, wearing a charcoal linen apron over a rolled-sleeve chambray shirt. Neutral studio backdrop, soft warm key light, 85mm prime lens, f/2.2, natural skin pores, welcoming gentle smile, no text.`
-          }
-        ]
-      },
-      {
-        num: "Stage 2",
-        name: "Scene & Product World",
-        badge: "Incremental Layer 3 of 7 · Empty Sets & Hero Prop",
-        summary: "Build empty Location Plates (no people) and a standalone Hero Product Ingredient so the room layout and product logo never mutate.",
-        flowTrack: "In Google Flow -> Ingredients Panel -> Create & Pin Scene A (Studio), Scene B (Café), and Object (Solis Terracotta Cup).",
-        crossTrack: "Generate 16:9 clean background plates and product macro in gemini-3-pro-image for multi-image reference conditioning in gemini-omni-1.1-flash.",
-        prompts: [
-          {
-            title: "Prompt 2.1 — Scene Ingredient A: Cold 5:45 AM Architecture Studio",
-            tag: "Scene Plate · Cold 7500K Cyan Contrast",
-            text: `Wide establishing interior shot of a minimalist architect's loft desk by a tall rain-streaked industrial window at 5:45 AM before dawn. Empty chair, no people. A drafting lamp casts a cool 7500K cyan-blue pool of light over an unrolled blank blueprint, scale ruler, and crumpled sketches. Raindrops trickle down the glass with blurred city streetlights outside. Moody teal-and-slate color grade, 35mm anamorphic lens, shallow depth of field, no text.`
-          },
-          {
-            title: "Prompt 2.2 — Scene Ingredient B: Golden Corner Espresso Bar",
-            tag: "Scene Plate · Warm 2700K Amber Contrast",
-            text: `Medium-wide interior shot of a cozy, wood-paneled artisan espresso bar at dawn. Empty frame with no people. Warm 2700K amber Edison bulbs and a polished brass espresso machine gleam with gentle steam rising. Rain is visible outside the fogged front window, contrasting with the rich golden warmth inside. Reclaimed oak counter in the foreground, 35mm cinema lens, Kodak Vision3 500T film look, no text.`
-          },
-          {
-            title: "Prompt 2.3 — Object Ingredient: Hero Product ([PROP_CUP])",
-            tag: "Product Macro · Exact Typography",
-            text: `Macro studio product photograph of a handcrafted matte terracotta ceramic cappuccino cup resting on a matching terracotta saucer. A minimalist gold embossed sun emblem and the word "SOLIS" are printed cleanly on the front of the cup. Rich velvety hazelnut crema with delicate rosetta latte art on top, a wisp of steam rising. Soft warm rim lighting, neutral dark background, 100mm macro lens.`
-          }
-        ]
-      },
-      {
-        num: "Stage 3",
-        name: "6-Shot Storyboard",
-        badge: "Incremental Layer 4 of 7 · Visual Continuity Grid",
-        summary: "Combine Characters + Scenes + Prop into 6 Storyboard Keyframes (including Start Frame & End Frame pairs) before rendering video.",
-        flowTrack: "Generate keyframe stills using your pinned Ingredients to preview framing and lock Start/End frames.",
-        crossTrack: "Pass Character + Scene + Prop images into gemini-3-pro-image to composite the 6 storyboard frames for gemini-omni-1.1-flash.",
-        prompts: [
-          {
-            title: "Prompt 3.1 — Shot 1 Storyboard Keyframe (Maya + Studio)",
-            tag: "Keyframe 1 · Composite Still",
-            text: `Using the character reference for Maya and the studio location reference: Medium close-up cinema still of Maya, a 29-year-old Latina architect with warm olive skin, subtle freckles, wavy raven hair in a low clip, round tortoiseshell glasses, and an ochre knit cardigan, sitting at the rain-streaked architect's desk at 5:45 AM. She rests her chin on her hand, staring at the blank blueprint with a tired, stuck expression. Cool cyan-blue window light reflects on her glasses. 35mm anamorphic lens.`
-          },
-          {
-            title: "Prompt 3.2 — Shot 3 First & Last Frame Pair (Product Transition)",
-            tag: "Keyframe 3A & 3B · Start/End Pair",
-            text: `[FIRST FRAME]: Extreme close-up macro shot under the brass espresso portafilter in the warm café: rich dark espresso pouring in dual streams into the matte terracotta ceramic cup embossed with the gold "SOLIS" sun logo.\n\n[LAST FRAME]: Foreground close-up on the reclaimed oak café counter: Barista Leo's hand gently slides the steaming matte terracotta "SOLIS" cappuccino cup with hazelnut latte art toward the camera. Warm golden rim lighting.`
-          }
-        ]
-      },
-      {
-        num: "Stage 4",
-        name: "Gemini Omni Video",
-        badge: "Incremental Layer 5 of 7 · Multi-Ref & Keyframe Video",
-        summary: "Animate Shots 1–3 using Gemini Omni 1.1 Flash (gemini-omni-1.1-flash): Multi-Reference Video (up to 5 images + 3 videos), First & Last Frame Keyframing, and 360p Draft -> 4K Upscaling.",
-        flowTrack: "Use Gemini Omni 1.1 Flash (or Google Flow 'Ingredients to Video' and 'Frames to Video') with explicit camera movement directives.",
-        crossTrack: "Iterate rapidly in 360p/720p draft mode in gemini-omni-1.1-flash, refine via conversational turns, and upscale winning takes to 4K.",
-        prompts: [
-          {
-            title: "Prompt 4.1 — Shot 1 Video (gemini-omni-1.1-flash Multi-Reference Dolly-In)",
-            tag: "gemini-omni-1.1-flash · Multi-Ref Video",
-            text: `Slow, smooth dolly-in toward a medium close-up of Maya, a 29-year-old Latina architect with warm olive skin, subtle freckles, wavy raven hair in a low clip, round tortoiseshell glasses, and an ochre knit cardigan, sitting at her drafting table by a rain-streaked window at 5:45 AM. She exhales a quiet sigh, taps her wooden pencil twice against the blank blueprint, and glances out at the rain. Cold cyan streetlamp reflections glide across her glasses. Shallow depth of field, 35mm anamorphic lens. Audio: Soft rhythmic rain pattering against window glass, distant thunder, two crisp wooden pencil taps, and a quiet sigh.`
-          },
-          {
-            title: "Prompt 4.2 — Shot 3 Video (gemini-omni-1.1-flash First & Last Frame Keyframing)",
-            tag: "gemini-omni-1.1-flash · First + Last Frame Keyframing",
-            text: `Macro cinematic tracking shot transitioning smoothly from the first frame to the last frame. Rich, syrupy espresso finishes pouring into the matte terracotta SOLIS cup, forming velvety hazelnut crema. Barista Leo's hand gently lifts the cup, places it onto the reclaimed oak counter, and slides it smoothly toward the foreground camera as a wisp of golden steam curls upward. 100mm macro lens, 60fps slow-motion feel. Audio: Rich espresso extraction hiss, gentle ceramic clink on oak wood, warm fingerpicked acoustic guitar notes entering.`
-          }
-        ]
-      },
-      {
-        num: "Stage 5",
-        name: "Dialogue & Lyria 3.5",
-        badge: "Incremental Layer 6 of 7 · 180° Rule + TTS + Lyria 3.5",
-        summary: "Direct a two-character conversation using the 180-Degree Eyeline Rule (Leo looks screen-left; Maya looks screen-right) in gemini-omni-1.1-flash, paired with gemini-3.8-flash-tts and Lyria 3.5.",
-        flowTrack: "Attach [CHAR_LEO], [CHAR_MAYA], [SCENE_CAFE], and [PROP_CUP] in gemini-omni-1.1-flash (or Flow) while locking screen-left vs. screen-right gaze.",
-        crossTrack: "Score the 30-second commercial in 44.1kHz stereo using lyria-3.5 / lyria-3-pro-preview (supports Text + Keyframe Image input!) and gemini-3.8-flash-tts.",
-        prompts: [
-          {
-            title: "Prompt 5.1 — Shot 4: Leo Speaks (OTS Shot Looking Screen-Left)",
-            tag: "gemini-omni-1.1-flash · Native Lip-Sync Dialogue",
-            text: `Over-the-shoulder medium shot framed from behind Maya's ochre-cardigan shoulder on the left, focusing on Leo, a 45-year-old barista with a neat salt-and-pepper beard and charcoal linen apron positioned on the right of the frame, looking screen-left with a warm, knowing smile. As his hand rests beside the steaming terracotta SOLIS cup on the counter, Leo speaks clearly in a warm, grounded baritone voice: 'Rough night with the blueprints? Start with this—the lines always follow.' Warm amber café lighting, 50mm lens, natural lip sync. Audio: Cozy café ambiance, soft rain outside, and Leo speaking in a warm baritone: 'Rough night with the blueprints? Start with this—the lines always follow.'`
-          },
-          {
-            title: "Prompt 5.2 — Shot 5: Maya Replies (Reverse Shot Looking Screen-Right)",
-            tag: "gemini-omni-1.1-flash · Native Lip-Sync Dialogue",
-            text: `Reverse-angle medium close-up of Maya, a 29-year-old Latina architect with warm olive skin, round tortoiseshell glasses, and ochre knit cardigan positioned on the left of the frame, looking screen-right toward the barista. She wraps both hands around the warm terracotta SOLIS cup, inhales the rising steam, and her tired expression melts into a genuine, relieved smile. She replies softly with a light chuckle: 'You just saved the whole skyline, Leo.' Warm golden key light, 50mm prime lens, natural lip sync. Audio: Gentle café murmur and Maya speaking in a warm, relieved voice with a subtle laugh: 'You just saved the whole skyline, Leo.'`
-          },
-          {
-            title: "Prompt 5.3 & 5.4 — Expressive Voiceover (gemini-3.8-flash-tts) & Multimodal Score (lyria-3.5)",
-            tag: "gemini-3.8-flash-tts & lyria-3.5 · 44.1kHz Stereo",
-            text: `[VOICEOVER — gemini-3.8-flash-tts (Voice: Kore)]:
-Style Prompt: Warm, intimate, cinematic commercial narrator speaking softly at sunrise with inspiring calm.
-Text: "[sigh] Every bold idea starts before the sun rises. [short pause] Solis Artisan Roast. Awaken the craft."
-
-[MUSIC SCORE — lyria-3.5 / lyria-3-pro-preview / lyria-3-clip-preview (Attach Keyframe 3.3 Image + Text)]:
-30-second cinematic commercial soundtrack in 44.1kHz stereo, 92 BPM:
-[0:00–0:08 Intro]: Sparse, intimate felt piano notes and delicate rain ambiance in a minor key (5:45 AM creative block);
-[0:08–0:20 Groove]: Transitions into warm fingerpicked acoustic guitar and upright bass as a café door chime rings;
-[0:20–0:30 Crescendo Outro]: Swells with uplifting chamber strings and a gentle brushed-snare groove, resolving on a glowing major chord at sunrise.`
-          }
-        ]
-      },
-      {
-        num: "Stage 6",
-        name: "Omni Edit & Finale",
-        badge: "Incremental Layer 7 of 7 · Conversational Edit & 40s Extend",
-        summary: "Refine clips with Gemini Omni multi-turn conversational editing, extend scenes in 3–10s increments (up to 40s), and add synced kinetic typography in Scenebuilder.",
-        flowTrack: "Use Gemini Omni Conversational Edit + 10s Scene Extension (or Flow Scenebuilder 'Extend' & 'Jump To') + 0.5s L-Cut audio overlap.",
-        crossTrack: "Upscale final takes to 4K in gemini-omni-1.1-flash and mix with your Lyria 3.5 stereo soundtrack and Gemini 3.8 Flash TTS tagline.",
-        prompts: [
-          {
-            title: "Prompt 6.1 — Gemini Omni Conversational Edit + 10s Scene Extension on Shot 5",
-            tag: "gemini-omni-1.1-flash · Conversational Edit & Extend",
-            text: `[CONVERSATIONAL EDIT TURN]:
-Keep Maya's exact facial performance, spoken dialogue, and framing, but intensify the warm 2700K golden rim light on her glasses and make the rising espresso steam from the SOLIS cup denser and more luminous.
-
-[SCENE EXTENSION (3–10s Increment, up to 40s)]:
-Continue the shot seamlessly as Maya takes her first slow sip from the matte terracotta SOLIS cup. Her eyes widen subtly with sudden creative inspiration, and she glances down toward her sketchbook with newfound energy.`
-          },
-          {
-            title: "Prompt 6.2 — Shot 6 Finale with In-Video Kinetic Typography (gemini-omni-1.1-flash)",
-            tag: "gemini-omni-1.1-flash · Kinetic Text Finale + 4K Upscale",
-            text: `Smooth push-in tilting down over Maya's shoulder at her studio desk as warm golden sunrise streams through the wet window, illuminating the steaming terracotta SOLIS cup beside her blueprint. Maya's charcoal pencil sweeps across the paper in one confident motion, completing a soaring architectural bridge arch. As steam rises from the SOLIS cup in the final 2 seconds, clean gold serif typography reading "SOLIS — AWAKEN THE CRAFT" materializes smoothly in the warm sunbeam. 35mm lens, 4K upscale. Audio: Uplifting acoustic guitar and strings crescendo, crisp charcoal sketching stroke on heavy paper, followed by warm voiceover: 'Solis. Awaken the craft.'`
-          }
-        ]
-      }
-    ];
-
-    const navEl = document.getElementById("stage-nav");
-    const contentEl = document.getElementById("stage-content");
-
-    function renderStage(idx) {
-      document.querySelectorAll(".stage-tab").forEach((b, i) => {
-        b.classList.toggle("active", i === idx);
-      });
-      const s = STAGES[idx];
-      let html = `
-        <div class="card">
-          <div class="card-header">
-            <h2>${s.num}: ${s.name}</h2>
-            <span class="tag">${s.badge}</span>
-          </div>
-          <p>${s.summary}</p>
-          <div class="dual-grid">
-            <div class="track-box">
-              <div class="track-title">Track A · Google Flow &amp; Gemini Omni</div>
-              <div>${s.flowTrack}</div>
-            </div>
-            <div class="track-box alt">
-              <div class="track-title">Track B · Pro Workflow &amp; Cross-Platform</div>
-              <div>${s.crossTrack}</div>
-            </div>
-          </div>
-        </div>
-      `;
-      s.prompts.forEach((p, pIdx) => {
-        const preId = `prompt-${idx}-${pIdx}`;
-        html += `
-          <div class="card">
-            <div class="card-header">
-              <h3>${p.title}</h3>
-              <div>
-                <span class="tag">${p.tag}</span>
-                <button class="btn" onclick="copyText('${preId}', this)">Copy Prompt</button>
-              </div>
-            </div>
-            <pre id="${preId}">${p.text}</pre>
-          </div>
-        `;
-      });
-      contentEl.innerHTML = html;
+    function showTab(id, btn) {
+      document.querySelectorAll('.stage-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.stage-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
     }
-
     function copyText(id, btn) {
       const text = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(text);
-      const old = btn.innerText;
-      btn.innerText = "Copied!";
-      setTimeout(() => (btn.innerText = old), 1500);
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerText;
+        btn.innerText = 'Copied!';
+        setTimeout(() => { btn.innerText = orig; }, 1400);
+      });
     }
-
-    STAGES.forEach((s, i) => {
-      const btn = document.createElement("button");
-      btn.className = "stage-tab" + (i === 0 ? " active" : "");
-      btn.innerHTML = `<div class="stage-num">${s.num}</div><div class="stage-name">${s.name}</div>`;
-      btn.onclick = () => renderStage(i);
-      navEl.appendChild(btn);
-    });
-
-    renderStage(0);
   </script>
 </body>
 </html>

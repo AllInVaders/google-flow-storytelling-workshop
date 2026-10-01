@@ -1,229 +1,125 @@
-# Part I: The Atomic Prompt Mastery Sandbox (Pre-Production Warm-Up)
+# Part I: Google Flow Prompt Sandbox (Labs A–D)
 
-> **When to Run This Section**: Run this as **Part I (20-minute Pre-Work or Warm-Up Lab)** before starting the 7-stage incremental commercial production—or right between **Stage 0 (Story Seed)** and **Stage 1 (Character Lock)**.
->
-> **Core Philosophy — Isolate One Variable at a Time**:
-> Before combining characters, sets, storyboards, and dialogue into a full commercial, great AI directors test **individual, atomic prompt characteristics** in isolation. By keeping the subject simple and pushing **one specific dimension** to the extreme—**Camera Angle**, **Warmth & Lighting**, **Visual Style**, **Multi-Object Composition**, **Conversational Video Editing**, or **Multimodal Music**—you discover the exact vocabulary that unlocks the best results in **Gemini Image (`gemini-3-pro-image` / `gemini-3.1-flash-image`)**, **Gemini Omni (`gemini-omni-1.1-flash`)**, and **Lyria 3.5 (`lyria-3.5` / `lyria-3-pro-preview`)**.
+> **Purpose**: Before building a full multi-shot story, spend 25 minutes in **Google Flow** ([labs.google/fx/tools/flow](https://labs.google/fx/tools/flow)) testing **one isolated visual or motion lever at a time**. By holding the subject constant and changing only one variable per prompt, you see immediately how **Nano Banana Pro** (Image) and **Gemini Omni Flash** (Video) respond to camera geometry, color temperature, artistic styles, and multi-object physics.
 
 ---
 
-## Quick Model Reference for the Sandbox
+## How to Run the Sandbox in Google Flow
 
-| Modality | Recommended Model ID | Why We Use It in This Lab |
-| :--- | :--- | :--- |
-| **Image Generation (Precision & Text)** | `gemini-3-pro-image` (*Nano Banana Pro*) | Best-in-class multi-object spatial accuracy, lens geometry, and crisp typography |
-| **Image Generation (Fast Iteration)** | `gemini-3.1-flash-image` (*Nano Banana 2*) | Rapid style/lighting A/B testing with adjustable thinking |
-| **Video Generation & Conversational Editing** | **`gemini-omni-1.1-flash`** (*Gemini Omni Flash* / `omni`) | **Primary Video Model**: Text/Image/Video-to-Video, multi-turn conversational editing (`interactions.create`), First/Last frame keyframing, 360p draft -> 4K upscaling, kinetic typography sync, and native audio |
-| **Music & Multimodal Audio Scoring** | **`lyria-3.5`** / **`lyria-3-pro-preview`** / **`lyria-3-clip-preview`** | **Latest Lyria Stack**: 44.1 kHz stereo music from **Text or Image + Text**, full song structure (`lyria-3.5` / `lyria-3-pro-preview`), or locked 30s commercial clips (`lyria-3-clip-preview`) |
-
----
-
-## Lab A: Testing Extreme Camera Angles & Perspective Shifts
-
-Most prompts fail to look cinematic because they default to a flat, eye-level medium shot. In this test, we keep the subject constant and push **camera angle, lens focal length, and continuous camera choreography**.
-
-### A.1 — Image Prompt: Extreme Worm's-Eye Architectural Lookup (`14mm Ultra-Wide`)
-*Run in Google Flow Images or `gemini-3-pro-image`:*
-```text
-Extreme worm's-eye view photograph taken from ground level with the camera resting directly on wet dark cobblestone pavement, looking straight up at 85 degrees toward a towering brutalist glass-and-brass coffee roastery at dawn. In the immediate foreground, 5 inches from the lens, a single matte terracotta espresso cup sits on the wet stone beside a puddle reflecting the soaring building above. 14mm ultra-wide rectilinear lens, dramatic converging vertical lines, crisp deep depth of field, no text.
-```
-
-### A.2 — Image Prompt: 90° Overhead "God's-Eye" Knolling Flat-Lay (`50mm Prime`)
-*Run in Google Flow Images or `gemini-3-pro-image`:*
-```text
-Exact 90-degree overhead bird's-eye flat-lay photograph looking straight down onto a dark walnut architect's drafting table. Arranged in precise geometric knolling alignment: (1) an unrolled cyan architectural bridge blueprint in the center, (2) a matte terracotta cappuccino cup with rosetta latte art in the top-right corner, (3) round tortoiseshell glasses and a brass compass on the left, and (4) a hand in an ochre knit sleeve reaching in from the bottom edge holding a charcoal pencil. 50mm lens, zero perspective distortion, soft directional top-left window light.
-```
-
-### A.3 — Video Prompt (`gemini-omni-1.1-flash`): Single-Take Whip-Pan & Crane-Up Choreography
-*Run in Gemini Omni (`gemini-omni-1.1-flash`) or Google Flow Video:*
-```text
-One continuous cinematic shot, no jump cuts. Start on an extreme low-angle macro view at counter height of a barista's hand tamping espresso grounds with a heavy brass tamper. The camera then whip-pans smoothly to the right in one fluid motion across the reclaimed oak counter, following a steaming matte terracotta cup as it slides toward an architect in tortoiseshell glasses, and cranes straight up into a high-angle overhead view looking down as she wraps both hands around the cup. Warm amber Edison lighting, 35mm lens, 24fps. Audio: Crisp metallic tamp click, smooth ceramic slide across wood, warm café murmur.
-```
-
-### A.4 — Gemini Omni Conversational Camera Angle Edit (Multi-Turn Follow-Up)
-*After generating A.3 in `gemini-omni-1.1-flash` (via AI Studio / Interactions API / Flow Agent), send this follow-up turn without rewriting the prompt:*
-```text
-Keep the exact same character, espresso bar, cup movement, and audio, but change the camera movement to a slow 180-degree orbital arc shot at eye level that circles smoothly around the terracotta cup as steam rises.
-```
+1. Open **[Google Flow](https://labs.google/fx/tools/flow)** and click **+ New Project** $\rightarrow$ name it `00 - Flow Prompt Sandbox`.
+2. In the bottom prompt bar:
+   - Select **Image** $\rightarrow$ **Nano Banana Pro** (`16:9`) to test static framing, lighting, and styles.
+   - Select **Video** $\rightarrow$ **Omni Flash** (`16:9`, `6s` or `8s`) to test camera motion, physics, and conversational video edits.
+   - **Pro Tip**: Select **Omni 360p** while experimenting to generate drafts at half the credit cost, then click **Upscale to 720p** (0 credits) on your favorite clips!
 
 ---
 
-## Lab B: Testing Warmth, Color Temperature (Kelvin) & Volumetric Light
+## Lab A: Extreme Camera Angles & Motion Geometry
 
-Lighting is the fastest way to tell an emotional story without dialogue. Run **B.1** and **B.2** side-by-side: notice how changing **only the lighting & Kelvin temperature keywords** completely flips the mood of the exact same room.
+Hold the subject constant (*a brass espresso machine on an oak counter in a sunlit cafe*) and change **only the camera angle and movement**.
 
-### B.1 — Image Prompt: Cold 7500K Pre-Dawn Isolation (Teal & Cyan Shadow)
+### Prompt A.1 — Extreme Worm's-Eye Low Angle (`Image > Nano Banana Pro`)
+
 ```text
-Medium shot of a minimalist studio desk by a tall rain-streaked industrial window. Lit exclusively by cold 7500K pre-dawn blue-hour overcast sky and a flickering cyan fluorescent streetlamp outside. Deep moody slate-blue shadows, wet cold condensation on the window glass, desaturated somber color palette, solitary atmosphere, 35mm anamorphic lens.
+Extreme low-angle worm's-eye view looking straight up from the surface of a reclaimed oak counter at a towering vintage brass espresso machine, 14mm ultra-wide lens, dramatic vertical perspective lines converging toward the ceiling, golden morning sunlight streaming through tall factory windows, shallow depth of field, photorealistic commercial photography.
 ```
 
-### B.2 — Image Prompt: Warm 2400K Golden Sanctuary (Amber Chiaroscuro & Halation)
+### Prompt A.2 — 90° Top-Down Overhead Flat-Lay (`Image > Nano Banana Pro`)
+
 ```text
-Medium shot of the exact same minimalist studio desk by a tall industrial window, now bathed in rich 2400K golden-hour sunrise and a warm vintage brass desk lamp. Golden volumetric sunbeams cut through floating dust motes and rising coffee steam, casting long warm amber and honey-gold shadows across the wooden desk. Soft warm halation around highlights, cozy inviting atmosphere, 35mm anamorphic lens.
+90-degree top-down bird's-eye view looking straight down at a reclaimed oak counter with a vintage brass espresso machine, a terracotta ceramic cup, a linen napkin, and scattered roasted coffee beans arranged in balanced geometric symmetry, 50mm lens, soft diffused overhead daylight, crisp commercial product photography.
 ```
 
-### B.3 — Video Prompt (`gemini-omni-1.1-flash`): Real-Time Cold-to-Warm Lighting Evolution
+### Prompt A.3 — Single-Take Whip-Pan to Macro Close-Up (`Video > Omni Flash`, `6s`)
+
 ```text
-Static medium-wide shot of a rain-streaked architect's loft desk in cold 7500K blue pre-dawn shadow. Over 6 seconds, storm clouds outside the tall window part rapidly as a blazing 3000K golden sunrise breaks through, sweeping a warm diagonal beam of sunlight across the desk, illuminating a steaming terracotta espresso cup and turning the room from cold cyan to glowing amber. Volumetric light rays in the rising steam. Audio: Distant rain fading out as a warm, resonant morning acoustic chord swells.
+Dynamic camera starting in a wide establishing shot of a sunlit industrial-chic cafe, then executing a fast whip-pan right and smooth dolly-in to an extreme macro close-up of dark espresso pouring from a brass portafilter into a matte terracotta cup, golden crema swirling, realistic steam rising, natural espresso pouring and cafe room-tone audio.
 ```
 
-### B.4 — Gemini Omni Conversational Relight (Multi-Turn Follow-Up)
-*After generating any video clip in `gemini-omni-1.1-flash`, test conversational relighting:*
+### Prompt A.4 — Conversational Camera Angle Edit (`Omni Flash Video Edit` — Turn 1)
+
+Click the video generated in **Prompt A.3**, select the **Edit Video** prompt box in Google Flow, and type:
+
 ```text
-Keep the subject, framing, and camera motion identical, but relight the entire scene to warm 2200K candlelight with soft golden rim lighting and gentle chiaroscuro shadows.
+Change the camera movement to a slow, steady 180-degree eye-level orbit around the brass espresso machine while keeping the pouring espresso and rising steam identical.
 ```
 
 ---
 
-## Lab C: Testing Radical Aesthetic & Film Stock Styles
+## Lab B: Warmth, Color Temperature & Relighting
 
-Test how **Gemini Image** and **Gemini Omni 1.1 Flash** lock onto tactile textures, historical film stocks, and non-photorealistic art directions.
+Hold the composition constant (*an architect's drafting desk by a rain-streaked window*) and shift **only the Kelvin color temperature and lighting mood**.
 
-### C.1 — Style 1 (Image): 1970s 35mm Kodak Vision3 500T Anamorphic Cinema
+### Prompt B.1 — Cold 7500K Pre-Dawn Isolation (`Image > Nano Banana Pro`)
+
 ```text
-Cinematic film still of a bustling rainy corner espresso bar at night seen through a wet glass window. Shot on 35mm Kodak Vision3 500T motion picture film with Panavision C-Series anamorphic lenses. Characteristic organic film grain, warm red-orange halation around glowing tungsten streetlamps, vertical oval bokeh in the rain droplets, and a subtle horizontal blue anamorphic lens flare.
+Medium wide shot of an architect's drafting desk beside a tall rain-streaked glass window at 5:45 AM, cold 7500K blue-hour ambient light, muted slate-blue shadows, a single unlit brass desk lamp, a blank white blueprint roll, melancholic and quiet mood, 35mm lens, photorealistic cinema still.
 ```
 
-### C.2 — Style 2 (Image & Omni Video): Tactile Stop-Motion Felt & Sculpted Clay Diorama
+### Prompt B.2 — Warm 2400K Golden Sunrise Breakthrough (`Image > Nano Banana Pro`)
+
 ```text
-Handcrafted miniature stop-motion diorama of a cozy corner coffee shop in the rain. Every element is built from tactile physical craft materials: the barista and architect are sculpted from matte polymer clay with visible subtle thumbprint textures; the rising espresso steam is made of wispy needle-felted merino wool; the rain droplets on the window are clear blown glass beads; the counter is balsa wood. Lit by warm miniature LED practical bulbs, 100mm macro tilt-shift lens with shallow depth of field. (For Gemini Omni Video: animate at a charming 12fps stop-motion frame cadence as the clay barista slides the miniature cup across the counter.)
+Medium wide shot of an architect's drafting desk beside a tall glass window at 6:15 AM, warm 2400K golden-hour sunrise beams cutting through morning mist, glowing amber rim light on the wooden desk, long dramatic shadows, warm brass desk lamp switched on, hopeful and inspiring mood, 35mm lens, photorealistic cinema still.
 ```
 
-### C.3 — Style 3 (Image & Omni Video): Architectural Sumi-e Ink & Bleeding Watercolor
+### Prompt B.3 — Real-Time Cold-to-Warm Lighting Shift (`Video > Omni Flash`, `8s`)
+
 ```text
-Expressive architectural concept illustration of a woman drinking espresso at a café counter while a suspension bridge forms in the steam above her cup. Drawn with crisp black technical Sumi-e fountain-pen ink lines on rough cold-press 300gsm cotton watercolor paper, layered with translucent washes of burnt sienna, warm ochre, and Prussian blue watercolor that bleed organically into the paper fibers.
+Fixed-tripod medium shot of an architect's drafting desk by a rain-streaked window. Over 8 seconds, the lighting transitions smoothly from cold 7500K blue pre-dawn shadows into warm 2400K golden sunrise beams flooding across the desk and illuminating a steaming terracotta coffee cup, gentle rain fading into morning birdsong.
 ```
 
-### C.4 — Style 4 (Gemini Omni Video): Retro 1999 Y2K Broadcast & Chrome Aesthetic
+### Prompt B.4 — Conversational Relighting (`Omni Flash Video Edit` — Turn 1)
+
+Select the video from **Prompt B.3** and apply a 1-turn conversational video edit in Google Flow:
+
 ```text
-Create an 8-second 16:9 retro 1999 Y2K commercial clip for an espresso bar. Fast zoom-in with a fisheye lens on a chrome espresso machine pulling a shot into a terracotta cup against a glossy cobalt-blue cyclorama backdrop with a hard white spotlight circle. High-key frontal studio light, candy amber, cobalt, and polished chrome palette; authentic 1999 broadcast television look with soft highlight bloom, subtle VHS chroma bleed, fine tape grain, and upbeat 120-BPM breakbeat percussive audio.
+Change the lighting to cozy 2200K warm amber candlelight at night with soft golden bokeh reflections on the window glass.
 ```
 
 ---
 
-## Lab D: Combining Multiple Objects & Chain-Reaction Physics
+## Lab C: Visual Styles & Mediums
 
-A classic stress test for any generative model is **multi-object spatial composition** (putting 4–5 distinct items in exact relative positions without merging their attributes) and **multi-object physical cause-and-effect**.
+Keep the exact same scene (*a barista pouring latte art into a terracotta cup*) and swap **only the artistic medium**.
 
-### D.1 — Image Prompt: 5-Object Spatial & Material Lock (`gemini-3-pro-image`)
+### Prompt C.1 — 35mm Anamorphic Kodak Vision3 Film (`Image > Nano Banana Pro`)
+
 ```text
-High-resolution studio tabletop composition on a slab of dark green Connemara marble featuring five distinct objects in exact spatial positions:
-(1) Center: a matte terracotta ceramic cappuccino cup with the word "SOLIS" embossed in gold leaf on the front;
-(2) Left of the cup: a pair of round tortoiseshell eyeglasses with raindrops on the lenses;
-(3) Right of the cup: a vintage brushed-brass mechanical pocket watch open to 6:00;
-(4) Foreground: three whole roasted Arabica coffee beans resting on the corner of a folded cyan blueprint;
-(5) Background: a translucent fluted glass carafe filled with cold water catching a warm diagonal sunbeam.
-Each material—matte terracotta, tortoiseshell acetate, brushed brass, paper, and fluted glass—is rendered with distinct physical accuracy. 85mm lens, f/5.6.
+Close-up of hands pouring steamed milk into a matte terracotta coffee cup to form a rosette latte art pattern, shot on 35mm Kodak Vision3 500T film, 2.39:1 anamorphic lens, horizontal amber lens flare, organic silver-halide film grain, rich halation on warm highlights, shallow depth of field.
 ```
 
-### D.2 — Video Prompt (`gemini-omni-1.1-flash`): Multi-Object Chain-Reaction Physics
-*Showcases Gemini Omni's world-knowledge physics simulation:*
+### Prompt C.2 — 12fps Stop-Motion Felt & Clay Diorama (`Video > Omni Flash`, `6s`)
+
 ```text
-Continuous smooth macro tracking shot following a precision chain reaction across a wooden café counter: a polished brass marble rolls down a grooved oak ruler, gently taps a row of three white brown-sugar dominoes which topple in sequence, nudging a brass spoon that tips into a matte terracotta cup filled with dark espresso, sending a delicate ripple across the golden crema as a wisp of steam curls upward. Realistic gravity, momentum, and fluid surface tension. 60fps smooth motion, warm studio lighting. Audio: Rolling metallic hum, three soft crisp sugar-cube clicks, a gentle ceramic clink, and liquid swirl.
+Handcrafted stop-motion animation at 12 frames per second of a miniature clay barista pouring cotton-wool steam and glossy resin espresso into a tiny terracotta clay mug on a balsa-wood counter, visible thumbprints on the clay, stitched felt apron texture, warm miniature stage lighting, playful tactile charm.
+```
+
+### Prompt C.3 — Architectural Ink & Watercolor Concept Sketch (`Image > Nano Banana Pro`)
+
+```text
+Expressive architectural concept illustration of a barista pouring coffee at an oak counter, hand-drawn black fountain-pen ink linework with loose burnt-sienna, warm ochre, and Prussian-blue watercolor washes on textured cold-press cotton paper, visible pencil construction lines.
 ```
 
 ---
 
-## Lab E: Gemini Omni Exclusive Superpowers (Kinetic Text & Conversational Remix)
+## Lab D: Combining Objects, Physics & Kinetic Typography
 
-Unlike legacy text-to-video pipelines, **Gemini Omni 1.1 Flash (`gemini-omni-1.1-flash`)** natively synchronizes **on-screen kinetic typography** with physical motion and supports **multi-turn conversational editing** via the Interactions API.
+Push **Nano Banana Pro** and **Gemini Omni Flash** to compose multiple distinct objects with exact spatial placement, cause-and-effect physics, and clean in-video text.
 
-### E.1 — Video Prompt (`gemini-omni-1.1-flash`): In-Video Kinetic Typography Sync
+### Prompt D.1 — 5-Object Spatial Lock (`Image > Nano Banana Pro`)
+
 ```text
-Macro cinematic close-up of a steaming matte terracotta cappuccino cup resting on a dark oak table in warm golden morning light. As a thick, velvety plume of golden steam rises from the cup toward the top of the frame, clean minimalist 3D gold serif letters reading "AWAKEN THE CRAFT" materialize in mid-air above the rim. The rising coffee steam physically swirls around and parts through the 3D gold letters, casting soft warm reflections on the typography. 85mm macro lens. Audio: Warm resonant cello swell and gentle café steam hiss.
+Crisp 45-degree tabletop product shot on a reclaimed oak counter containing five exact objects: (1) a matte terracotta cup embossed with 'SOLIS' in the center, (2) antique brass compass calipers to the left, (3) a rolled white architectural blueprint behind the cup, (4) round tortoiseshell eyeglasses resting on the blueprint, and (5) a sprig of fresh green rosemary to the right, warm morning side-light, 50mm lens.
 ```
 
-### E.2 — Multi-Turn Conversational Video Editing Workflow (Python SDK / Interactions API)
-```python
-import base64
-from google import genai
+### Prompt D.2 — Multi-Object Physics Chain Reaction (`Video > Omni Flash`, `8s`)
 
-client = genai.Client()
-
-# Turn 1: Fast 360p/720p Draft Generation in Gemini Omni 1.1 Flash
-turn1 = client.interactions.create(
-    model="gemini-omni-1.1-flash",
-    input=(
-        "Medium tracking shot of an architect in an ochre cardigan walking along a "
-        "rain-slicked city sidewalk at dawn toward a glowing corner café. 35mm lens."
-    ),
-)
-with open("shot_draft.mp4", "wb") as f:
-    f.write(base64.b64decode(turn1.output_video.data))
-
-# Turn 2: Conversational Edit — Keep motion & character, change weather & angle
-turn2 = client.interactions.create(
-    model="gemini-omni-1.1-flash",
-    previous_interaction_id=turn1.id,
-    input=(
-        "Keep the exact same character and walking pace, but change the lighting to "
-        "warm golden sunrise breaking through the buildings and add a glowing neon "
-        "'SOLIS' sign in the café window."
-    ),
-)
-with open("shot_refined.mp4", "wb") as f:
-    f.write(base64.b64decode(turn2.output_video.data))
-```
-
----
-
-## Lab F: Latest Lyria 3.5 & Lyria 3 Pro Multimodal Music Sandbox
-
-As of late 2026, Google's **Lyria 3.5 (`lyria-3.5`)**, **Lyria 3 Pro (`lyria-3-pro-preview`)**, and **Lyria 3 Clip (`lyria-3-clip-preview`)** produce **44.1 kHz high-fidelity stereo audio** and support **multimodal inputs (Text + Image!)** via the Interactions API.
-
-### F.1 — Exact 30-Second Commercial Instrumental Bed (`lyria-3-clip-preview` / `lyria-3.5`)
 ```text
-30-second cinematic commercial soundtrack in 44.1kHz stereo, 92 BPM, instrumental only.
-[0:00–0:08 Intro]: Sparse, melancholic solo felt piano with soft room reverb, evoking a cold rainy 5:45 AM morning.
-[0:08–0:20 Main Groove]: A warm, fingerpicked acoustic guitar and upright bass enter on a gentle upbeat groove, adding cozy artisan café warmth.
-[0:20–0:30 Crescendo Outro]: Uplifting chamber strings (cello and violin) swell into a bright, inspiring major-key resolution that lands cleanly at 0:29 with a warm acoustic harmonic tail.
+Continuous macro tracking shot across an oak drafting table: a single roasted coffee bean rolls down a wooden ruler, tips a brass balance scale, which gently nudges a glass carafe to pour a dark ribbon of coffee into a matte terracotta 'SOLIS' cup as golden steam rises into a warm sunbeam, realistic clinking and pouring sound effects.
 ```
 
-### F.2 — Full Song with Structural Tags & Expressive Vocals (`lyria-3.5` / `lyria-3-pro-preview`)
+### Prompt D.3 — In-Video Kinetic Brand Typography (`Video > Omni Flash`, `6s`)
+
 ```text
-Warm indie-folk commercial anthem, 96 BPM, 44.1kHz stereo, intimate female lead vocal with brushed drums, upright bass, and warm acoustic guitar.
-[Intro]
-(Gentle fingerpicked acoustic guitar and soft rain ambience)
-[Verse 1]
-Five forty-five on a windowpane,
-Blueprints waiting in the morning rain.
-[Chorus]
-One warm spark in the terracotta cup,
-Golden sunrise waking the skyline up.
-Solis in the morning light,
-Every line falls into sight.
-[Outro]
-(Warm cello and acoustic guitar harmonic fade)
+Cinematic close-up of a steaming matte terracotta cup embossed with 'SOLIS' on an oak counter in golden morning sunlight. As the translucent white steam rises into the warm air, clean minimalist gold serif typography reading 'AWAKEN THE CRAFT' forms naturally in the center of the frame above the cup, soft acoustic chord and gentle cafe ambiance.
 ```
-
-### F.3 — Multimodal Image-to-Music Scoring (`lyria-3.5` with Image Input)
-*Pass any image generated in **Lab B.1 (Cold Rain)** or **Lab B.2 (Warm Sunrise)** directly into `lyria-3.5`:*
-```python
-import base64
-from google import genai
-from google.genai import types
-
-client = genai.Client()
-
-with open("warm_sunrise_studio.png", "rb") as f:
-    img_bytes = f.read()
-
-interaction = client.interactions.create(
-    model="lyria-3.5",
-    input=[
-        types.Part.from_bytes(data=img_bytes, mime_type="image/png"),
-        "Compose a 30-second instrumental commercial soundtrack that matches the exact lighting, warmth, and emotional mood of this image. 44.1kHz stereo.",
-    ],
-)
-with open("image_scored_track.mp3", "wb") as f:
-    f.write(base64.b64decode(interaction.output_audio.data))
-```
-
----
-
-## Sandbox Takeaway Checklist (Before Moving to Part II)
-
-1. **Camera Angles**: Did you see how specifying `14mm worm's-eye lookup`, `90-degree overhead flat-lay`, or `single-take whip-pan` immediately breaks out of generic "eye-level AI video"?
-2. **Warmth & Kelvin Lighting**: Did you see how shifting from `7500K cold cyan blue-hour` to `2400K golden sunrise chiaroscuro` tells an emotional story before a single word is spoken?
-3. **Gemini Omni Conversational Editing**: Instead of starting from scratch when a video clip is 80% right, use a conversational follow-up turn in `gemini-omni-1.1-flash` to relight or re-angle the shot!
-4. **Ready for Part II**: Now let's take these exact atomic skills and layer them incrementally to produce our 30-second commercial: **"Solis — The 6:00 AM Spark"**!
