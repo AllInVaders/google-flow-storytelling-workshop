@@ -1,9 +1,9 @@
 # Student Hands-On Lab Guide: Google Flow & Gemini Omni Storytelling
 
-Welcome to the **Google Flow & Gemini Omni Storytelling Workshop**! Every lab in this guide runs directly inside **[Google Flow](https://labs.google/fx/tools/flow)**.
+Welcome to the **Google Flow & Gemini Omni Storytelling Workshop**! Every lab in this guide runs directly inside **[Google Flow](https://labs.google/fx/tools/flow)** using **only real, existing Google Flow features**.
 
 - **Part I (25 Min)**: **Prompt Sandbox (Labs A–D)** — Test camera angles, warmth, visual styles, and multi-object physics in isolation.
-- **Part II (65 Min)**: **5-Step Incremental Story Build** — Produce a 30-second commercial (*"Solis Artisan Coffee — The 6:00 AM Spark"*) from a 2-sentence story seed using **`@Maya`** and **`@Leo`** character references, **Nano Banana Pro**, **Gemini Omni Flash**, and **Scenebuilder**.
+- **Part II (65 Min)**: **5-Step Incremental Story Build** — Produce a 30-second commercial (*"Solis Artisan Coffee — The 6:00 AM Spark"*) from a 2-sentence story seed using **`@Maya`** and **`@Leo`** character references, **`More > Add to Prompt`**, **`Video > Frames`**, **Gemini Omni Flash**, and **Scenebuilder**.
 
 ---
 
@@ -32,7 +32,7 @@ Keep the subject identical (*a brass espresso machine on an oak counter*) and te
    ```text
    Dynamic camera starting in a wide establishing shot of a sunlit industrial-chic cafe, then executing a fast whip-pan right and smooth dolly-in to an extreme macro close-up of dark espresso pouring from a brass portafilter into a matte terracotta cup, golden crema swirling, realistic steam rising, natural espresso pouring and cafe room-tone audio.
    ```
-4. **1-Turn Camera Edit (`Omni Flash Video Edit`)**: Click the video from #3, select **Edit Video**, and type:
+4. **1-Turn Camera Edit (`Omni Flash Video Edit`)**: Select the video from #3, open the conversational video edit box, and type:
    ```text
    Change the camera movement to a slow, steady 180-degree eye-level orbit around the brass espresso machine while keeping the pouring espresso and rising steam identical.
    ```
@@ -54,7 +54,7 @@ Test how Kelvin color temperature tells an emotional story before any actor spea
    ```text
    Fixed-tripod medium shot of an architect's drafting desk by a rain-streaked window. Over 8 seconds, the lighting transitions smoothly from cold 7500K blue pre-dawn shadows into warm 2400K golden sunrise beams flooding across the desk and illuminating a steaming terracotta coffee cup, gentle rain fading into morning birdsong.
    ```
-4. **1-Turn Relighting Edit (`Omni Flash Video Edit`)**: Click the video from #3, select **Edit Video**, and type:
+4. **1-Turn Relighting Edit (`Omni Flash Video Edit`)**: Select the video from #3, open the conversational video edit box, and type:
    ```text
    Change the lighting to cozy 2200K warm amber candlelight at night with soft golden bokeh reflections on the window glass.
    ```
@@ -112,19 +112,17 @@ Story Seed: At 5:45 AM on a rainy morning, exhausted architect Maya stares at a 
 Break this story into a concise 5-shot beat sheet for Google Flow:
 - Shot 1 (Studio - Creative Block, 6s)
 - Shot 2 (Cafe Arrival - Transition from Cold Rain to Warm Glow, 6s)
-- Shot 3 (The Craft - Leo Pours & Slides the Solis Cup, 6s)
+- Shot 3 (The Craft - Leo Pours & Slides the Terracotta Cup, 6s)
 - Shot 4 (Dialogue - Leo's Encouragement, 6s)
 - Shot 5 (Dialogue, First Sip & Creative Spark Finale, 6s)
-For each shot, list only: Shot #, Setting (@Studio or @Cafe), Characters (@Maya, @Leo), Action, and Lighting Shift.
+For each shot, list only: Shot #, Setting, Characters (@Maya, @Leo), Action, and Lighting Shift.
 ```
 
 ---
 
-### Step 2: Create Characters (`@Maya`, `@Leo`) & Scene Ingredients Once
+### Step 2: Create Characters (`@Maya`, `@Leo`) Once in Google Flow
 
-> **⚠️ Critical Rule**: In Google Flow, you create a character **once** in **Characters $\rightarrow$ New Character**. After you click **Done**, **never re-describe their physical appearance again**! In every future prompt, simply type **`@Maya`** or **`@Leo`** (e.g., `"@Maya drinks coffee"`).
-
-#### 2A. Create Your Two Characters (`Left Sidebar > Characters > New Character`)
+> **⚠️ Critical Rule**: In Google Flow, you create a character **once** in **Left Sidebar $\rightarrow$ Characters $\rightarrow$ New Character**. After you click **Done**, **never re-describe their physical appearance again**! In every future prompt, simply type **`@Maya`** or **`@Leo`** (e.g., `"@Maya drinks coffee from the terracotta cup"`).
 
 1. **Create `@Maya`**:
    - Click **Characters** $\rightarrow$ **New Character**.
@@ -144,89 +142,77 @@ For each shot, list only: Shot #, Setting (@Studio or @Cafe), Characters (@Maya,
    - Enter Character Name: **`Leo`**
    - Click **Select a voice** $\rightarrow$ pick a **Warm Male Baritone** $\rightarrow$ **Add to Character** $\rightarrow$ **Done**.
 
-#### 2B. Create Your Three Scene & Prop Ingredients (`Image > Nano Banana Pro`)
-
-Generate these three assets in **Image $\rightarrow$ Nano Banana Pro** (`16:9`) and name them `Studio`, `Cafe`, and `SolisCup`:
-
-1. **`@Studio`**:
-   ```text
-   Empty architectural studio loft at 5:45 AM before dawn, wide establishing shot, rain-streaked floor-to-ceiling industrial glass window overlooking a misty blue-hour city skyline, tilted birchwood drafting table with a blank white blueprint roll, brass desk lamp turned off, cold 7000K slate-blue lighting, 24mm lens, no people.
-   ```
-2. **`@Cafe`**:
-   ```text
-   Empty neighborhood artisan coffee shop interior at 6:00 AM, reclaimed oak counter in the foreground, gleaming vintage brass espresso machine, warm 2700K Edison pendant bulbs glowing against exposed brick, rain visible on the front glass window, inviting golden-amber atmosphere, 35mm lens, no people.
-   ```
-3. **`@SolisCup`**:
-   ```text
-   Product close-up of a handcrafted matte terracotta ceramic cappuccino cup with a cream ceramic interior resting on a matching terracotta saucer, subtle minimalist embossed wordmark 'SOLIS' on the front of the cup, rich dark espresso with velvety hazelnut-brown microfoam rosette latte art, soft studio lighting.
-   ```
-
 ---
 
-### Step 3: Build Storyboard Frames Using `@Maya` & `@Leo` (`Image > Nano Banana Pro`)
+### Step 3: Generate Scene & Storyboard Images (`Image > Nano Banana Pro`)
 
-In **Image $\rightarrow$ Nano Banana Pro** (`16:9`), type `@` in the prompt box to select your saved Characters and Ingredients. Notice how short and clean every prompt is!
+> **How to Reference Scene & Prop Images in Google Flow**: Remember that only **Characters** (`@Maya`, `@Leo`) and **Voices** (`@Voice`) have `@` tags. To reuse the same cafe interior or terracotta cup across multiple images, hover over an existing image tile in your project grid and click **`More` ($\vdots$) $\rightarrow$ `Add to Prompt`** (or drag the image tile into the prompt box) before generating the next frame!
 
-1. **Frame 3.1 (Shot 1 — Studio Block)**:
+In **Image $\rightarrow$ Nano Banana Pro** (`16:9`), generate your 5 storyboard images:
+
+1. **Image 3.1 (Shot 1 — Maya's Cold Studio)**:
    ```text
-   @Maya sitting at the drafting desk inside @Studio at 5:45 AM, leaning on her elbow and staring tiredly at the blank white blueprint, holding a charcoal pencil loosely, cold blue pre-dawn window light, medium shot, 35mm lens.
+   @Maya sitting at a birchwood drafting desk in an architectural studio loft at 5:45 AM, leaning on her elbow and staring tiredly at a blank white blueprint roll, rain-streaked glass window behind her, cold 7000K blue pre-dawn lighting, medium shot, 35mm lens.
    ```
-2. **Frame 3.2 (Shot 2 — Cafe Arrival)**:
+2. **Image 3.2 (Shot 2 — Entering the Warm Cafe)**:
    ```text
-   @Maya stepping inside @Cafe out of the morning rain, looking toward the warm glowing espresso counter with quiet relief, cool blue rain outside the door contrasting with warm golden light inside, medium wide shot, 35mm lens.
+   @Maya stepping inside a warm neighborhood artisan coffee shop out of the morning rain, looking toward a reclaimed oak counter with a gleaming vintage brass espresso machine, warm 2700K Edison pendant bulbs glowing against exposed brick, medium wide shot, 35mm lens.
    ```
-3. **Frame 3.3 (Shot 3 Start Frame — Leo Pours)**:
+3. **Image 3.3 (Shot 3 Start Frame — Leo Pours)**:
+   - *Optional*: Click **`More > Add to Prompt`** on **Image 3.2** to reference the cafe background.
    ```text
-   @Leo standing behind the oak counter in @Cafe, pulling a fresh espresso shot from the brass machine into @SolisCup as aromatic steam rises, warm 2700K pendant lighting, medium shot, 50mm lens.
+   @Leo standing behind the reclaimed oak counter in the warm artisan coffee shop, pulling a fresh espresso shot from the vintage brass espresso machine into a matte terracotta cappuccino cup embossed with 'SOLIS' as aromatic steam rises, warm 2700K pendant lighting, medium shot, 50mm lens.
    ```
-4. **Frame 3.4 (Shot 3 End Frame — Cup Slid to Maya)**:
+4. **Image 3.4 (Shot 3 End Frame — Cup Slid to Maya)**:
+   - Click **`More > Add to Prompt`** on **Image 3.3** so the oak counter and terracotta cup match Image 3.3!
    ```text
-   Close-up on the oak counter in @Cafe as @Leo's hand finishes sliding the steaming @SolisCup into the foreground in front of @Maya, warm golden morning light catching the rising steam, shallow depth of field, 50mm lens.
+   Close-up on the reclaimed oak counter in the warm coffee shop as @Leo's hand finishes sliding the steaming matte terracotta 'SOLIS' cappuccino cup into the foreground in front of @Maya, warm golden morning light catching the rising steam, shallow depth of field, 50mm lens.
    ```
-5. **Frame 3.5 (Shot 5 Frame — Maya's First Sip)**:
+5. **Image 3.5 (Shot 5 Frame — Maya's First Sip)**:
+   - Click **`More > Add to Prompt`** on **Image 3.4**.
    ```text
-   Medium close-up of @Maya in @Cafe wrapping both hands around @SolisCup, inhaling the warm steam with her eyes brightening in a moment of sudden creative inspiration, warm 2400K golden sunrise light streaming across the counter, 50mm lens.
+   Medium close-up of @Maya at the oak cafe counter wrapping both hands around the steaming matte terracotta 'SOLIS' cappuccino cup, inhaling the warm steam with her eyes brightening in sudden creative inspiration, warm 2400K golden sunrise light streaming across the counter, 50mm lens.
    ```
 
 ---
 
 ### Step 4: Animate Video & Dialogue in Google Flow (`Video > Omni Flash`)
 
-Switch the prompt bar to **Video $\rightarrow$ Omni Flash** (`16:9`, `6s`).
+Switch the prompt bar to **Video $\rightarrow$ Omni Flash** (`16:9`, `6s`, **Omni 360p** draft mode).
 
-1. **Clip 4.1 — Shot 1 (`Ingredients` or `+ Add start frame` with Frame 3.1)**:
+1. **Clip 4.1 — Shot 1 (`Video > Frames`: attach Image 3.1 as `+ Add start frame`, or `Video > Ingredients` with `@Maya` + Image 3.1)**:
    ```text
-   Slow push-in medium shot of @Maya sitting at the drafting table in @Studio, rubbing her temple and tapping her charcoal pencil against the blank white blueprint while rain patters softly against the cold blue window glass.
+   Slow push-in medium shot of @Maya sitting at the drafting desk in the cold rainy studio, rubbing her temple and tapping her charcoal pencil against the blank white blueprint while rain patters softly against the window glass.
    ```
-2. **Clip 4.2 — Shot 2 (`Ingredients` or `+ Add start frame` with Frame 3.2)**:
+2. **Clip 4.2 — Shot 2 (`Video > Frames`: attach Image 3.2 as `+ Add start frame`, or `Video > Ingredients` with `@Maya` + Image 3.2)**:
    ```text
-   Smooth tracking shot following @Maya as she walks into @Cafe, shaking a drop of rain from her sleeve and walking up to the warm sunlit oak espresso bar, gentle door chime and cozy cafe ambiance.
+   Smooth tracking shot following @Maya as she walks into the warm coffee shop out of the rain, shaking a drop of water from her sleeve and approaching the sunlit oak espresso bar, gentle door chime and cozy cafe ambiance.
    ```
-3. **Clip 4.3 — Shot 3 (`Frames Mode`: attach Frame 3.3 as `+ Add start frame` and Frame 3.4 as `+ Add end frame`)**:
+3. **Clip 4.3 — Shot 3 (`Video > Frames`: attach Image 3.3 as `+ Add start frame` and Image 3.4 as `+ Add end frame`)**:
    ```text
-   Smooth camera tilt and follow as @Leo finishes pouring rich crema into @SolisCup and slides the steaming cup smoothly across the oak counter in @Cafe toward @Maya, espresso machine hiss and ceramic saucer slide audio.
+   Smooth camera tilt and follow as @Leo finishes pouring rich crema into the matte terracotta 'SOLIS' cup and slides the steaming cup smoothly across the oak counter toward @Maya, espresso machine hiss and ceramic saucer slide audio.
    ```
-4. **Clip 4.4 — Shot 4: Leo Speaks (`Ingredients`: `@Leo`, `@Maya`, `@Cafe`, `@SolisCup`)**:
+4. **Clip 4.4 — Shot 4: Leo Speaks (`Video > Ingredients`: `@Leo`, `@Maya` + attach Image 3.4 as location/prop ingredient)**:
    ```text
-   Over-the-shoulder medium shot from behind @Maya on the left, focusing on @Leo on the right looking screen-left across the counter in @Cafe with a warm smile. @Leo says: "Rough night with the blueprints? Start with this."
+   Over-the-shoulder medium shot from behind @Maya on the left, focusing on @Leo on the right looking screen-left across the oak espresso counter with a warm smile. @Leo says: "Rough night with the blueprints? Start with this."
    ```
-5. **Clip 4.5 — Shot 5: Maya Drinks Coffee & Replies (`Ingredients`: `@Maya`, `@Cafe`, `@SolisCup`)**:
+5. **Clip 4.5 — Shot 5: Maya Drinks Coffee & Replies (`Video > Ingredients`: `@Maya` + attach Image 3.5 as ingredient, or `+ Add start frame` with Image 3.5)**:
    ```text
-   Reverse-angle medium close-up of @Maya on the left looking screen-right in @Cafe. @Maya drinks coffee from @SolisCup, lowers the cup with a warm inspired smile, and says: "You just saved the whole skyline, Leo."
+   Reverse-angle medium close-up of @Maya on the left looking screen-right at the warm oak counter. @Maya drinks coffee from the terracotta cup, lowers the cup with a warm inspired smile, and says: "You just saved the whole skyline, Leo."
    ```
 
 ---
 
 ### Step 5: Conversational Video Editing (`Omni Flash`) & Scenebuilder
 
-1. **Turn 1 Conversational Edit on Clip 4.5**: Click **Clip 4.5** $\rightarrow$ **Edit Video** $\rightarrow$ enter:
+1. **Turn 1 Conversational Edit on Clip 4.5**: Select **Clip 4.5** $\rightarrow$ open the video edit box $\rightarrow$ enter:
    ```text
-   Intensify the warm 2400K golden sunrise beams streaming through the window behind @Maya and make the rising coffee steam from @SolisCup glow softly in the backlight.
+   Intensify the warm 2400K golden sunrise beams streaming through the cafe window behind @Maya and make the rising coffee steam glow softly in the backlight.
    ```
 2. **Turn 2 Conversational Edit on Clip 4.5**: In the same edit thread, enter:
    ```text
    In the final 2 seconds as the steam rises, fade in clean minimalist gold serif text in the upper center reading 'SOLIS — AWAKEN THE CRAFT'.
    ```
 3. **Assemble in Scenebuilder**:
-   - Click **More ($\vdots$) $\rightarrow$ Add to Scene** on **Clips 4.1 through 4.5**.
-   - Open **Scenebuilder**, trim the clip handles so `@Leo`'s question flows right into `@Maya` drinking coffee and replying, click **Upscale to 720p** (0 credits) on any draft clips, and click **Download**!
+   - Click **`More` ($\vdots$) $\rightarrow$ `Add to Scene`** on **Clips 4.1 through 4.5**.
+   - Open **Scenebuilder** (`Scenes` in the left sidebar), trim the clip handles so `@Leo`'s question flows right into `@Maya` drinking coffee and replying, click **`Upscale to 720p`** (0 credits) on any draft clips, and click **`Download`**!

@@ -2,9 +2,11 @@
 """Builds the 14-Slide Native Editable Google Slides Deck for the Google Flow & Gemini Omni Storytelling Workshop.
 
 Features:
-- 100% Focused on Google Flow (https://labs.google/fx/tools/flow), Gemini Omni Flash, and Nano Banana Pro
+- 100% Focused on real, verified Google Flow features (https://labs.google/fx/tools/flow), Gemini Omni Flash, and Nano Banana Pro
 - Part I: Google Flow Prompt Sandbox (Labs A–D: Camera Angles, Kelvin Warmth, Visual Styles, Multi-Object Physics & Kinetic Text)
-- Part II: 5-Step Incremental Story Build ("Solis — The 6:00 AM Spark") with proper @Maya and @Leo Character Referencing (Create Once -> Refer with @Name)
+- Part II: 5-Step Incremental Story Build ("Solis — The 6:00 AM Spark") with:
+  * Proper @Maya and @Leo Character Referencing (Create Once in Characters > New Character -> Refer ONLY by @Maya & @Leo)
+  * Real Scene & Prop Image Referencing (More > Add to Prompt, Video > Ingredients, Video > Frames: + Add start/end frame, Save frame) — zero fake @Object tags!
 - Single-word classic Material Icons (bolt, hub, code, check, warning, security, key, cloud, lock, psychology, star)
 - Clickable link pills pointing to https://github.com/AllInVaders/google-flow-storytelling-workshop and https://labs.google/fx/tools/flow
 - Tripartite speaker notes ([PURPOSE], [VERBAL SCRIPT], [TRANSITION]) on 100% of slides
@@ -610,7 +612,7 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "lock",
             "accent": ACCENT_BLUE,
             "title": "Steps 1–2 · Cast",
-            "body": "• 2-Sentence Seed\n• 5-Shot Beat Sheet\n• Create @Maya Once\n• Create @Leo Once\n• @Studio & @Cafe",
+            "body": "• 2-Sentence Seed\n• 5-Shot Beat Sheet\n• Create @Maya Once\n• Create @Leo Once\n• Lock Voice + Face",
             "link_label": "Step 1–2 Guide ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
@@ -618,7 +620,7 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "hub",
             "accent": ACCENT_PURPLE,
             "title": "Step 3 · Board",
-            "body": "• Nano Banana Pro\n• Prompt Only with @Maya & @Leo\n• No Re-Generation\n• Start/End Frames",
+            "body": "• Nano Banana Pro\n• Prompt Only with @Maya & @Leo\n• More > Add to Prompt\n• Start/End Frames",
             "link_label": "Step 3 Guide ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
@@ -626,7 +628,7 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "psychology",
             "accent": ACCENT_CYAN,
             "title": "Step 4 · Omni",
-            "body": "• Video > Omni Flash\n• @Character + @Voice\n• Start/End Frames\n• 180° Dialogue Rule\n• 360p -> 720p Free",
+            "body": "• Video > Omni Flash\n• @Character + @Voice\n• Video > Frames\n• 180° Dialogue Rule\n• 360p -> 720p Free",
             "link_label": "Step 4 Guide ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
@@ -642,7 +644,7 @@ def build_all_slides(existing_slide_ids=None):
     add_takeaway_banner(
         ops,
         sid,
-        "100% Google Flow Workspace: Create @Characters Once -> Refer by @Name -> Animate & Edit in Gemini Omni Flash!",
+        "100% Real Google Flow Workspace: Create @Characters Once -> Refer by @Name -> Animate & Edit in Gemini Omni Flash!",
         FLOW_URL,
     )
     ops.append({
@@ -846,15 +848,15 @@ def build_all_slides(existing_slide_ids=None):
         sid,
         "Core Engine · Gemini Omni Flash Inside Google Flow",
         "Why We Use Gemini Omni Flash in Google Flow",
-        "One unified model in Google Flow for @Character locks, Start/End Frames, Voice dialogue, and 3-turn video edits.",
+        "One unified model in Google Flow for @Character locks, Ingredients/Frames, Voice dialogue, and 3-turn video edits.",
         5,
     )
     add_grid_2x2(ops, sid, [
         {
             "icon": "lock",
             "accent": ACCENT_BLUE,
-            "title": "1. Native @Character, @Ingredient & @Voice Locks",
-            "body": "Type @ in the Google Flow prompt box to combine @Maya, @Leo, @Studio, @Cafe, and @SolisCup—with their bundled character voices automatically synced to spoken lines.",
+            "title": "1. Native @Character, @Voice & Image Ingredients",
+            "body": "Type @Maya or @Leo in the prompt box (with bundled character voices!) and attach existing scene/prop images via More > Add to Prompt or Video > Ingredients.",
             "link_label": "Flow Cheat Sheet ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/03-google-flow-cheatsheet.md",
         },
@@ -870,7 +872,7 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "hub",
             "accent": ACCENT_PURPLE,
             "title": "3. Start/End Frames & Save Frame Chaining",
-            "body": "Attach + Add start frame and + Add end frame for exact motion transitions, or pause any clip and click Save frame to chain the next shot seamlessly.",
+            "body": "Attach + Add start frame and + Add end frame in Video > Frames for exact motion transitions, or pause any clip and click Save frame to chain the next shot.",
             "link_label": "Step 4 Video Labs ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
@@ -878,7 +880,7 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "star",
             "accent": ACCENT_GREEN,
             "title": "4. 3-Turn Conversational Video Editing",
-            "body": "Click Edit Video on any Omni Flash clip (up to 10s) to change camera angles, relight to golden hour, or add brand titles across up to 3 conversational turns.",
+            "body": "Select any Omni Flash clip (up to 10s) to conversationally change camera angles, relight to golden hour, or add brand titles across up to 3 turns.",
             "link_label": "Step 5 Edit Labs ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
         },
@@ -896,7 +898,7 @@ def build_all_slides(existing_slide_ids=None):
             "[PURPOSE]\n"
             "Summarize the four capabilities of Gemini Omni Flash inside Google Flow that power Part II.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Everything in Part II runs on Gemini Omni Flash inside Google Flow: native @Character, @Ingredient, and @Voice references, 4-to-10-second clips with free 360p-to-720p upscaling, Start and End Frame interpolation, and up to 3 turns of conversational video editing.\"\n\n"
+            "\"Everything in Part II runs on Gemini Omni Flash inside Google Flow: native @Character and @Voice references, attaching existing project images as Ingredients or Start/End Frames, 4-to-10-second clips with free 360p-to-720p upscaling, and up to 3 turns of conversational video editing.\"\n\n"
             "[TRANSITION]\n"
             "Let's create our Part II project and start Step 1: our 2-sentence story seed."
         ),
@@ -928,7 +930,7 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "hub",
             "accent": ACCENT_BLUE,
             "title": "The 5-Shot Commercial Beat Sheet (30s Total)",
-            "body": "• Shot 1 (6s): @Maya stuck at desk in cold @Studio (7000K)\n• Shot 2 (6s): @Maya enters warm @Cafe out of the rain\n• Shot 3 (6s): @Leo pours & slides @SolisCup across counter\n• Shot 4 (6s): @Leo speaks -> Shot 5 (6s): @Maya sips & replies",
+            "body": "• Shot 1 (6s): @Maya stuck at desk in cold rainy studio (7000K)\n• Shot 2 (6s): @Maya enters warm cafe out of the rain (2700K)\n• Shot 3 (6s): @Leo pours & slides terracotta cup across counter\n• Shot 4 (6s): @Leo speaks -> Shot 5 (6s): @Maya sips & replies",
         },
         {
             "accent": ACCENT_AMBER,
@@ -939,7 +941,7 @@ def build_all_slides(existing_slide_ids=None):
                 "We are creating a 30-second commercial in Google Flow for 'Solis Artisan Coffee' titled 'The 6:00 AM Spark.'\n"
                 "Story Seed: At 5:45 AM on a rainy morning, exhausted architect Maya stares at a blank blueprint in her cold studio until she walks\n"
                 "into a warm neighborhood cafe where barista Leo slides her a steaming terracotta cup of Solis coffee. One sip sparks her creativity.\n"
-                "Break this story into a concise 5-shot beat sheet listing: Shot #, Setting (@Studio/@Cafe), Characters (@Maya/@Leo), Action & Lighting."
+                "Break this story into a concise 5-shot beat sheet listing: Shot #, Setting, Characters (@Maya/@Leo), Action & Lighting Shift."
             ),
         },
     )
@@ -958,20 +960,20 @@ def build_all_slides(existing_slide_ids=None):
             "[VERBAL SCRIPT]\n"
             "\"Create a new project in Google Flow called 'Solis - The 6AM Spark' and open the Google Flow Agent panel. Paste Prompt 1.1 to turn our 2-sentence story seed into a 5-shot beat sheet. Notice how the emotional arc is carried by our color temperature shift from 7000K cold blue rain to 2400K golden sunrise.\"\n\n"
             "[TRANSITION]\n"
-            "Now comes the most important step in Google Flow: creating @Maya and @Leo properly in Step 2A."
+            "Now comes the most important step in Google Flow: creating @Maya and @Leo properly in Step 2."
         ),
     })
 
     # =========================================================================
-    # SLIDE 07: Step 2A — Create Characters Once (@Maya & @Leo)
+    # SLIDE 07: Step 2 — Create Characters Once (@Maya & @Leo)
     # =========================================================================
     sid = "SLIDE_07"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Part II · Step 2A of 5: Google Flow Characters (@Maya & @Leo)",
-        "Step 2A: Create Characters Once in Characters > New Character",
+        "Part II · Step 2 of 5: Google Flow Characters (@Maya & @Leo)",
+        "Step 2: Create Characters Once in Characters > New Character",
         "Lock each character's visual appearance, name, and voice ONCE—never re-describe their appearance again!",
         7,
     )
@@ -989,7 +991,7 @@ def build_all_slides(existing_slide_ids=None):
             "accent": ACCENT_PURPLE,
             "title": "2. Name & Attach\nCharacter Voice",
             "body": "• Name your characters 'Maya' and 'Leo'.\n• Click Select a voice -> pick Warm Alto for Maya & Warm Baritone for Leo -> click Add to Character -> Done.",
-            "link_label": "Step 2A Prompts ↗",
+            "link_label": "Step 2 Prompts ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
         },
         {
@@ -1028,7 +1030,7 @@ def build_all_slides(existing_slide_ids=None):
     add_header(
         ops,
         sid,
-        "Step 2A Hands-On Lab · Right vs. Wrong Character Prompting in Flow",
+        "Step 2 Hands-On Lab · Right vs. Wrong Character Prompting in Flow",
         "Live Lab: Creating @Maya Once vs. The 'Re-Generation' Mistake",
         "Once @Maya and @Leo are created, your scene prompts should only describe their actions—never their faces!",
         8,
@@ -1046,7 +1048,7 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "check",
             "accent": ACCENT_GREEN,
             "title": "✅ RIGHT: Referencing @Maya in Scene Prompts",
-            "body": "1. Create Maya once in Characters > New Character.\n2. In Shots 1–5, only type:\n\"@Maya drinks coffee from @SolisCup, inhales the warm steam, and smiles.\"\n-> 100% locked face, glasses, cardigan, and voice!",
+            "body": "1. Create Maya once in Characters > New Character.\n2. In Shots 1–5, only type:\n\"@Maya drinks coffee from the terracotta cup, inhales the warm steam, and smiles.\"\n-> 100% locked face, glasses, cardigan, and voice!",
         },
         {
             "accent": ACCENT_BLUE,
@@ -1074,83 +1076,81 @@ def build_all_slides(existing_slide_ids=None):
             "[PURPOSE]\n"
             "Contrast the wrong way (re-describing characters in scene prompts) against the right way (creating @Maya once and prompting '@Maya drinks coffee').\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Look at the two cards at the top. On the left is what NOT to do: repeating '29-year-old Latina architect with olive skin and glasses' in your scene prompts re-generates a new person. On the right is how Google Flow works: create @Maya once using the bottom box, and then just type '@Maya drinks coffee from @SolisCup and smiles.'\"\n\n"
+            "\"Look at the two cards at the top. On the left is what NOT to do: repeating '29-year-old Latina architect with olive skin and glasses' in your scene prompts re-generates a new person. On the right is how Google Flow works: create @Maya once using the bottom box, and then just type '@Maya drinks coffee from the terracotta cup and smiles.'\"\n\n"
             "[TRANSITION]\n"
-            "Now let's create our three empty scene and product Ingredients in Step 2B."
+            "What about backgrounds and objects like the cafe or coffee cup? Let's check Slide 09 to see how Google Flow actually handles image references."
         ),
     })
 
     # =========================================================================
-    # SLIDE 09: Step 2B — Create Reusable Scene & Product Ingredients
+    # SLIDE 09: Step 3A — How Scene & Object References Actually Work in Flow
     # =========================================================================
     sid = "SLIDE_09"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Part II · Step 2B of 5: Scene & Prop Ingredients (@Studio, @Cafe, @SolisCup)",
-        "Step 2B: Create Reusable Scene & Product Ingredients",
-        "Generate empty architectural sets and your hero product prop in Image > Nano Banana Pro so you can tag them with @.",
+        "Part II · Real Google Flow UI Controls (No Fake @Object Tags!)",
+        "How Scene & Object References Actually Work in Google Flow",
+        "Only Characters (@Maya, @Leo) and Voices (@Voice) use @ tags—attach scene & prop images via Add to Prompt or Frames!",
         9,
     )
-    add_split_case_study(
-        ops,
-        sid,
+    add_three_cards(ops, sid, [
         {
             "icon": "cloud",
             "accent": ACCENT_BLUE,
-            "title": "Empty Sets: @Studio (7000K) & @Cafe (2700K)",
-            "body": "• Generate both sets with 'no people' so the background geometry stays consistent across cuts.\n• @Studio: Cold 7000K rain-streaked loft.\n• @Cafe: Warm 2700K oak counter & brass espresso machine.",
+            "title": "1. More (⋮) >\nAdd to Prompt",
+            "body": "• Google Flow's sidebar has All media, Images, Videos, Characters, Scenes & Uploads (no @Object creator!).\n• Hover over any image tile and click More (⋮) -> Add to Prompt (or drag it into the prompt box) to reuse that room or prop!",
+            "link_label": "Official Flow Docs ↗",
+            "link_url": "https://support.google.com/flow/answer/16729550",
         },
         {
-            "icon": "star",
+            "icon": "hub",
+            "accent": ACCENT_PURPLE,
+            "title": "2. Video > Frames\n(Start & End Frame)",
+            "body": "• In Video > Omni Flash, switch to Frames and attach your storyboard image to + Add start frame (and + Add end frame).\n• Omni Flash animates directly from your exact cafe & terracotta cup image!",
+            "link_label": "Official Flow Docs ↗",
+            "link_url": "https://support.google.com/flow/answer/16353334",
+        },
+        {
+            "icon": "bolt",
             "accent": ACCENT_AMBER,
-            "title": "Hero Product Prop: @SolisCup",
-            "body": "• Handcrafted matte terracotta cappuccino cup with a cream interior and embossed 'SOLIS' wordmark.\n• Saving it as @SolisCup keeps the cup identical when @Leo pours and @Maya drinks!",
+            "title": "3. Pause Video >\nClick 'Save frame'",
+            "body": "• Want your next shot to pick up on the exact same counter and cup?\n• Pause any generated video clip on a frame, click Save frame, and attach that saved image to your next prompt!",
+            "link_label": "Flow Cheat Sheet ↗",
+            "link_url": f"{GITHUB_BLOB}/workshop-guide/03-google-flow-cheatsheet.md",
         },
-        {
-            "accent": ACCENT_CYAN,
-            "title": "Copy-Paste Ingredient Prompts — Run in Image > Nano Banana Pro (16:9)",
-            "link_label": "Copy Set Prompts ↗",
-            "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
-            "code": (
-                "[@Studio]: Empty architectural studio loft at 5:45 AM, rain-streaked glass window overlooking misty city skyline, birchwood drafting\n"
-                "table with blank white blueprint roll, brass desk lamp turned off, cold 7000K slate-blue lighting, 24mm lens, no people.\n"
-                "[@Cafe]: Empty neighborhood artisan coffee shop at 6:00 AM, reclaimed oak counter, gleaming vintage brass espresso machine, warm\n"
-                "2700K Edison pendant bulbs against exposed brick, 35mm lens, no people.  [@SolisCup]: Matte terracotta cup embossed with 'SOLIS'."
-            ),
-        },
-    )
+    ])
     add_takeaway_banner(
         ops,
         sid,
-        "You now have 5 reusable Google Flow building blocks: @Maya, @Leo, @Studio, @Cafe, and @SolisCup!",
-        f"{GITHUB_BLOB}/workshop-guide/02-student-incremental-labs.md",
+        "Verified Flow Rule: Use '@Maya' & '@Leo' for people, and 'More > Add to Prompt' or '+ Add start frame' for sets & props!",
+        "https://support.google.com/flow/answer/16729550",
     )
     ops.append({
         "op": "set-notes",
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Generate the three environment and prop Ingredients (@Studio, @Cafe, @SolisCup) in Google Flow using Nano Banana Pro.\n\n"
+            "Clarify that in Google Flow only Characters and Voices have @ tags, and show the 3 real UI ways to reference scene and object images.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Next, switch the prompt bar to Image -> Nano Banana Pro and generate our three non-character Ingredients: @Studio, @Cafe, and @SolisCup. Generating empty sets with 'no people' gives us rock-solid background plates that we can combine with @Maya and @Leo in Step 3.\"\n\n"
+            "\"In Google Flow's left sidebar, you have All media, Images, Videos, Characters, Scenes, and Uploads—there is no @Object tag creator! Instead, when you want to keep a location or prop like our cafe counter and terracotta cup consistent across shots, you use three real Google Flow tools: (1) Hover over an image and click More -> Add to Prompt, (2) Attach your storyboard image to + Add start frame in Video > Frames, or (3) Pause a video clip and click Save frame.\"\n\n"
             "[TRANSITION]\n"
-            "Now let's combine our @Characters and @Ingredients into 5 storyboard frames in Step 3."
+            "Let's use @Maya, @Leo, and More -> Add to Prompt to generate our 5 storyboard images on Slide 10."
         ),
     })
 
     # =========================================================================
-    # SLIDE 10: Step 3 — Build Storyboard Frames Using @Maya, @Leo & @Cafe
+    # SLIDE 10: Step 3 — Build Storyboard Images Using @Maya, @Leo & Add to Prompt
     # =========================================================================
     sid = "SLIDE_10"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
     add_header(
         ops,
         sid,
-        "Part II · Step 3 of 5: Storyboard Frames (Image > Nano Banana Pro)",
-        "Step 3: Build Storyboard Frames Using @Maya, @Leo & @Cafe",
-        "Combine your saved @ assets into 5 storyboard stills—including a Start & End Frame pair for Shot 3!",
+        "Part II · Step 3 of 5: Storyboard Images (Image > Nano Banana Pro)",
+        "Step 3: Build Storyboard Images Using @Maya, @Leo & Add to Prompt",
+        "Generate 5 storyboard images in Nano Banana Pro—using More > Add to Prompt to lock the cafe & terracotta cup!",
         10,
     )
     add_split_case_study(
@@ -1159,14 +1159,14 @@ def build_all_slides(existing_slide_ids=None):
         {
             "icon": "hub",
             "accent": ACCENT_PURPLE,
-            "title": "Short, Clean Prompts Using @ References",
-            "body": "• Type @ in the prompt box (or drag tiles from your asset grid) to combine @Maya + @Studio or @Leo + @Cafe + @SolisCup.\n• Validate framing and lighting on fast images before spending video credits.",
+            "title": "Images 3.1 & 3.2: Studio Block -> Cafe Arrival",
+            "body": "• Image 3.1: @Maya at her birchwood drafting desk in the cold 7000K rainy studio.\n• Image 3.2: @Maya stepping inside the warm 2700K coffee shop out of the rain.",
         },
         {
             "icon": "bolt",
             "accent": ACCENT_AMBER,
-            "title": "Start + End Frame Pair for Shot 3 (Frames 3.3 & 3.4)",
-            "body": "• Frame 3.3 (Start): @Leo pouring espresso into @SolisCup.\n• Frame 3.4 (End): @Leo's hand sliding @SolisCup across the counter in front of @Maya.\n• Ready for Omni Flash Frames interpolation!",
+            "title": "Images 3.3 – 3.5: Chain Cafe & Cup via 'Add to Prompt'",
+            "body": "• Image 3.3 (Start Frame): @Leo pouring espresso into the matte terracotta 'SOLIS' cup.\n• Click More > Add to Prompt on Image 3.3 to generate Image 3.4 (End Frame: cup slid to @Maya) & Image 3.5 (@Maya's sip)!",
         },
         {
             "accent": ACCENT_PURPLE,
@@ -1174,17 +1174,17 @@ def build_all_slides(existing_slide_ids=None):
             "link_label": "Copy Step 3 Prompts ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
             "code": (
-                "[Frame 3.1]: @Maya sitting at the drafting desk inside @Studio at 5:45 AM, staring tiredly at the blank white blueprint, 35mm lens.\n"
-                "[Frame 3.2]: @Maya stepping inside @Cafe out of the morning rain, looking toward the warm glowing espresso counter, 35mm lens.\n"
-                "[Frame 3.3 Start]: @Leo standing behind the oak counter in @Cafe, pulling a fresh espresso shot into @SolisCup, 50mm lens.\n"
-                "[Frame 3.4 End]: Close-up on the oak counter in @Cafe as @Leo's hand finishes sliding the steaming @SolisCup in front of @Maya."
+                "[Image 3.1]: @Maya sitting at a birchwood drafting desk in an architectural studio loft at 5:45 AM, blank white blueprint, 7000K blue light.\n"
+                "[Image 3.2]: @Maya stepping inside a warm artisan coffee shop out of the rain, looking toward a reclaimed oak espresso counter, 2700K.\n"
+                "[Image 3.3 Start]: @Leo behind the oak counter in the warm cafe, pulling espresso from the brass machine into a matte terracotta 'SOLIS' cup.\n"
+                "[Image 3.4 End (Add 3.3 to Prompt)]: Close-up on the oak counter as @Leo's hand slides the steaming terracotta 'SOLIS' cup in front of @Maya."
             ),
         },
     )
     add_takeaway_banner(
         ops,
         sid,
-        "Notice how clean Step 3 is: zero physical descriptions—just @Maya, @Leo, @Studio, @Cafe, and @SolisCup!",
+        "By clicking 'More > Add to Prompt' on Image 3.3, Image 3.4 & 3.5 keep the exact same oak counter and terracotta cup!",
         f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
     )
     ops.append({
@@ -1192,16 +1192,16 @@ def build_all_slides(existing_slide_ids=None):
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Generate the 5 storyboard frames in Nano Banana Pro using only @Character and @Ingredient tags.\n\n"
+            "Generate the 5 storyboard images in Nano Banana Pro using @Maya, @Leo, and More -> Add to Prompt.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Look at the storyboard prompts at the bottom of Slide 10. Every single prompt is one crisp sentence using @Maya, @Leo, @Studio, @Cafe, and @SolisCup! We also generate Frame 3.3 and Frame 3.4 as a Start and End Frame pair for Shot 3.\"\n\n"
+            "\"Look at how clean Step 3 is. We type @Maya and @Leo so we never re-describe their faces. Then, once we generate Image 3.3 of @Leo pouring into the terracotta SOLIS cup, we hover over Image 3.3, click More -> Add to Prompt, and generate Image 3.4 of @Leo sliding that exact same cup across the oak counter toward @Maya.\"\n\n"
             "[TRANSITION]\n"
-            "With our storyboard locked, let's switch to Video -> Omni Flash in Step 4 to animate Shots 1, 2, and 3."
+            "With our 5 storyboard images ready, let's switch to Video -> Omni Flash in Step 4 to animate Shots 1, 2, and 3."
         ),
     })
 
     # =========================================================================
-    # SLIDE 11: Step 4 — Animate Shots in Google Flow (Video > Omni Flash)
+    # SLIDE 11: Step 4A — Animate Shots in Google Flow (Video > Omni Flash)
     # =========================================================================
     sid = "SLIDE_11"
     ops.append({"op": "add-slide", "layout": "BLANK", "id": sid})
@@ -1210,7 +1210,7 @@ def build_all_slides(existing_slide_ids=None):
         sid,
         "Part II · Step 4A of 5: Animating Shots 1–3 (Video > Omni Flash)",
         "Step 4A: Animate Shots in Google Flow (Video > Omni Flash)",
-        "Use @Character + @Ingredient references for Shots 1–2, and + Add start/end frame for Shot 3.",
+        "Attach Images 3.1–3.4 in Video > Frames (+ Add start/end frame) or Video > Ingredients to animate Shots 1–3.",
         11,
     )
     add_split_case_study(
@@ -1219,14 +1219,14 @@ def build_all_slides(existing_slide_ids=None):
         {
             "icon": "bolt",
             "accent": ACCENT_CYAN,
-            "title": "Clips 4.1 & 4.2: Ingredients Mode (@Maya + Set)",
-            "body": "• Select Video > Omni Flash (6s, Omni 360p draft).\n• Reference @Maya + @Studio for Shot 1 and @Maya + @Cafe for Shot 2 (or attach Frame 3.1 / 3.2 as + Add start frame).",
+            "title": "Clips 4.1 & 4.2: Attach Start Frame or Ingredients",
+            "body": "• Select Video > Omni Flash (6s, Omni 360p draft).\n• Attach Image 3.1 as + Add start frame for Shot 1 (Studio) and Image 3.2 as + Add start frame for Shot 2 (Cafe Arrival).",
         },
         {
             "icon": "hub",
             "accent": ACCENT_AMBER,
             "title": "Clip 4.3: Frames Mode (Start Frame -> End Frame)",
-            "body": "• Click + Add start frame (Frame 3.3) and + Add end frame (Frame 3.4).\n• Omni Flash smoothly interpolates @Leo pouring espresso and sliding @SolisCup to @Maya!",
+            "body": "• In Video > Frames, attach Image 3.3 to + Add start frame and Image 3.4 to + Add end frame.\n• Omni Flash smoothly interpolates @Leo pouring espresso and sliding the terracotta cup to @Maya!",
         },
         {
             "accent": ACCENT_CYAN,
@@ -1234,10 +1234,10 @@ def build_all_slides(existing_slide_ids=None):
             "link_label": "Copy Step 4A Prompts ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
             "code": (
-                "[Clip 4.1 - Shot 1]: Slow push-in medium shot of @Maya sitting at the drafting table in @Studio, rubbing her temple and tapping\n"
-                "her charcoal pencil against the blank white blueprint while rain patters softly against the cold blue window glass.\n"
-                "[Clip 4.2 - Shot 2]: Smooth tracking shot following @Maya as she walks into @Cafe, walking up to the warm sunlit espresso bar.\n"
-                "[Clip 4.3 - Shot 3 (Start 3.3 + End 3.4)]: Smooth tilt as @Leo finishes pouring into @SolisCup and slides it across @Cafe to @Maya."
+                "[Clip 4.1 - Shot 1 (Start Frame 3.1)]: Slow push-in medium shot of @Maya sitting at the drafting desk in the cold rainy studio,\n"
+                "rubbing her temple and tapping her charcoal pencil against the blank white blueprint while rain patters against the window.\n"
+                "[Clip 4.2 - Shot 2 (Start Frame 3.2)]: Smooth tracking shot following @Maya as she walks into the warm coffee shop out of the rain.\n"
+                "[Clip 4.3 - Shot 3 (Start 3.3 + End 3.4)]: Smooth tilt as @Leo finishes pouring into the terracotta cup and slides it to @Maya."
             ),
         },
     )
@@ -1252,9 +1252,9 @@ def build_all_slides(existing_slide_ids=None):
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Demonstrate animating Shots 1, 2, and 3 in Google Flow using Gemini Omni Flash Ingredients mode and Start/End Frames mode.\n\n"
+            "Demonstrate animating Shots 1, 2, and 3 in Google Flow using Gemini Omni Flash Frames mode and Ingredients mode.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Switch the prompt box to Video -> Omni Flash. For Shots 1 and 2, we simply tag @Maya with @Studio and @Cafe. For Shot 3, we attach Frame 3.3 as our Start Frame and Frame 3.4 as our End Frame so Omni Flash connects Leo's pour directly into sliding @SolisCup across the oak counter.\"\n\n"
+            "\"Switch the prompt box to Video -> Omni Flash. For Shots 1 and 2, attach Image 3.1 and Image 3.2 as your Start Frames (or as Ingredients alongside @Maya). For Shot 3, attach Image 3.3 as your Start Frame and Image 3.4 as your End Frame so Omni Flash connects Leo's pour directly into sliding the terracotta cup across the oak counter.\"\n\n"
             "[TRANSITION]\n"
             "Now let's animate Shots 4 and 5 with spoken two-character dialogue in Step 4B."
         ),
@@ -1270,7 +1270,7 @@ def build_all_slides(existing_slide_ids=None):
         sid,
         "Part II · Step 4B of 5: Spoken Dialogue & The 180° Eyeline Rule",
         "Step 4B: Directing Two-Character Dialogue (@Leo & @Maya)",
-        "Omni Flash uses @Leo and @Maya's bundled voices while the 180° rule makes them look at each other.",
+        "In Video > Ingredients, reference @Leo & @Maya (with their bundled voices) plus your cafe image!",
         12,
     )
     add_split_case_study(
@@ -1280,13 +1280,13 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "bolt",
             "accent": ACCENT_AMBER,
             "title": "Clip 4.4 — Shot 4: @Leo Speaks (Looking Left)",
-            "body": "• Over-the-shoulder from behind @Maya on the left, focusing on @Leo on the right looking screen-left.\n• @Leo speaks in his bundled Warm Baritone voice:\n\"Rough night with the blueprints? Start with this.\"",
+            "body": "• In Video > Ingredients, type @Leo and @Maya and attach Image 3.4 as a location/prop ingredient.\n• Over-the-shoulder from behind @Maya on the left; @Leo on the right speaks in his bundled Warm Baritone voice!",
         },
         {
             "icon": "star",
             "accent": ACCENT_GREEN,
             "title": "Clip 4.5 — Shot 5: @Maya Drinks Coffee & Replies",
-            "body": "• Reverse-angle medium close-up of @Maya on the left looking screen-right.\n• @Maya drinks coffee from @SolisCup, smiles, and replies in her bundled Warm Alto voice!",
+            "body": "• In Video > Ingredients, type @Maya and attach Image 3.5 (or use Image 3.5 as + Add start frame).\n• Reverse-angle of @Maya on the left looking screen-right: @Maya drinks coffee from the terracotta cup and replies!",
         },
         {
             "accent": ACCENT_GREEN,
@@ -1294,17 +1294,17 @@ def build_all_slides(existing_slide_ids=None):
             "link_label": "Copy Step 4B Prompts ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
             "code": (
-                "[Clip 4.4 - Shot 4]: Over-the-shoulder medium shot from behind @Maya on the left, focusing on @Leo on the right looking\n"
-                "screen-left across the counter in @Cafe with a warm smile. @Leo says: \"Rough night with the blueprints? Start with this.\"\n"
-                "[Clip 4.5 - Shot 5]: Reverse-angle medium close-up of @Maya on the left looking screen-right in @Cafe. @Maya drinks coffee\n"
-                "from @SolisCup, lowers the cup with a warm inspired smile, and says: \"You just saved the whole skyline, Leo.\""
+                "[Clip 4.4 - Shot 4 (Ingredients: @Leo, @Maya + Image 3.4)]: Over-the-shoulder medium shot from behind @Maya on the left, focusing\n"
+                "on @Leo on the right looking screen-left across the oak counter with a warm smile. @Leo says: \"Rough night with the blueprints? Start with this.\"\n"
+                "[Clip 4.5 - Shot 5 (Ingredients: @Maya + Image 3.5)]: Reverse-angle medium close-up of @Maya on the left looking screen-right at the\n"
+                "oak counter. @Maya drinks coffee from the terracotta cup, lowers the cup with a warm smile, and says: \"You just saved the whole skyline, Leo.\""
             ),
         },
     )
     add_takeaway_banner(
         ops,
         sid,
-        "Look at Clip 4.5: '@Maya drinks coffee from @SolisCup... and says: ...' — zero character re-generation!",
+        "Look at Clip 4.5: '@Maya drinks coffee from the terracotta cup... and says: ...' — 100% real Google Flow workflow!",
         FLOW_URL,
     )
     ops.append({
@@ -1312,9 +1312,9 @@ def build_all_slides(existing_slide_ids=None):
         "slide": sid,
         "text": (
             "[PURPOSE]\n"
-            "Teach how to direct a natural two-character conversation in Omni Flash using @Leo and @Maya's bundled voices and the 180-degree eyeline rule.\n\n"
+            "Teach how to direct a natural two-character conversation in Omni Flash using @Leo and @Maya's bundled voices, an attached cafe ingredient image, and the 180-degree eyeline rule.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"Look at how simple and powerful Clips 4.4 and 4.5 are. In Clip 4.4, @Leo looks screen-left and speaks in his saved baritone voice. In Clip 4.5, we literally write: '@Maya drinks coffee from @SolisCup, lowers the cup with a warm inspired smile, and says: You just saved the whole skyline, Leo.' Because @Maya is a saved Flow Character, her face, outfit, and alto voice stay 100% consistent!\"\n\n"
+            "\"Look at how simple and powerful Clips 4.4 and 4.5 are. In Video > Ingredients, we tag @Leo and @Maya and attach our cafe counter image. In Clip 4.4, @Leo looks screen-left and speaks in his saved baritone voice. In Clip 4.5, we literally write: '@Maya drinks coffee from the terracotta cup, lowers the cup with a warm smile, and says: You just saved the whole skyline, Leo.'\"\n\n"
             "[TRANSITION]\n"
             "Finally, let's move to Step 5 to polish Clip 4.5 with Omni conversational editing and assemble our cut in Scenebuilder."
         ),
@@ -1340,13 +1340,13 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "psychology",
             "accent": ACCENT_BLUE,
             "title": "Omni Conversational Video Edit (Up to 3 Turns)",
-            "body": "• Click Clip 4.5 -> Edit Video.\n• Turn 1: Intensify the warm 2400K golden sunrise beams.\n• Turn 2: Fade in gold serif text 'SOLIS — AWAKEN THE CRAFT' in the rising steam—without losing @Maya's performance!",
+            "body": "• Select Clip 4.5 and open the conversational edit box.\n• Turn 1: Intensify the warm 2400K golden sunrise beams.\n• Turn 2: Fade in gold serif text 'SOLIS — AWAKEN THE CRAFT' in the rising steam—without losing @Maya's performance!",
         },
         {
             "icon": "check",
             "accent": ACCENT_GREEN,
             "title": "Assemble & Export in Google Flow Scenebuilder",
-            "body": "• Hover over Clips 4.1–4.5 -> More (⋮) -> Add to Scene.\n• Open Scenebuilder to order Shots 1–5 and trim dialogue handles.\n• Click Upscale to 720p (0 credits) on all clips and Download!",
+            "body": "• Hover over Clips 4.1–4.5 -> More (⋮) -> Add to Scene.\n• Open Scenebuilder (Scenes) to order Shots 1–5 and trim dialogue handles.\n• Click Upscale to 720p (0 credits) on all clips and Download!",
         },
         {
             "accent": ACCENT_BLUE,
@@ -1354,8 +1354,8 @@ def build_all_slides(existing_slide_ids=None):
             "link_label": "Copy Step 5 Prompts ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
             "code": (
-                "[Edit 5.1 - Turn 1 (Relight Clip 4.5)]: Intensify the warm 2400K golden sunrise beams streaming through the window behind\n"
-                "@Maya and make the rising coffee steam from @SolisCup glow softly in the backlight.\n"
+                "[Edit 5.1 - Turn 1 (Relight Clip 4.5)]: Intensify the warm 2400K golden sunrise beams streaming through the cafe window behind\n"
+                "@Maya and make the rising coffee steam glow softly in the backlight.\n"
                 "[Edit 5.2 - Turn 2 (Brand Title Overlay)]: In the final 2 seconds as the steam rises, fade in clean minimalist gold serif text\n"
                 "in the upper center reading 'SOLIS — AWAKEN THE CRAFT'."
             ),
@@ -1374,7 +1374,7 @@ def build_all_slides(existing_slide_ids=None):
             "[PURPOSE]\n"
             "Show how to apply multi-turn conversational video edits in Gemini Omni Flash and assemble the final 30-second commercial in Scenebuilder.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"In Step 5, instead of re-generating Shot 5 from scratch, click Edit Video on Clip 4.5. In Turn 1, we intensify the 2400K golden sunrise backlight. In Turn 2, we fade in 'SOLIS — AWAKEN THE CRAFT' as the steam rises. Then add all 5 clips to Scenebuilder, trim the handles, upscale to 720p for 0 credits, and download your commercial!\"\n\n"
+            "\"In Step 5, instead of re-generating Shot 5 from scratch, select Clip 4.5 and open the conversational video edit prompt. In Turn 1, we intensify the 2400K golden sunrise backlight. In Turn 2, we fade in 'SOLIS — AWAKEN THE CRAFT' as the steam rises. Then add all 5 clips to Scenebuilder, trim the handles, upscale to 720p for 0 credits, and download your commercial!\"\n\n"
             "[TRANSITION]\n"
             "Let's wrap up on Slide 14 with our 5 Google Flow Golden Rules and GitHub repository links."
         ),
@@ -1397,8 +1397,8 @@ def build_all_slides(existing_slide_ids=None):
         {
             "icon": "lock",
             "accent": ACCENT_BLUE,
-            "title": "Rules 1 & 2:\n@Characters & Sets",
-            "body": "1. Create @Maya & @Leo ONCE in Characters > New Character (with Voice).\n2. Never re-describe them—only type '@Maya drinks coffee' in @Studio or @Cafe!",
+            "title": "Rules 1 & 2:\n@Characters & Images",
+            "body": "1. Create @Maya & @Leo ONCE in Characters > New Character (with Voice) and only refer to @Maya & @Leo.\n2. Attach scene/prop images via More > Add to Prompt or + Add start frame!",
             "link_label": "Flow Cheat Sheet ↗",
             "link_url": f"{GITHUB_BLOB}/workshop-guide/03-google-flow-cheatsheet.md",
         },
@@ -1406,7 +1406,7 @@ def build_all_slides(existing_slide_ids=None):
             "icon": "bolt",
             "accent": ACCENT_AMBER,
             "title": "Rules 3 & 4:\nFrames & Omni Edit",
-            "body": "3. Prototype in Omni 360p, use Start/End Frames & Save Frame, and upscale to 720p for 0 credits.\n4. Use 3-turn Video Editing instead of re-rolling good acting!",
+            "body": "3. Prototype in Omni 360p, use Start/End Frames & Save frame, and upscale to 720p for 0 credits.\n4. Use 3-turn Video Editing instead of re-rolling good acting!",
             "link_label": "Solis Prompt Library ↗",
             "link_url": f"{GITHUB_BLOB}/prompts/solis-commercial-prompt-library.md",
         },
@@ -1432,7 +1432,7 @@ def build_all_slides(existing_slide_ids=None):
             "[PURPOSE]\n"
             "Summarize the 5 Golden Rules of Google Flow & Gemini Omni Flash and share the GitHub repository.\n\n"
             "[VERBAL SCRIPT]\n"
-            "\"To recap our 5 Golden Rules: (1) Test isolated levers in the Sandbox first; (2) Create @Maya and @Leo once in the Characters tab and only refer to them by @Name thereafter; (3) Lock empty sets as @Ingredients; (4) Use Omni 360p drafts, Start/End Frames, and free 720p upscaling; and (5) Use 3-turn conversational video editing and Scenebuilder to finish your film. All prompts are live on GitHub!\"\n\n"
+            "\"To recap our 5 Golden Rules: (1) Test isolated levers in the Sandbox first; (2) Create @Maya and @Leo once in the Characters tab and only refer to them by @Name thereafter; (3) Reuse scene and prop images via More -> Add to Prompt, Video -> Ingredients, or Video -> Frames; (4) Use Omni 360p drafts, Save frame, and free 720p upscaling; and (5) Use 3-turn conversational video editing and Scenebuilder to finish your film. All prompts are live on GitHub!\"\n\n"
             "[TRANSITION]\n"
             "Thank you, and happy filmmaking in Google Flow!"
         ),

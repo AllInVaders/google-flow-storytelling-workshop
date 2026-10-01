@@ -152,7 +152,7 @@
     <h1>Google Flow & Gemini Omni Storytelling Workshop</h1>
     <p class="subtitle">
       Part I tests isolated creative levers in Google Flow (Camera Angles, Warmth, Styles & Physics).
-      Part II builds a 30-second commercial by creating <code>@Maya</code> and <code>@Leo</code> once and referencing them across 5 incremental steps.
+      Part II builds a 30-second commercial by creating <code>@Maya</code> and <code>@Leo</code> once and using real Google Flow image/frame controls across 5 steps.
     </p>
     <div class="top-links">
       <a class="btn primary" href="https://labs.google/fx/tools/flow" target="_blank" rel="noopener">Open Google Flow ↗</a>
@@ -173,11 +173,11 @@
       </button>
       <button class="stage-tab" onclick="showTab('step2', this)">
         <div class="stage-num">Part II · Step 2</div>
-        <div class="stage-name">@Maya, @Leo & Sets</div>
+        <div class="stage-name">Create @Maya & @Leo</div>
       </button>
       <button class="stage-tab" onclick="showTab('step3', this)">
         <div class="stage-num">Part II · Step 3</div>
-        <div class="stage-name">Storyboard Frames</div>
+        <div class="stage-name">Storyboard Images</div>
       </button>
       <button class="stage-tab" onclick="showTab('step4', this)">
         <div class="stage-num">Part II · Step 4</div>
@@ -259,14 +259,14 @@ Story Seed: At 5:45 AM on a rainy morning, exhausted architect Maya stares at a 
 Break this story into a concise 5-shot beat sheet for Google Flow:
 - Shot 1 (Studio - Creative Block, 6s)
 - Shot 2 (Cafe Arrival - Transition from Cold Rain to Warm Glow, 6s)
-- Shot 3 (The Craft - Leo Pours & Slides the Solis Cup, 6s)
+- Shot 3 (The Craft - Leo Pours & Slides the Terracotta Cup, 6s)
 - Shot 4 (Dialogue - Leo's Encouragement, 6s)
 - Shot 5 (Dialogue, First Sip & Creative Spark Finale, 6s)
-For each shot, list only: Shot #, Setting (@Studio or @Cafe), Characters (@Maya, @Leo), Action, and Lighting Shift.</pre>
+For each shot, list only: Shot #, Setting, Characters (@Maya, @Leo), Action, and Lighting Shift.</pre>
       </div>
     </section>
 
-    <!-- STEP 2: CHARACTERS & SETS -->
+    <!-- STEP 2: CHARACTERS -->
     <section id="step2" class="stage-pane">
       <div class="callout">
         <strong>⚠️ Golden Rule of Google Flow Characters:</strong> Create <code>Maya</code> and <code>Leo</code> <strong>once</strong> in <strong>Left Sidebar &gt; Characters &gt; New Character</strong> (and attach their Voice). After that, <strong>never re-describe their physical traits again</strong>—only refer to <code>@Maya</code> and <code>@Leo</code>!
@@ -291,51 +291,37 @@ For each shot, list only: Shot #, Setting (@Studio or @Cafe), Characters (@Maya,
         </div>
         <pre id="p-leo">42-year-old artisan barista with medium-brown skin, silver-flecked short curly hair, neatly trimmed beard, warm smile lines around the eyes, wearing a washed indigo denim apron over a charcoal henley with rolled sleeves, neutral 5600K studio lighting, clean slate-gray background, photorealistic portrait.</pre>
       </div>
-      <div class="card">
-        <div class="card-header">
-          <h3>Ingredients — Create <code>@Studio</code>, <code>@Cafe</code> & <code>@SolisCup</code></h3>
-          <div>
-            <span class="tag">Image &gt; Nano Banana Pro</span>
-            <button class="copy-btn" onclick="copyText('p-sets', this)">Copy Prompts</button>
-          </div>
-        </div>
-        <pre id="p-sets">[@Studio]: Empty architectural studio loft at 5:45 AM before dawn, wide establishing shot, rain-streaked floor-to-ceiling industrial glass window overlooking a misty blue-hour city skyline, tilted birchwood drafting table with a blank white blueprint roll, brass desk lamp turned off, cold 7000K slate-blue lighting, 24mm lens, no people.
-
-[@Cafe]: Empty neighborhood artisan coffee shop interior at 6:00 AM, reclaimed oak counter in the foreground, gleaming vintage brass espresso machine, warm 2700K Edison pendant bulbs glowing against exposed brick, rain visible on the front glass window, inviting golden-amber atmosphere, 35mm lens, no people.
-
-[@SolisCup]: Product close-up of a handcrafted matte terracotta ceramic cappuccino cup with a cream ceramic interior resting on a matching terracotta saucer, subtle minimalist embossed wordmark 'SOLIS' on the front of the cup, rich dark espresso with velvety hazelnut-brown microfoam rosette latte art, soft studio lighting.</pre>
-      </div>
     </section>
 
     <!-- STEP 3: STORYBOARD -->
     <section id="step3" class="stage-pane">
       <div class="callout">
-        <strong>Step 3 Goal:</strong> Generate your 5 storyboard frames in <strong>Image &gt; Nano Banana Pro</strong> using only <code>@Maya</code>, <code>@Leo</code>, <code>@Studio</code>, <code>@Cafe</code>, and <code>@SolisCup</code> tags!
+        <strong>Step 3 Goal:</strong> Generate your 5 storyboard images in <strong>Image &gt; Nano Banana Pro</strong> using <code>@Maya</code> and <code>@Leo</code>. To keep the cafe counter and terracotta cup consistent across shots, hover over a generated image tile and click <strong>More (⋮) &gt; Add to Prompt</strong> (or drag the image into the prompt box)!
       </div>
       <div class="card">
         <div class="card-header">
-          <h3>Frames 3.1 to 3.5 — Storyboard Prompts Using <code>@Maya</code> & <code>@Leo</code></h3>
+          <h3>Images 3.1 to 3.5 — Storyboard Prompts Using <code>@Maya</code>, <code>@Leo</code> & <code>Add to Prompt</code></h3>
           <div>
             <span class="tag">Image &gt; Nano Banana Pro</span>
             <button class="copy-btn" onclick="copyText('p-board', this)">Copy Prompts</button>
           </div>
         </div>
-        <pre id="p-board">[Frame 3.1 - Shot 1]: @Maya sitting at the drafting desk inside @Studio at 5:45 AM, leaning on her elbow and staring tiredly at the blank white blueprint, holding a charcoal pencil loosely, cold blue pre-dawn window light, medium shot, 35mm lens.
+        <pre id="p-board">[Image 3.1 - Shot 1]: @Maya sitting at a birchwood drafting desk in an architectural studio loft at 5:45 AM, leaning on her elbow and staring tiredly at a blank white blueprint roll, rain-streaked glass window behind her, cold 7000K blue pre-dawn lighting, medium shot, 35mm lens.
 
-[Frame 3.2 - Shot 2]: @Maya stepping inside @Cafe out of the morning rain, looking toward the warm glowing espresso counter with quiet relief, cool blue rain outside the door contrasting with warm golden light inside, medium wide shot, 35mm lens.
+[Image 3.2 - Shot 2]: @Maya stepping inside a warm neighborhood artisan coffee shop out of the morning rain, looking toward a reclaimed oak counter with a gleaming vintage brass espresso machine, warm 2700K Edison pendant bulbs glowing against exposed brick, medium wide shot, 35mm lens.
 
-[Frame 3.3 - Shot 3 Start Frame]: @Leo standing behind the oak counter in @Cafe, pulling a fresh espresso shot from the brass machine into @SolisCup as aromatic steam rises, warm 2700K pendant lighting, medium shot, 50mm lens.
+[Image 3.3 - Shot 3 Start Frame (Optional: Click 'More > Add to Prompt' on Image 3.2)]: @Leo standing behind the reclaimed oak counter in the warm artisan coffee shop, pulling a fresh espresso shot from the vintage brass espresso machine into a matte terracotta cappuccino cup embossed with 'SOLIS' as aromatic steam rises, warm 2700K pendant lighting, medium shot, 50mm lens.
 
-[Frame 3.4 - Shot 3 End Frame]: Close-up on the oak counter in @Cafe as @Leo's hand finishes sliding the steaming @SolisCup into the foreground in front of @Maya, warm golden morning light catching the rising steam, shallow depth of field, 50mm lens.
+[Image 3.4 - Shot 3 End Frame (Click 'More > Add to Prompt' on Image 3.3)]: Close-up on the reclaimed oak counter in the warm coffee shop as @Leo's hand finishes sliding the steaming matte terracotta 'SOLIS' cappuccino cup into the foreground in front of @Maya, warm golden morning light catching the rising steam, shallow depth of field, 50mm lens.
 
-[Frame 3.5 - Shot 5]: Medium close-up of @Maya in @Cafe wrapping both hands around @SolisCup, inhaling the warm steam with her eyes brightening in a moment of sudden creative inspiration, warm 2400K golden sunrise light streaming across the counter, 50mm lens.</pre>
+[Image 3.5 - Shot 5 (Click 'More > Add to Prompt' on Image 3.4)]: Medium close-up of @Maya at the oak cafe counter wrapping both hands around the steaming matte terracotta 'SOLIS' cappuccino cup, inhaling the warm steam with her eyes brightening in sudden creative inspiration, warm 2400K golden sunrise light streaming across the counter, 50mm lens.</pre>
       </div>
     </section>
 
     <!-- STEP 4: OMNI VIDEO & VOICE -->
     <section id="step4" class="stage-pane">
       <div class="callout">
-        <strong>Step 4 Goal:</strong> Switch to <strong>Video &gt; Omni Flash</strong> (`6s`, `Omni 360p` draft mode). Reference <code>@Maya</code> and <code>@Leo</code> (their bundled voices automatically speak the dialogue!) and use <strong>+ Add start frame</strong> / <strong>+ Add end frame</strong> on Shot 3.
+        <strong>Step 4 Goal:</strong> Switch to <strong>Video &gt; Omni Flash</strong> (`6s`, `Omni 360p` draft mode). Reference <code>@Maya</code> and <code>@Leo</code> (their bundled voices automatically speak the dialogue!) and use <strong>Video &gt; Frames</strong> (<code>+ Add start frame</code> / <code>+ Add end frame</code>) or <strong>Video &gt; Ingredients</strong>.
       </div>
       <div class="card">
         <div class="card-header">
@@ -345,15 +331,15 @@ For each shot, list only: Shot #, Setting (@Studio or @Cafe), Characters (@Maya,
             <button class="copy-btn" onclick="copyText('p-video', this)">Copy Prompts</button>
           </div>
         </div>
-        <pre id="p-video">[Clip 4.1 - Shot 1]: Slow push-in medium shot of @Maya sitting at the drafting table in @Studio, rubbing her temple and tapping her charcoal pencil against the blank white blueprint while rain patters softly against the cold blue window glass.
+        <pre id="p-video">[Clip 4.1 - Shot 1 (Attach Image 3.1 as Start Frame)]: Slow push-in medium shot of @Maya sitting at the drafting desk in the cold rainy studio, rubbing her temple and tapping her charcoal pencil against the blank white blueprint while rain patters softly against the window glass.
 
-[Clip 4.2 - Shot 2]: Smooth tracking shot following @Maya as she walks into @Cafe, shaking a drop of rain from her sleeve and walking up to the warm sunlit oak espresso bar, gentle door chime and cozy cafe ambiance.
+[Clip 4.2 - Shot 2 (Attach Image 3.2 as Start Frame)]: Smooth tracking shot following @Maya as she walks into the warm coffee shop out of the rain, shaking a drop of water from her sleeve and approaching the sunlit oak espresso bar, gentle door chime and cozy cafe ambiance.
 
-[Clip 4.3 - Shot 3 (Attach Frame 3.3 as Start Frame + Frame 3.4 as End Frame)]: Smooth camera tilt and follow as @Leo finishes pouring rich crema into @SolisCup and slides the steaming cup smoothly across the oak counter in @Cafe toward @Maya, espresso machine hiss and ceramic saucer slide audio.
+[Clip 4.3 - Shot 3 (Frames Mode: Attach Image 3.3 as Start Frame + Image 3.4 as End Frame)]: Smooth camera tilt and follow as @Leo finishes pouring rich crema into the matte terracotta 'SOLIS' cup and slides the steaming cup smoothly across the oak counter toward @Maya, espresso machine hiss and ceramic saucer slide audio.
 
-[Clip 4.4 - Shot 4 (Leo Speaks)]: Over-the-shoulder medium shot from behind @Maya on the left, focusing on @Leo on the right looking screen-left across the counter in @Cafe with a warm smile. @Leo says: "Rough night with the blueprints? Start with this."
+[Clip 4.4 - Shot 4 (Ingredients Mode: @Leo, @Maya + Image 3.4)]: Over-the-shoulder medium shot from behind @Maya on the left, focusing on @Leo on the right looking screen-left across the oak espresso counter with a warm smile. @Leo says: "Rough night with the blueprints? Start with this."
 
-[Clip 4.5 - Shot 5 (Maya Drinks Coffee & Replies)]: Reverse-angle medium close-up of @Maya on the left looking screen-right in @Cafe. @Maya drinks coffee from @SolisCup, lowers the cup with a warm inspired smile, and says: "You just saved the whole skyline, Leo."</pre>
+[Clip 4.5 - Shot 5 (Ingredients Mode: @Maya + Image 3.5)]: Reverse-angle medium close-up of @Maya on the left looking screen-right at the warm oak counter. @Maya drinks coffee from the terracotta cup, lowers the cup with a warm inspired smile, and says: "You just saved the whole skyline, Leo."</pre>
       </div>
     </section>
 
@@ -370,7 +356,7 @@ For each shot, list only: Shot #, Setting (@Studio or @Cafe), Characters (@Maya,
             <button class="copy-btn" onclick="copyText('p-edit', this)">Copy Prompts</button>
           </div>
         </div>
-        <pre id="p-edit">[Turn 1 - Relight]: Intensify the warm 2400K golden sunrise beams streaming through the window behind @Maya and make the rising coffee steam from @SolisCup glow softly in the backlight.
+        <pre id="p-edit">[Turn 1 - Relight]: Intensify the warm 2400K golden sunrise beams streaming through the cafe window behind @Maya and make the rising coffee steam glow softly in the backlight.
 
 [Turn 2 - Title Overlay]: In the final 2 seconds as the steam rises, fade in clean minimalist gold serif text in the upper center reading 'SOLIS — AWAKEN THE CRAFT'.</pre>
       </div>
